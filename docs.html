@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>เอกสารสำคัญ | Taiwan Trip 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #E74C5E;
+            --primary-light: #FFF0F2;
+            --secondary: #2A6FDB;
+            --secondary-light: #EBF2FF;
+            --green: #3BA676;
+            --green-light: #EDFAF3;
+            --orange: #E8913A;
+            --orange-light: #FFF5EA;
+            --purple: #7B61FF;
+            --purple-light: #F0EDFF;
+            --text-primary: #1B1D22;
+            --text-secondary: #5A5E6E;
+            --text-tertiary: #717484;
+            --bg-page: #F6F7FA;
+            --bg-card: #FFFFFF;
+            --border: #EBECEF;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-bottom: calc(68px + var(--safe-bottom));
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+            color: white;
+            padding: 32px 20px 24px;
+            text-align: center;
+        }
+
+        .header-back {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .header-back:hover { color: white; }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header h1 i { margin-right: 8px; opacity: 0.8; }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* ===== CONTENT ===== */
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        /* ===== FEATURED CARD (Drive) ===== */
+        .drive-card {
+            background: var(--secondary);
+            color: white;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 16px rgba(42, 111, 219, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .drive-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 111, 219, 0.4);
+        }
+
+        .drive-card:active {
+            transform: scale(0.98);
+        }
+
+        .drive-card .drive-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .drive-card .drive-info h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .drive-card .drive-info p {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .drive-card .drive-arrow {
+            margin-left: auto;
+            font-size: 16px;
+            opacity: 0.6;
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+
+        /* ===== DOC CARDS GRID ===== */
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .doc-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            text-decoration: none;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .doc-card:active {
+            transform: scale(0.97);
+        }
+
+        .doc-card .doc-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .doc-card .doc-icon.flight {
+            background: var(--secondary-light);
+            color: var(--secondary);
+        }
+
+        .doc-card .doc-icon.insurance {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .doc-card .doc-icon.hotel {
+            background: var(--orange-light);
+            color: var(--orange);
+        }
+
+        .doc-card .doc-icon.train {
+            background: var(--purple-light);
+            color: var(--purple);
+        }
+
+        .doc-card .doc-name {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .doc-card .doc-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .doc-status.pending {
+            background: var(--orange-light);
+            color: var(--orange);
+        }
+
+        .doc-status.ready {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .doc-card .doc-link {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: auto;
+        }
+
+        /* ===== NOTE ===== */
+        .note-box {
+            background: var(--secondary-light);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .note-box i {
+            color: var(--secondary);
+            font-size: 16px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .note-box p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== DESKTOP NAV ===== */
+        .desktop-nav {
+            display: none;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+        }
+
+        .desktop-nav-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 52px;
+        }
+
+        .desktop-nav-brand {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .desktop-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .desktop-nav-links a {
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .desktop-nav-links a:hover {
+            background: var(--bg-page);
+            color: var(--text-primary);
+        }
+
+        .desktop-nav-links a.active {
+            background: var(--secondary-light);
+            color: #2260BF;
+        }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            z-index: 100;
+            padding-bottom: var(--safe-bottom);
+        }
+
+        .bottom-nav-inner {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            padding: 6px 8px;
+            gap: 2px;
+        }
+
+        .bottom-nav-inner::-webkit-scrollbar { display: none; }
+
+        .bnav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 56px;
+            padding: 4px 8px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+
+        .bnav-item i { font-size: 18px; }
+        .bnav-item.active { color: #C43D4E; }
+
+        /* ===== DESKTOP ===== */
+        @media (min-width: 768px) {
+            .desktop-nav { display: block; position: sticky; top: 0; z-index: 100; }
+            .bottom-nav { display: none; }
+            body { padding-bottom: 0; }
+            .content { padding: 24px; }
+            .header { padding: 40px 24px 32px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== DESKTOP NAV ===== -->
+<nav class="desktop-nav">
+    <div class="desktop-nav-inner">
+        <a href="index.html" class="desktop-nav-brand">🇹🇼 Taiwan Guidebook</a>
+        <div class="desktop-nav-links">
+            <a href="index.html"><i class="fa-solid fa-map"></i> แผนเที่ยว</a>
+            <a href="docs.html" class="active"><i class="fa-solid fa-folder-open"></i> เอกสาร</a>
+            <a href="budget.html"><i class="fa-solid fa-wallet"></i> Budget</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== HEADER ===== -->
+<div class="header" style="position: relative;">
+    <a href="index.html" class="header-back"><i class="fa-solid fa-chevron-left"></i> แผนเที่ยว</a>
+    <h1><i class="fa-solid fa-folder-open"></i> เอกสารสำคัญ</h1>
+    <p>รวมเอกสารทั้งหมดสำหรับทริป</p>
+</div>
+
+<!-- ===== CONTENT ===== -->
+<div class="content">
+
+    <!-- Featured: Google Drive -->
+    <a href="https://drive.google.com/drive/folders/1rUJO3HZk_pwTVJPNYf5bym-eRT6ng_ay?usp=sharing" target="_blank" rel="noopener" class="drive-card">
+        <div class="drive-icon">
+            <i class="fa-brands fa-google-drive"></i>
+        </div>
+        <div class="drive-info">
+            <h3>Google Drive ทั้งหมด</h3>
+            <p>เปิด folder รวมเอกสารทริป</p>
+        </div>
+        <div class="drive-arrow">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </div>
+    </a>
+
+    <!-- Note -->
+    <div class="note-box">
+        <i class="fa-solid fa-circle-info"></i>
+        <p>เอกสารทั้งหมดเก็บไว้ใน Google Drive — กดที่การ์ดเพื่อเปิดดู สถานะจะอัปเดตเมื่อเอกสารพร้อม</p>
+    </div>
+
+    <!-- Doc Categories -->
+    <div class="section-title">เอกสารแยกหมวด</div>
+    <div class="doc-grid">
+
+        <!-- ตั๋วเครื่องบิน -->
+        <a href="https://drive.google.com/drive/folders/1rUJO3HZk_pwTVJPNYf5bym-eRT6ng_ay?usp=sharing" target="_blank" rel="noopener" class="doc-card">
+            <div class="doc-icon flight">
+                <i class="fa-solid fa-plane-departure"></i>
+            </div>
+            <div class="doc-name">ตั๋วเครื่องบิน</div>
+            <div class="doc-status pending">
+                <i class="fa-solid fa-clock"></i> รอเอกสาร
+            </div>
+            <div class="doc-link">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดใน Drive
+            </div>
+        </a>
+
+        <!-- ประกันเดินทาง -->
+        <a href="https://drive.google.com/drive/folders/1rUJO3HZk_pwTVJPNYf5bym-eRT6ng_ay?usp=sharing" target="_blank" rel="noopener" class="doc-card">
+            <div class="doc-icon insurance">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="doc-name">ประกันเดินทาง</div>
+            <div class="doc-status pending">
+                <i class="fa-solid fa-clock"></i> รอเอกสาร
+            </div>
+            <div class="doc-link">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดใน Drive
+            </div>
+        </a>
+
+        <!-- ที่พัก -->
+        <a href="https://drive.google.com/drive/folders/1rUJO3HZk_pwTVJPNYf5bym-eRT6ng_ay?usp=sharing" target="_blank" rel="noopener" class="doc-card">
+            <div class="doc-icon hotel">
+                <i class="fa-solid fa-bed"></i>
+            </div>
+            <div class="doc-name">Booking ที่พัก</div>
+            <div class="doc-status pending">
+                <i class="fa-solid fa-clock"></i> รอเอกสาร
+            </div>
+            <div class="doc-link">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดใน Drive
+            </div>
+        </a>
+
+        <!-- ตั๋ว HSR / Klook -->
+        <a href="https://drive.google.com/drive/folders/1rUJO3HZk_pwTVJPNYf5bym-eRT6ng_ay?usp=sharing" target="_blank" rel="noopener" class="doc-card">
+            <div class="doc-icon train">
+                <i class="fa-solid fa-train"></i>
+            </div>
+            <div class="doc-name">ตั๋ว HSR / Klook</div>
+            <div class="doc-status pending">
+                <i class="fa-solid fa-clock"></i> รอเอกสาร
+            </div>
+            <div class="doc-link">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดใน Drive
+            </div>
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+        <a href="index.html#day1" class="bnav-item"><i class="fa-solid fa-1"></i>DAY 1</a>
+        <a href="index.html#day2" class="bnav-item"><i class="fa-solid fa-2"></i>DAY 2</a>
+        <a href="index.html#day3" class="bnav-item"><i class="fa-solid fa-3"></i>DAY 3</a>
+        <a href="index.html#day4" class="bnav-item"><i class="fa-solid fa-4"></i>DAY 4</a>
+        <a href="index.html#day5" class="bnav-item"><i class="fa-solid fa-5"></i>DAY 5</a>
+        <a href="index.html#day6" class="bnav-item"><i class="fa-solid fa-6"></i>DAY 6</a>
+        <a href="index.html#bonus" class="bnav-item"><i class="fa-solid fa-compass"></i>Bonus</a>
+        <a href="docs.html" class="bnav-item active"><i class="fa-solid fa-folder-open"></i>เอกสาร</a>
+        <a href="budget.html" class="bnav-item"><i class="fa-solid fa-wallet"></i>เงิน</a>
+    </div>
+</nav>
+
+</body>
+</html>
