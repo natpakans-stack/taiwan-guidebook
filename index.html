@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="lang-th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -70,6 +70,39 @@
             font-size: 15px;
             padding-bottom: calc(72px + var(--safe-bottom));
             -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .lang-th .en { display: none !important; }
+        .lang-en .th { display: none !important; }
+
+        .lang-toggle {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            display: flex;
+            background: rgba(255,255,255,0.15);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+            z-index: 10;
+        }
+
+        .lang-toggle button {
+            padding: 5px 12px;
+            border: none;
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-toggle button.active {
+            background: rgba(255,255,255,0.25);
+            color: white;
         }
 
         /* ===== HERO ===== */
@@ -619,15 +652,19 @@
 
 <!-- ===== HERO ===== -->
 <header class="hero" id="top">
+    <div class="lang-toggle">
+        <button class="active" onclick="setLang('th')">TH</button>
+        <button onclick="setLang('en')">EN</button>
+    </div>
     <span class="hero-flag">&#127481;&#127484;</span>
-    <h1>คู่มือเที่ยวไต้หวัน<span>Taiwan Travel Guidebook V1.4</span></h1>
-    <p class="hero-sub">ไทเป &rarr; หยางหมิงซาน &rarr; ซานเตียวหลิ่ง &amp; อู่ไหล &rarr; เกาสง<br>เที่ยวครบทุกรส: เมืองหลวง &bull; ภูเขาไฟ &amp; ทุ่งหญ้า &bull; เทรลน้ำตก &amp; หมู่บ้านอาตายัล &bull; เมืองท่าศิลปะริมทะเล</p>
+    <h1><span class="th">คู่มือเที่ยวไต้หวัน</span><span class="en">Taiwan Travel Guide</span><span>Taiwan Travel Guidebook V1.5</span></h1>
+    <p class="hero-sub"><span class="th">ไทเป &rarr; หยางหมิงซาน &rarr; ซานเตียวหลิ่ง &amp; อู่ไหล &rarr; เกาสง<br>เที่ยวครบทุกรส: เมืองหลวง &bull; ภูเขาไฟ &amp; ทุ่งหญ้า &bull; เทรลน้ำตก &amp; หมู่บ้านอาตายัล &bull; เมืองท่าศิลปะริมทะเล</span><span class="en">Taipei &rarr; Yangmingshan &rarr; Sandiaoling &amp; Wulai &rarr; Kaohsiung<br>Capital City &bull; Volcano &amp; Grassland &bull; Waterfall Trail &amp; Atayal Village &bull; Seaside Art City</span></p>
     <div class="hero-chips">
-        <span class="hero-chip">1&ndash;6 พ.ค. 2568</span>
-        <span class="hero-chip">6 วัน 5 คืน</span>
-        <span class="hero-chip">ลาแค่ 2 วัน!</span>
-        <span class="hero-chip">2 เมือง</span>
-        <span class="hero-chip">~25K บาท</span>
+        <span class="hero-chip"><span class="th">1&ndash;6 พ.ค. 2568</span><span class="en">1&ndash;6 May 2025</span></span>
+        <span class="hero-chip"><span class="th">6 วัน 5 คืน</span><span class="en">6 Days 5 Nights</span></span>
+        <span class="hero-chip"><span class="th">ลาแค่ 2 วัน!</span><span class="en">Only 2 Leave Days!</span></span>
+        <span class="hero-chip"><span class="th">2 เมือง</span><span class="en">2 Cities</span></span>
+        <span class="hero-chip"><span class="th">~25K บาท</span><span class="en">~25K THB</span></span>
     </div>
 </header>
 
@@ -638,64 +675,63 @@
     <!-- ============================================ -->
     <section class="section" id="dates">
         <div class="section-label"><i class="fa-solid fa-calendar-check"></i> TRIP DATES</div>
-        <h2 class="section-title">วันเดินทาง &amp; วันลา</h2>
+        <h2 class="section-title"><span class="th">วันเดินทาง &amp; วันลา</span><span class="en">Travel Dates &amp; Leave Days</span></h2>
 
         <div class="card" style="border-left: 3px solid var(--green);">
-            <div class="card-title"><i class="fa-solid fa-calendar-days"></i> ช่วงเวลาเดินทาง: 1&ndash;6 พ.ค. 2568</div>
-            <p style="font-size:12px; color:var(--text-tertiary); margin-bottom:4px;">Travel Period: 1&ndash;6 May 2025 &bull; Taipei (3 nights) &rarr; Kaohsiung (2 nights)</p>
+            <div class="card-title"><i class="fa-solid fa-calendar-days"></i> <span class="th">ช่วงเวลาเดินทาง: 1&ndash;6 พ.ค. 2568</span><span class="en">Travel Period: 1&ndash;6 May 2025</span></div>
             <table style="width:100%; border-collapse:collapse; font-size:14px; margin-top:8px;">
                 <thead>
                     <tr style="text-align:left; border-bottom:2px solid var(--border);">
-                        <th style="padding:6px 8px;">วัน</th>
-                        <th style="padding:6px 8px;">วันที่</th>
-                        <th style="padding:6px 8px;">สถานะ</th>
-                        <th style="padding:6px 8px;">แผนทริป</th>
+                        <th style="padding:6px 8px;"><span class="th">วัน</span><span class="en">Day</span></th>
+                        <th style="padding:6px 8px;"><span class="th">วันที่</span><span class="en">Date</span></th>
+                        <th style="padding:6px 8px;"><span class="th">สถานะ</span><span class="en">Status</span></th>
+                        <th style="padding:6px 8px;"><span class="th">แผนทริป</span><span class="en">Trip Plan</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="background:var(--green-light);">
-                        <td style="padding:6px 8px;">ศุกร์</td>
-                        <td style="padding:6px 8px;">1 พ.ค.</td>
-                        <td style="padding:6px 8px;"><span class="hl-chip hl-high" style="font-size:11px;">วันแรงงาน (หยุด)</span></td>
-                        <td style="padding:6px 8px;">Day 1 &mdash; ถึงไทเป</td>
+                        <td style="padding:6px 8px;"><span class="th">ศุกร์</span><span class="en">Fri</span></td>
+                        <td style="padding:6px 8px;"><span class="th">1 พ.ค.</span><span class="en">1 May</span></td>
+                        <td style="padding:6px 8px;"><span class="hl-chip hl-high" style="font-size:11px;"><span class="th">วันแรงงาน (หยุด)</span><span class="en">Labour Day (Holiday)</span></span></td>
+                        <td style="padding:6px 8px;"><span class="th">Day 1 &mdash; ถึงไทเป</span><span class="en">Day 1 &mdash; Arrive Taipei</span></td>
                     </tr>
                     <tr style="background:var(--green-light);">
-                        <td style="padding:6px 8px;">เสาร์</td>
-                        <td style="padding:6px 8px;">2 พ.ค.</td>
-                        <td style="padding:6px 8px;"><span class="hl-chip hl-high" style="font-size:11px;">วันหยุดสุดสัปดาห์</span></td>
-                        <td style="padding:6px 8px;">Day 2 &mdash; หยางหมิงซาน</td>
+                        <td style="padding:6px 8px;"><span class="th">เสาร์</span><span class="en">Sat</span></td>
+                        <td style="padding:6px 8px;"><span class="th">2 พ.ค.</span><span class="en">2 May</span></td>
+                        <td style="padding:6px 8px;"><span class="hl-chip hl-high" style="font-size:11px;"><span class="th">วันหยุดสุดสัปดาห์</span><span class="en">Weekend</span></span></td>
+                        <td style="padding:6px 8px;"><span class="th">Day 2 &mdash; หยางหมิงซาน</span><span class="en">Day 2 &mdash; Yangmingshan</span></td>
                     </tr>
                     <tr style="background:var(--green-light);">
-                        <td style="padding:6px 8px;">อาทิตย์</td>
-                        <td style="padding:6px 8px;">3 พ.ค.</td>
-                        <td style="padding:6px 8px;"><span class="hl-chip hl-high" style="font-size:11px;">วันหยุดสุดสัปดาห์</span></td>
-                        <td style="padding:6px 8px;">Day 3 &mdash; Sandiaoling + อู่ไหล</td>
+                        <td style="padding:6px 8px;"><span class="th">อาทิตย์</span><span class="en">Sun</span></td>
+                        <td style="padding:6px 8px;"><span class="th">3 พ.ค.</span><span class="en">3 May</span></td>
+                        <td style="padding:6px 8px;"><span class="hl-chip hl-high" style="font-size:11px;"><span class="th">วันหยุดสุดสัปดาห์</span><span class="en">Weekend</span></span></td>
+                        <td style="padding:6px 8px;"><span class="th">Day 3 &mdash; Sandiaoling + อู่ไหล</span><span class="en">Day 3 &mdash; Sandiaoling + Wulai</span></td>
                     </tr>
                     <tr style="background:var(--green-light);">
-                        <td style="padding:6px 8px;">จันทร์</td>
-                        <td style="padding:6px 8px;">4 พ.ค.</td>
-                        <td style="padding:6px 8px;"><span class="hl-chip hl-high" style="font-size:11px;">วันฉัตรมงคล (หยุด)</span></td>
-                        <td style="padding:6px 8px;">Day 4 &mdash; HSR ไปเกาสง</td>
+                        <td style="padding:6px 8px;"><span class="th">จันทร์</span><span class="en">Mon</span></td>
+                        <td style="padding:6px 8px;"><span class="th">4 พ.ค.</span><span class="en">4 May</span></td>
+                        <td style="padding:6px 8px;"><span class="hl-chip hl-high" style="font-size:11px;"><span class="th">วันฉัตรมงคล (หยุด)</span><span class="en">Coronation Day (Holiday)</span></span></td>
+                        <td style="padding:6px 8px;"><span class="th">Day 4 &mdash; HSR ไปเกาสง</span><span class="en">Day 4 &mdash; HSR to Kaohsiung</span></td>
                     </tr>
                     <tr style="background:var(--orange-light);">
-                        <td style="padding:6px 8px;">อังคาร</td>
-                        <td style="padding:6px 8px;">5 พ.ค.</td>
-                        <td style="padding:6px 8px;"><span class="hl-chip hl-must" style="font-size:11px;">ใช้วันลา</span></td>
-                        <td style="padding:6px 8px;">Day 5 &mdash; ฝอกวงซัน + ฉีจิน</td>
+                        <td style="padding:6px 8px;"><span class="th">อังคาร</span><span class="en">Tue</span></td>
+                        <td style="padding:6px 8px;"><span class="th">5 พ.ค.</span><span class="en">5 May</span></td>
+                        <td style="padding:6px 8px;"><span class="hl-chip hl-must" style="font-size:11px;"><span class="th">ใช้วันลา</span><span class="en">Annual Leave</span></span></td>
+                        <td style="padding:6px 8px;"><span class="th">Day 5 &mdash; ฝอกวงซัน + ฉีจิน</span><span class="en">Day 5 &mdash; Fo Guang Shan + Cijin</span></td>
                     </tr>
                     <tr style="background:var(--orange-light);">
-                        <td style="padding:6px 8px;">พุธ</td>
-                        <td style="padding:6px 8px;">6 พ.ค.</td>
-                        <td style="padding:6px 8px;"><span class="hl-chip hl-must" style="font-size:11px;">ใช้วันลา</span></td>
-                        <td style="padding:6px 8px;">Day 6 &mdash; เจดีย์มังกร + บินกลับ</td>
+                        <td style="padding:6px 8px;"><span class="th">พุธ</span><span class="en">Wed</span></td>
+                        <td style="padding:6px 8px;"><span class="th">6 พ.ค.</span><span class="en">6 May</span></td>
+                        <td style="padding:6px 8px;"><span class="hl-chip hl-must" style="font-size:11px;"><span class="th">ใช้วันลา</span><span class="en">Annual Leave</span></span></td>
+                        <td style="padding:6px 8px;"><span class="th">Day 6 &mdash; เจดีย์มังกร + บินกลับ</span><span class="en">Day 6 &mdash; Dragon Pagodas + Fly home</span></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="tip" style="margin-top: 12px;">
-            <strong><i class="fa-solid fa-lightbulb"></i> สรุปวันลา</strong>
-            ลาแค่ <strong>2 วัน</strong> (5&ndash;6 พ.ค.) ได้หยุดยาว <strong>6 วัน!</strong>
+            <strong><i class="fa-solid fa-lightbulb"></i> <span class="th">สรุปวันลา</span><span class="en">Leave Summary</span></strong>
+            <span class="th">ลาแค่ <strong>2 วัน</strong> (5&ndash;6 พ.ค.) ได้หยุดยาว <strong>6 วัน!</strong></span><span class="en">Only <strong>2 leave days</strong> (5&ndash;6 May) for a <strong>6-day holiday!</strong></span>
         </div>
     </section>
 
@@ -706,34 +742,34 @@
     <!-- ============================================ -->
     <section class="section" id="prep">
         <div class="section-label"><i class="fa-solid fa-clipboard-list"></i> STEP 0</div>
-        <h2 class="section-title">การเตรียมตัวจากไทย</h2>
+        <h2 class="section-title"><span class="th">การเตรียมตัวจากไทย</span><span class="en">Pre-Trip Preparation</span></h2>
 
         <div class="card">
-            <div class="card-title"><i class="fa-solid fa-plane"></i> ตั๋วเครื่องบิน (สำคัญมาก!)</div>
-            <p>จองแบบ <strong>Multi-City</strong> (ไป-กลับคนละสนามบิน)</p>
-            <p><strong>ขาไป:</strong> กรุงเทพฯ (BKK/DMK) &#9992;&#65039; ไทเป (TPE - เถาหยวน)</p>
-            <p><strong>ขากลับ:</strong> เกาสง (KHH) &#9992;&#65039; กรุงเทพฯ (BKK/DMK)</p>
+            <div class="card-title"><i class="fa-solid fa-plane"></i> <span class="th">ตั๋วเครื่องบิน (สำคัญมาก!)</span><span class="en">Flights (Very Important!)</span></div>
+            <p><span class="th">จองแบบ <strong>Multi-City</strong> (ไป-กลับคนละสนามบิน)</span><span class="en">Book <strong>Multi-City</strong> (different departure &amp; return airports)</span></p>
+            <p><span class="th"><strong>ขาไป:</strong> กรุงเทพฯ (BKK/DMK) &#9992;&#65039; ไทเป (TPE - เถาหยวน)</span><span class="en"><strong>Outbound:</strong> Bangkok (BKK/DMK) &#9992;&#65039; Taipei (TPE - Taoyuan)</span></p>
+            <p><span class="th"><strong>ขากลับ:</strong> เกาสง (KHH) &#9992;&#65039; กรุงเทพฯ (BKK/DMK)</span><span class="en"><strong>Return:</strong> Kaohsiung (KHH) &#9992;&#65039; Bangkok (BKK/DMK)</span></p>
             <div class="tip" style="margin-top: 10px;">
-                <strong><i class="fa-solid fa-piggy-bank"></i> ประหยัดเงิน+เวลา</strong>
-                ไม่ต้องนั่งรถไฟย้อนกลับไทเป ประหยัดได้ ~1,500 บาท และ 3-4 ชั่วโมง
+                <strong><i class="fa-solid fa-piggy-bank"></i> <span class="th">ประหยัดเงิน+เวลา</span><span class="en">Save Money + Time</span></strong>
+                <span class="th">ไม่ต้องนั่งรถไฟย้อนกลับไทเป ประหยัดได้ ~1,500 บาท และ 3-4 ชั่วโมง</span><span class="en">No need to take the train back to Taipei &mdash; saves ~1,500 THB and 3-4 hours</span>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-title"><i class="fa-solid fa-train"></i> ตั๋ว HSR (รถไฟความเร็วสูง)</div>
-            <p>จองเส้นทาง <strong>Taipei &rarr; Zuoying</strong> ผ่านแอป Klook หรือ KKday</p>
-            <p>มักมีโปร <strong>1 แถม 1</strong> หรือส่วนลด 20% สำหรับนักท่องเที่ยว</p>
+            <div class="card-title"><i class="fa-solid fa-train"></i> <span class="th">ตั๋ว HSR (รถไฟความเร็วสูง)</span><span class="en">HSR Tickets (High Speed Rail)</span></div>
+            <p><span class="th">จองเส้นทาง <strong>Taipei &rarr; Zuoying</strong> ผ่านแอป Klook หรือ KKday</span><span class="en">Book <strong>Taipei &rarr; Zuoying</strong> route via Klook or KKday app</span></p>
+            <p><span class="th">มักมีโปร <strong>1 แถม 1</strong> หรือส่วนลด 20% สำหรับนักท่องเที่ยว</span><span class="en">Often has <strong>Buy 1 Get 1 Free</strong> or 20% discount for tourists</span></p>
         </div>
 
         <div class="card">
-            <div class="card-title"><i class="fa-solid fa-wallet"></i> การเงิน</div>
-            <p><strong>แลกเงินสด TWD</strong> ไปส่วนหนึ่ง สำหรับตลาดกลางคืน</p>
-            <p><strong>สมัครบัตร Travel Card</strong> (YouTrip, Planet SCB) รูดซื้อของตามร้านสะดวกซื้อและห้าง เรทดีมาก ไม่มีชาร์จ 2.5%</p>
+            <div class="card-title"><i class="fa-solid fa-wallet"></i> <span class="th">การเงิน</span><span class="en">Money</span></div>
+            <p><span class="th"><strong>แลกเงินสด TWD</strong> ไปส่วนหนึ่ง สำหรับตลาดกลางคืน</span><span class="en"><strong>Exchange some TWD cash</strong> for night markets</span></p>
+            <p><span class="th"><strong>สมัครบัตร Travel Card</strong> (YouTrip, Planet SCB) รูดซื้อของตามร้านสะดวกซื้อและห้าง เรทดีมาก ไม่มีชาร์จ 2.5%</span><span class="en"><strong>Get a Travel Card</strong> (YouTrip, Planet SCB) &mdash; great exchange rate, no 2.5% foreign transaction fee</span></p>
         </div>
 
         <div class="card">
-            <div class="card-title"><i class="fa-solid fa-sim-card"></i> อินเทอร์เน็ต</div>
-            <p>ซื้อ <strong>SIM Card หรือ eSIM</strong> ล่วงหน้าจากไทย ไปถึงเปิดใช้งานได้เลย</p>
+            <div class="card-title"><i class="fa-solid fa-sim-card"></i> <span class="th">อินเทอร์เน็ต</span><span class="en">Internet</span></div>
+            <p><span class="th">ซื้อ <strong>SIM Card หรือ eSIM</strong> ล่วงหน้าจากไทย ไปถึงเปิดใช้งานได้เลย</span><span class="en">Buy <strong>SIM Card or eSIM</strong> in advance &mdash; activate upon arrival</span></p>
         </div>
     </section>
 
@@ -742,32 +778,32 @@
     <!-- ============================================ -->
     <section class="section" id="info">
         <div class="section-label"><i class="fa-solid fa-circle-info"></i> ESSENTIALS</div>
-        <h2 class="section-title">ข้อมูลพื้นฐาน</h2>
+        <h2 class="section-title"><span class="th">ข้อมูลพื้นฐาน</span><span class="en">Basic Info</span></h2>
 
         <div class="info-grid">
             <div class="info-box">
                 <span class="ii"><i class="fa-solid fa-passport"></i></span>
-                <div class="il">วีซ่า</div>
-                <div class="iv">ไม่ต้องขอ</div>
-                <div class="id">อยู่ได้ 14 วัน</div>
+                <div class="il"><span class="th">วีซ่า</span><span class="en">VISA</span></div>
+                <div class="iv"><span class="th">ไม่ต้องขอ</span><span class="en">Visa-Free</span></div>
+                <div class="id"><span class="th">อยู่ได้ 14 วัน</span><span class="en">Stay up to 14 days</span></div>
             </div>
             <div class="info-box">
                 <span class="ii"><i class="fa-solid fa-money-bill-wave"></i></span>
-                <div class="il">สกุลเงิน</div>
+                <div class="il"><span class="th">สกุลเงิน</span><span class="en">CURRENCY</span></div>
                 <div class="iv">TWD (NT$)</div>
-                <div class="id">1 TWD &asymp; 1.1 บาท</div>
+                <div class="id"><span class="th">1 TWD &asymp; 1.1 บาท</span><span class="en">1 TWD &asymp; 1.1 THB</span></div>
             </div>
             <div class="info-box">
                 <span class="ii"><i class="fa-solid fa-plug"></i></span>
-                <div class="il">ปลั๊กไฟ</div>
-                <div class="iv">หัวแบน 2 ขา</div>
-                <div class="id">110V เหมือนไทย!</div>
+                <div class="il"><span class="th">ปลั๊กไฟ</span><span class="en">PLUG</span></div>
+                <div class="iv"><span class="th">หัวแบน 2 ขา</span><span class="en">Flat 2-pin</span></div>
+                <div class="id"><span class="th">110V เหมือนไทย!</span><span class="en">110V, same as Thailand!</span></div>
             </div>
             <div class="info-box">
                 <span class="ii"><i class="fa-solid fa-clock"></i></span>
-                <div class="il">เวลา</div>
+                <div class="il"><span class="th">เวลา</span><span class="en">TIME</span></div>
                 <div class="iv">GMT+8</div>
-                <div class="id">เร็วกว่าไทย 1 ชม.</div>
+                <div class="id"><span class="th">เร็วกว่าไทย 1 ชม.</span><span class="en">+1 hr from Thailand</span></div>
             </div>
         </div>
     </section>
@@ -777,38 +813,38 @@
     <!-- ============================================ -->
     <section class="section" id="transport">
         <div class="section-label"><i class="fa-solid fa-train-subway"></i> TRANSPORT</div>
-        <h2 class="section-title">ระบบขนส่ง</h2>
+        <h2 class="section-title"><span class="th">ระบบขนส่ง</span><span class="en">Transportation</span></h2>
 
         <div class="card">
             <div class="card-title"><i class="fa-solid fa-credit-card"></i> EasyCard (悠遊卡)</div>
-            <p>บัตรเติมเงินใช้ได้ทุกระบบขนส่ง + ร้านสะดวกซื้อ (7-11, FamilyMart)</p>
-            <p>ซื้อที่สนามบินหรือสถานี MRT ราคา 100 TWD แนะนำเติม <strong>1,000 TWD</strong></p>
-            <span class="badge-sm badge-green">ส่วนลด 20% ค่า MRT</span>
+            <p><span class="th">บัตรเติมเงินใช้ได้ทุกระบบขนส่ง + ร้านสะดวกซื้อ (7-11, FamilyMart)</span><span class="en">Rechargeable card for all public transport + convenience stores (7-11, FamilyMart)</span></p>
+            <p><span class="th">ซื้อที่สนามบินหรือสถานี MRT ราคา 100 TWD แนะนำเติม <strong>1,000 TWD</strong></span><span class="en">Buy at airport or MRT station for 100 TWD. Recommend loading <strong>1,000 TWD</strong></span></p>
+            <span class="badge-sm badge-green"><span class="th">ส่วนลด 20% ค่า MRT</span><span class="en">20% MRT discount</span></span>
         </div>
 
         <div class="transport-row">
             <div class="transport-badge mrt"><i class="fa-solid fa-train-subway"></i></div>
             <div class="transport-info">
-                <h4>MRT (รถไฟฟ้า)</h4>
-                <p>สะดวก สะอาด ป้ายอังกฤษชัด วิ่ง 06:00-00:00</p>
-                <span class="badge-sm badge-red">ห้ามกินดื่ม! ปรับ 1,500-7,500 TWD</span>
+                <h4><span class="th">MRT (รถไฟฟ้า)</span><span class="en">MRT (Metro)</span></h4>
+                <p><span class="th">สะดวก สะอาด ป้ายอังกฤษชัด วิ่ง 06:00-00:00</span><span class="en">Convenient, clean, English signs. Runs 06:00-00:00</span></p>
+                <span class="badge-sm badge-red"><span class="th">ห้ามกินดื่ม! ปรับ 1,500-7,500 TWD</span><span class="en">No eating/drinking! Fine 1,500-7,500 TWD</span></span>
             </div>
         </div>
 
         <div class="transport-row">
             <div class="transport-badge hsr"><i class="fa-solid fa-train"></i></div>
             <div class="transport-info">
-                <h4>HSR (รถไฟความเร็วสูง)</h4>
-                <p>ไทเป-เกาสง 1.5 ชม. ตั๋ว ~1,490 TWD</p>
-                <span class="badge-sm badge-green">จองผ่าน Klook ได้โปร 1 แถม 1</span>
+                <h4><span class="th">HSR (รถไฟความเร็วสูง)</span><span class="en">HSR (High Speed Rail)</span></h4>
+                <p><span class="th">ไทเป-เกาสง 1.5 ชม. ตั๋ว ~1,490 TWD</span><span class="en">Taipei-Kaohsiung 1.5 hrs. Ticket ~1,490 TWD</span></p>
+                <span class="badge-sm badge-green"><span class="th">จองผ่าน Klook ได้โปร 1 แถม 1</span><span class="en">Book via Klook for Buy 1 Get 1 Free</span></span>
             </div>
         </div>
 
         <div class="transport-row">
             <div class="transport-badge tra"><i class="fa-solid fa-train-tram"></i></div>
             <div class="transport-info">
-                <h4>TRA (รถไฟท้องถิ่น)</h4>
-                <p>ครอบคลุมทั่วเกาะ ใช้ EasyCard แตะได้เลย ไปหยางหมิงซาน/อู่ไหล</p>
+                <h4><span class="th">TRA (รถไฟท้องถิ่น)</span><span class="en">TRA (Local Train)</span></h4>
+                <p><span class="th">ครอบคลุมทั่วเกาะ ใช้ EasyCard แตะได้เลย ไปหยางหมิงซาน/อู่ไหล</span><span class="en">Island-wide coverage. Tap EasyCard to ride. Goes to Yangmingshan/Wulai</span></p>
             </div>
         </div>
     </section>
@@ -822,9 +858,8 @@
         <div class="day-header">
             <div class="day-num">DAY<span>1</span></div>
             <div class="day-info">
-                <h3>สวัสดีไทเป &mdash; เช็คอิน & สายมู</h3>
-                <p>เดินทางถึง + เที่ยวรอบเมืองหลวง</p>
-                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">Arrive Taipei &bull; Check-in &bull; Temples &bull; Night Market</p>
+                <h3><span class="th">สวัสดีไทเป &mdash; เช็คอิน &amp; สายมู</span><span class="en">Hello Taipei &mdash; Check-in &amp; Temples</span></h3>
+                <p><span class="th">เดินทางถึง + เที่ยวรอบเมืองหลวง</span><span class="en">Arrive + Explore the capital city</span></p>
             </div>
         </div>
 
@@ -836,10 +871,10 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">ถึงสนามบินเถาหยวน (TPE)</div>
-                    <div class="tl-desc">ผ่าน ตม. &rarr; ซื้อ EasyCard + เติมเงิน 1,000 TWD &rarr; เปิดใช้ eSIM</div>
+                    <div class="tl-title"><span class="th">ถึงสนามบินเถาหยวน (TPE)</span><span class="en">Arrive at Taoyuan Airport (TPE)</span></div>
+                    <div class="tl-desc"><span class="th">ผ่าน ตม. &rarr; ซื้อ EasyCard + เติมเงิน 1,000 TWD &rarr; เปิดใช้ eSIM</span><span class="en">Immigration &rarr; Buy EasyCard + load 1,000 TWD &rarr; Activate eSIM</span></div>
                     <span class="hl-chip hl-must">Must Do</span>
-                    <a href="https://www.google.com/maps/search/Taoyuan+International+Airport+TPE" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Taoyuan+International+Airport+TPE" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -850,8 +885,8 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">Airport MRT Express เข้าเมือง</div>
-                    <div class="tl-desc">สายสีม่วง Express ไป Taipei Main Station (35 นาที, 160 TWD)</div>
+                    <div class="tl-title"><span class="th">Airport MRT Express เข้าเมือง</span><span class="en">Airport MRT Express to city center</span></div>
+                    <div class="tl-desc"><span class="th">สายสีม่วง Express ไป Taipei Main Station (35 นาที, 160 TWD)</span><span class="en">Purple Express line to Taipei Main Station (35 min, 160 TWD)</span></div>
                     <a href="https://www.google.com/maps/search/Taipei+Main+Station" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Taipei Main Station</a>
                 </div>
             </div>
@@ -863,8 +898,8 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">เช็คอินที่พัก</div>
-                    <div class="tl-desc">แนะนำย่าน Taipei Main Station เช่น <strong>Hotel Relax</strong> เดินทางง่าย ลากกระเป๋าไปขึ้นรถไฟได้ทันที</div>
+                    <div class="tl-title"><span class="th">เช็คอินที่พัก</span><span class="en">Check in to hotel</span></div>
+                    <div class="tl-desc"><span class="th">แนะนำย่าน Taipei Main Station เช่น <strong>Hotel Relax</strong> เดินทางง่าย ลากกระเป๋าไปขึ้นรถไฟได้ทันที</span><span class="en">Recommended area: Taipei Main Station, e.g. <strong>Hotel Relax</strong> &mdash; easy access, walk to trains with luggage</span></div>
                 </div>
             </div>
 
@@ -875,10 +910,10 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">วัดหลงซาน (Longshan Temple)</div>
-                    <div class="tl-desc">ไหว้ขอพรความรักกับ <strong>"เฒ่าจันทรา"</strong> และซื้อเครื่องราง วัดเก่าแก่กว่า 280 ปี บรรยากาศศักดิ์สิทธิ์</div>
+                    <div class="tl-title"><span class="th">วัดหลงซาน (Longshan Temple)</span><span class="en">Longshan Temple</span></div>
+                    <div class="tl-desc"><span class="th">ไหว้ขอพรความรักกับ <strong>"เฒ่าจันทรา"</strong> และซื้อเครื่องราง วัดเก่าแก่กว่า 280 ปี บรรยากาศศักดิ์สิทธิ์</span><span class="en">Pray for love at the <strong>"Moon Old Man"</strong> shrine &amp; buy charms. 280+ year-old temple with sacred atmosphere</span></div>
                     <span class="hl-chip hl-high">Highlight</span>
-                    <a href="https://www.google.com/maps/search/Longshan+Temple+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Longshan+Temple+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -889,11 +924,11 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">ซีเหมินติง (Ximending)</div>
-                    <div class="tl-desc">สยามสแควร์แห่งไต้หวัน! ช้อปปิ้ง + สตรีทฟู้ด</div>
-                    <div class="tl-desc"><strong>ห้ามพลาด:</strong> บะหมี่หอยนางรมอาจง (Ay-Chung), ไก่ทอดไซส์ยักษ์ Hot Star</div>
+                    <div class="tl-title"><span class="th">ซีเหมินติง (Ximending)</span><span class="en">Ximending</span></div>
+                    <div class="tl-desc"><span class="th">สยามสแควร์แห่งไต้หวัน! ช้อปปิ้ง + สตรีทฟู้ด</span><span class="en">Taiwan's Shibuya! Shopping + street food</span></div>
+                    <div class="tl-desc"><span class="th"><strong>ห้ามพลาด:</strong> บะหมี่หอยนางรมอาจง (Ay-Chung), ไก่ทอดไซส์ยักษ์ Hot Star</span><span class="en"><strong>Must try:</strong> Ay-Chung Oyster Noodles, Hot Star Large Fried Chicken</span></div>
                     <span class="hl-chip hl-food">Street Food</span>
-                    <a href="https://www.google.com/maps/search/Ximending+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Ximending+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -903,12 +938,12 @@
                     <div class="tl-dot"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">ตลาดกลางคืน Ningxia Night Market</div>
-                    <div class="tl-desc">ตลาดที่คนไต้หวันบอกว่า <strong>ของกินอร่อยที่สุด!</strong></div>
-                    <div class="tl-desc"><strong>ห้ามพลาด:</strong> เผือกทอดไส้หมูหยอง, ข้าวหน้าหมูพะโล้</div>
+                    <div class="tl-title"><span class="th">ตลาดกลางคืน Ningxia Night Market</span><span class="en">Ningxia Night Market</span></div>
+                    <div class="tl-desc"><span class="th">ตลาดที่คนไต้หวันบอกว่า <strong>ของกินอร่อยที่สุด!</strong></span><span class="en">Locals say this has the <strong>best food of all night markets!</strong></span></div>
+                    <div class="tl-desc"><span class="th"><strong>ห้ามพลาด:</strong> เผือกทอดไส้หมูหยอง, ข้าวหน้าหมูพะโล้</span><span class="en"><strong>Must try:</strong> Taro balls with pork floss, braised pork rice</span></div>
                     <span class="hl-chip hl-food">Street Food</span>
                     <span class="hl-chip hl-must">Must Eat</span>
-                    <a href="https://www.google.com/maps/search/Ningxia+Night+Market+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Ningxia+Night+Market+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
         </div>
@@ -923,15 +958,14 @@
         <div class="day-header">
             <div class="day-num">DAY<span>2</span></div>
             <div class="day-info">
-                <h3>หยางหมิงซาน &mdash; ภูเขาไฟ &amp; ทุ่งหญ้าบนยอดเขา</h3>
-                <p>Xiaoyoukeng ควันกำมะถัน + Qingtiangang ทุ่งหญ้าสุดปัง</p>
-                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">Yangmingshan National Park &bull; Xiaoyoukeng Fumaroles &bull; Qingtiangang Grassland</p>
+                <h3><span class="th">หยางหมิงซาน &mdash; ภูเขาไฟ &amp; ทุ่งหญ้าบนยอดเขา</span><span class="en">Yangmingshan &mdash; Volcano &amp; Hilltop Grassland</span></h3>
+                <p><span class="th">Xiaoyoukeng ควันกำมะถัน + Qingtiangang ทุ่งหญ้าสุดปัง</span><span class="en">Xiaoyoukeng sulfur fumaroles + Qingtiangang panoramic grassland</span></p>
             </div>
         </div>
 
         <div class="tip" style="margin-bottom: 16px;">
-            <strong><i class="fa-solid fa-cloud-sun"></i> สิ่งที่ต้องเตรียม</strong>
-            พกเสื้อกันหนาวบาง ๆ (บนเขาเย็นกว่าเมือง 5-10 องศา) + รองเท้าผ้าใบ + น้ำดื่ม
+            <strong><i class="fa-solid fa-cloud-sun"></i> <span class="th">สิ่งที่ต้องเตรียม</span><span class="en">What to Prepare</span></strong>
+            <span class="th">พกเสื้อกันหนาวบาง ๆ (บนเขาเย็นกว่าเมือง 5-10 องศา) + รองเท้าผ้าใบ + น้ำดื่ม</span><span class="en">Bring a light jacket (5-10&deg;C cooler on the mountain) + sneakers + water</span>
         </div>
 
         <div class="card">
@@ -942,9 +976,9 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">MRT ไปสถานี Jiantan + ต่อรถบัส S15</div>
-                    <div class="tl-desc">นั่ง MRT ไปสถานี Jiantan แล้วต่อรถบัสสาย S15 ขึ้นเขาหยางหมิงซาน (~40 นาที) ใช้ EasyCard แตะได้เลย</div>
-                    <a href="https://www.google.com/maps/search/Jiantan+MRT+Station+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> สถานี Jiantan</a>
+                    <div class="tl-title"><span class="th">MRT ไปสถานี Jiantan + ต่อรถบัส S15</span><span class="en">MRT to Jiantan Station + Bus S15</span></div>
+                    <div class="tl-desc"><span class="th">นั่ง MRT ไปสถานี Jiantan แล้วต่อรถบัสสาย S15 ขึ้นเขาหยางหมิงซาน (~40 นาที) ใช้ EasyCard แตะได้เลย</span><span class="en">Take MRT to Jiantan Station, then bus S15 up to Yangmingshan (~40 min). Tap EasyCard</span></div>
+                    <a href="https://www.google.com/maps/search/Jiantan+MRT+Station+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">สถานี Jiantan</span><span class="en">Jiantan Station</span></a>
                 </div>
             </div>
 
@@ -955,10 +989,10 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">Xiaoyoukeng (小油坑) &mdash; พื้นที่ภูเขาไฟ</div>
-                    <div class="tl-desc">พื้นที่ภูเขาไฟยังมีพลัง! เห็น <strong>ไอกำมะถันพวยพุ่งจากพื้นดิน</strong> บรรยากาศเหมือนอีกดาว เดินเส้นทางไม่ยาก เหมาะถ่ายรูป</div>
+                    <div class="tl-title"><span class="th">Xiaoyoukeng (小油坑) &mdash; พื้นที่ภูเขาไฟ</span><span class="en">Xiaoyoukeng (小油坑) &mdash; Volcanic Area</span></div>
+                    <div class="tl-desc"><span class="th">พื้นที่ภูเขาไฟยังมีพลัง! เห็น <strong>ไอกำมะถันพวยพุ่งจากพื้นดิน</strong> บรรยากาศเหมือนอีกดาว เดินเส้นทางไม่ยาก เหมาะถ่ายรูป</span><span class="en">Active volcanic area! See <strong>sulfur steam rising from the ground</strong>. Otherworldly atmosphere. Easy trail, great for photos</span></div>
                     <span class="hl-chip hl-high">Highlight</span>
-                    <span class="hl-chip hl-photo">วิวเหนือจริง</span>
+                    <span class="hl-chip hl-photo"><span class="th">วิวเหนือจริง</span><span class="en">Surreal Views</span></span>
                     <a href="https://www.google.com/maps/search/Xiaoyoukeng+Yangmingshan" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Xiaoyoukeng</a>
                 </div>
             </div>
@@ -970,8 +1004,8 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">ต่อรถบัสไป Qingtiangang Grassland (擎天崗)</div>
-                    <div class="tl-desc">นั่งรถบัส S15 ต่อไปอีก ~15 นาที</div>
+                    <div class="tl-title"><span class="th">ต่อรถบัสไป Qingtiangang Grassland (擎天崗)</span><span class="en">Take bus to Qingtiangang Grassland (擎天崗)</span></div>
+                    <div class="tl-desc"><span class="th">นั่งรถบัส S15 ต่อไปอีก ~15 นาที</span><span class="en">Continue on bus S15 for ~15 more minutes</span></div>
                 </div>
             </div>
 
@@ -982,11 +1016,11 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">Qingtiangang Grassland &mdash; ทุ่งหญ้าบนยอดเขา</div>
-                    <div class="tl-desc"><strong>ทุ่งหญ้าเขียวขจีกว้างสุดลูกหูลูกตา</strong> มีวัวกระทิงเดินเล่น อากาศเย็นสบาย วิวพาโนรามา 360 องศา</div>
-                    <div class="tl-desc">เดินเล่นชมวิว ใช้เวลา 1.5-2 ชม. มีทางเดินลาดยางสะดวก</div>
+                    <div class="tl-title"><span class="th">Qingtiangang Grassland &mdash; ทุ่งหญ้าบนยอดเขา</span><span class="en">Qingtiangang Grassland &mdash; Hilltop Meadow</span></div>
+                    <div class="tl-desc"><span class="th"><strong>ทุ่งหญ้าเขียวขจีกว้างสุดลูกหูลูกตา</strong> มีวัวกระทิงเดินเล่น อากาศเย็นสบาย วิวพาโนรามา 360 องศา</span><span class="en"><strong>Vast green grassland stretching to the horizon</strong> with free-roaming water buffalo. Cool breeze, 360&deg; panoramic views</span></div>
+                    <div class="tl-desc"><span class="th">เดินเล่นชมวิว ใช้เวลา 1.5-2 ชม. มีทางเดินลาดยางสะดวก</span><span class="en">Scenic walk takes 1.5-2 hrs. Paved paths available</span></div>
                     <span class="hl-chip hl-must">Must Visit</span>
-                    <span class="hl-chip hl-photo">วิวสุดปัง</span>
+                    <span class="hl-chip hl-photo"><span class="th">วิวสุดปัง</span><span class="en">Amazing Views</span></span>
                     <a href="https://www.google.com/maps/search/Qingtiangang+Grassland+Yangmingshan" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Qingtiangang</a>
                 </div>
             </div>
@@ -998,8 +1032,8 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">นั่งรถบัส S15 กลับ MRT Jiantan</div>
-                    <div class="tl-desc">กลับลงเขา ใช้เวลา ~40 นาที</div>
+                    <div class="tl-title"><span class="th">นั่งรถบัส S15 กลับ MRT Jiantan</span><span class="en">Bus S15 back to MRT Jiantan</span></div>
+                    <div class="tl-desc"><span class="th">กลับลงเขา ใช้เวลา ~40 นาที</span><span class="en">Head back down, ~40 min ride</span></div>
                 </div>
             </div>
 
@@ -1010,9 +1044,9 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">แวะ Shilin Night Market ช้อปปิ้ง</div>
-                    <div class="tl-desc">อยู่ใกล้สถานี Jiantan พอดี! แวะเดินก่อนตลาดเปิดเต็มที่ หรือช้อปร้านใต้ดิน</div>
-                    <a href="https://www.google.com/maps/search/Shilin+Night+Market+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <div class="tl-title"><span class="th">แวะ Shilin Night Market ช้อปปิ้ง</span><span class="en">Stop by Shilin Night Market</span></div>
+                    <div class="tl-desc"><span class="th">อยู่ใกล้สถานี Jiantan พอดี! แวะเดินก่อนตลาดเปิดเต็มที่ หรือช้อปร้านใต้ดิน</span><span class="en">Right next to Jiantan Station! Browse before it gets crowded or shop the underground food court</span></div>
+                    <a href="https://www.google.com/maps/search/Shilin+Night+Market+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -1022,11 +1056,11 @@
                     <div class="tl-dot"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">ตลาดกลางคืนเหราเหอ (Raohe Night Market)</div>
-                    <div class="tl-desc"><strong>ห้ามพลาด:</strong> ซาลาเปาอบโอ่ง (Fuzhou Black Pepper Bun) คิวล้นหลามแต่อร่อยคุ้มค่ารอ!</div>
+                    <div class="tl-title"><span class="th">ตลาดกลางคืนเหราเหอ (Raohe Night Market)</span><span class="en">Raohe Night Market</span></div>
+                    <div class="tl-desc"><span class="th"><strong>ห้ามพลาด:</strong> ซาลาเปาอบโอ่ง (Fuzhou Black Pepper Bun) คิวล้นหลามแต่อร่อยคุ้มค่ารอ!</span><span class="en"><strong>Must try:</strong> Fuzhou Black Pepper Bun &mdash; long queue but worth the wait!</span></div>
                     <span class="hl-chip hl-food">Street Food</span>
                     <span class="hl-chip hl-must">Must Eat</span>
-                    <a href="https://www.google.com/maps/search/Raohe+Night+Market+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Raohe+Night+Market+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
         </div>
@@ -1041,15 +1075,14 @@
         <div class="day-header">
             <div class="day-num" style="background: var(--secondary);">DAY<span>3</span></div>
             <div class="day-info">
-                <h3>เทรลน้ำตก &amp; หมู่บ้านอาตายัล</h3>
-                <p>Sandiaoling เทรลเช้า + อู่ไหลน้ำตก &amp; รถรางบ่าย</p>
-                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">Sandiaoling Waterfall Trail &bull; Wulai Aboriginal Village &bull; Wulai Waterfall &bull; Log Cart</p>
+                <h3><span class="th">เทรลน้ำตก &amp; หมู่บ้านอาตายัล</span><span class="en">Waterfall Trail &amp; Atayal Village</span></h3>
+                <p><span class="th">Sandiaoling เทรลเช้า + อู่ไหลน้ำตก &amp; รถรางบ่าย</span><span class="en">Sandiaoling morning trail + Wulai waterfall &amp; log cart afternoon</span></p>
             </div>
         </div>
 
         <div class="tip tip-red" style="margin-bottom: 16px;">
-            <strong><i class="fa-solid fa-shoe-prints"></i> สิ่งที่ต้องเตรียม</strong>
-            ใส่รองเท้าผ้าใบกันลื่น + พกน้ำดื่ม + เสื้อกันฝนติดกระเป๋า (วันนี้เดินเยอะ!)
+            <strong><i class="fa-solid fa-shoe-prints"></i> <span class="th">สิ่งที่ต้องเตรียม</span><span class="en">What to Prepare</span></strong>
+            <span class="th">ใส่รองเท้าผ้าใบกันลื่น + พกน้ำดื่ม + เสื้อกันฝนติดกระเป๋า (วันนี้เดินเยอะ!)</span><span class="en">Wear non-slip sneakers + bring water + pack rain jacket (lots of walking today!)</span>
         </div>
 
         <div class="card">
@@ -1060,9 +1093,9 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">นั่งรถไฟ TRA ไป Sandiaoling</div>
-                    <div class="tl-desc">จาก Taipei Main Station สาย Yilan Line ใช้เวลา ~1 ชม. ใช้ EasyCard แตะเข้าได้เลย <strong>ออกเช้าเพื่อให้มีเวลาช่วงบ่าย!</strong></div>
-                    <a href="https://www.google.com/maps/search/Sandiaoling+Station+Taiwan" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> สถานี Sandiaoling</a>
+                    <div class="tl-title"><span class="th">นั่งรถไฟ TRA ไป Sandiaoling</span><span class="en">Take TRA train to Sandiaoling</span></div>
+                    <div class="tl-desc"><span class="th">จาก Taipei Main Station สาย Yilan Line ใช้เวลา ~1 ชม. ใช้ EasyCard แตะเข้าได้เลย <strong>ออกเช้าเพื่อให้มีเวลาช่วงบ่าย!</strong></span><span class="en">From Taipei Main Station, Yilan Line, ~1 hr. Tap EasyCard. <strong>Leave early to have time for the afternoon!</strong></span></div>
+                    <a href="https://www.google.com/maps/search/Sandiaoling+Station+Taiwan" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">สถานี Sandiaoling</span><span class="en">Sandiaoling Station</span></a>
                 </div>
             </div>
 
@@ -1073,14 +1106,14 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">เดินเทรล Sandiaoling Waterfall Trail</div>
-                    <div class="tl-desc">ระยะทาง ~3.2 กม. ใช้เวลา 2.5-3 ชม.</div>
-                    <div class="tl-desc"><strong>น้ำตกชั้น 1 (Hegu):</strong> ชมวิวจากจุดชมวิว</div>
-                    <div class="tl-desc"><strong>น้ำตกชั้น 2 (Motian):</strong> ไฮไลต์ของทริป! เดินมุดเข้าไป <strong>ด้านหลังม่านน้ำตก</strong> ถ่ายรูปเท่มาก</div>
-                    <div class="tl-desc"><strong>น้ำตกชั้น 3 (Pipa Dong):</strong> ปีนบันไดขึ้นไป ชมน้ำตกที่ตกลงมาในแอ่งหิน</div>
+                    <div class="tl-title"><span class="th">เดินเทรล Sandiaoling Waterfall Trail</span><span class="en">Hike Sandiaoling Waterfall Trail</span></div>
+                    <div class="tl-desc"><span class="th">ระยะทาง ~3.2 กม. ใช้เวลา 2.5-3 ชม.</span><span class="en">Distance ~3.2 km, takes 2.5-3 hrs</span></div>
+                    <div class="tl-desc"><span class="th"><strong>น้ำตกชั้น 1 (Hegu):</strong> ชมวิวจากจุดชมวิว</span><span class="en"><strong>Waterfall 1 (Hegu):</strong> View from the lookout point</span></div>
+                    <div class="tl-desc"><span class="th"><strong>น้ำตกชั้น 2 (Motian):</strong> ไฮไลต์ของทริป! เดินมุดเข้าไป <strong>ด้านหลังม่านน้ำตก</strong> ถ่ายรูปเท่มาก</span><span class="en"><strong>Waterfall 2 (Motian):</strong> Trip highlight! Walk <strong>behind the waterfall curtain</strong> &mdash; amazing photos</span></div>
+                    <div class="tl-desc"><span class="th"><strong>น้ำตกชั้น 3 (Pipa Dong):</strong> ปีนบันไดขึ้นไป ชมน้ำตกที่ตกลงมาในแอ่งหิน</span><span class="en"><strong>Waterfall 3 (Pipa Dong):</strong> Climb stairs to see water cascading into rock pools</span></div>
                     <span class="hl-chip hl-high">High Recommend!</span>
-                    <span class="hl-chip hl-photo">ถ่ายรูปสวยมาก</span>
-                    <a href="https://www.google.com/maps/search/Sandiaoling+Waterfall+Trail" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> จุดเริ่มเทรล</a>
+                    <span class="hl-chip hl-photo"><span class="th">ถ่ายรูปสวยมาก</span><span class="en">Great Photos</span></span>
+                    <a href="https://www.google.com/maps/search/Sandiaoling+Waterfall+Trail" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">จุดเริ่มเทรล</span><span class="en">Trailhead</span></a>
                 </div>
             </div>
 
@@ -1091,8 +1124,8 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">นั่งรถไฟกลับ Taipei Main Station</div>
-                    <div class="tl-desc">TRA กลับ ~1 ชม. แล้วต่อ MRT สายสีเขียวไป Xindian</div>
+                    <div class="tl-title"><span class="th">นั่งรถไฟกลับ Taipei Main Station</span><span class="en">Take train back to Taipei Main Station</span></div>
+                    <div class="tl-desc"><span class="th">TRA กลับ ~1 ชม. แล้วต่อ MRT สายสีเขียวไป Xindian</span><span class="en">TRA back ~1 hr, then transfer to Green Line MRT to Xindian</span></div>
                 </div>
             </div>
 
@@ -1103,9 +1136,9 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">รถบัส 849 จาก Xindian ไปอู่ไหล</div>
-                    <div class="tl-desc">จาก MRT Xindian ต่อรถบัสสาย 849 อีก ~40 นาที ใช้ EasyCard แตะได้</div>
-                    <a href="https://www.google.com/maps/search/Xindian+MRT+Station+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> สถานี Xindian</a>
+                    <div class="tl-title"><span class="th">รถบัส 849 จาก Xindian ไปอู่ไหล</span><span class="en">Bus 849 from Xindian to Wulai</span></div>
+                    <div class="tl-desc"><span class="th">จาก MRT Xindian ต่อรถบัสสาย 849 อีก ~40 นาที ใช้ EasyCard แตะได้</span><span class="en">From MRT Xindian, take bus 849 for ~40 min. Tap EasyCard</span></div>
+                    <a href="https://www.google.com/maps/search/Xindian+MRT+Station+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">สถานี Xindian</span><span class="en">Xindian Station</span></a>
                 </div>
             </div>
 
@@ -1116,11 +1149,11 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">Wulai Old Street + น้ำตก (烏來)</div>
-                    <div class="tl-desc">เดินชม <strong>หมู่บ้านชนพื้นเมืองอาตายัล</strong> ชิมอาหารพื้นเมือง ข้าวปั้นอาตายัล ไส้กรอกหมูป่า</div>
-                    <div class="tl-desc">เดินต่อไปชม <strong>น้ำตกอู่ไหลสูง 80 เมตร</strong> สวยงามตระการตา!</div>
-                    <span class="hl-chip hl-food">อาหารพื้นเมือง</span>
-                    <span class="hl-chip hl-photo">ถ่ายรูปสวยมาก</span>
+                    <div class="tl-title"><span class="th">Wulai Old Street + น้ำตก (烏來)</span><span class="en">Wulai Old Street + Waterfall (烏來)</span></div>
+                    <div class="tl-desc"><span class="th">เดินชม <strong>หมู่บ้านชนพื้นเมืองอาตายัล</strong> ชิมอาหารพื้นเมือง ข้าวปั้นอาตายัล ไส้กรอกหมูป่า</span><span class="en">Explore the <strong>Atayal indigenous village</strong>. Try local food: Atayal rice balls, wild boar sausage</span></div>
+                    <div class="tl-desc"><span class="th">เดินต่อไปชม <strong>น้ำตกอู่ไหลสูง 80 เมตร</strong> สวยงามตระการตา!</span><span class="en">Walk to the <strong>80-meter Wulai Waterfall</strong> &mdash; spectacular!</span></div>
+                    <span class="hl-chip hl-food"><span class="th">อาหารพื้นเมือง</span><span class="en">Indigenous Food</span></span>
+                    <span class="hl-chip hl-photo"><span class="th">ถ่ายรูปสวยมาก</span><span class="en">Great Photos</span></span>
                     <a href="https://www.google.com/maps/search/Wulai+Old+Street+Taiwan" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Wulai Old Street</a>
                     <a href="https://www.google.com/maps/search/Wulai+Waterfall+Taiwan" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Wulai Falls</a>
                 </div>
@@ -1133,8 +1166,8 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">Wulai Log Cart (รถรางโบราณ)</div>
-                    <div class="tl-desc"><strong>รถรางไม้วิ่งเลียบหน้าผา สนุกมาก!</strong> ระยะสั้นแค่ 1.5 กม. แต่สนุกและวิวสวย ค่าโดยสาร 50 TWD</div>
+                    <div class="tl-title"><span class="th">Wulai Log Cart (รถรางโบราณ)</span><span class="en">Wulai Log Cart (Historic Rail Cart)</span></div>
+                    <div class="tl-desc"><span class="th"><strong>รถรางไม้วิ่งเลียบหน้าผา สนุกมาก!</strong> ระยะสั้นแค่ 1.5 กม. แต่สนุกและวิวสวย ค่าโดยสาร 50 TWD</span><span class="en"><strong>Wooden cart running along the cliff &mdash; so much fun!</strong> Short 1.5 km ride but scenic. Fare: 50 TWD</span></div>
                     <span class="hl-chip hl-must">Must Do</span>
                     <a href="https://www.google.com/maps/search/Wulai+Log+Cart+Taiwan" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Log Cart</a>
                 </div>
@@ -1147,8 +1180,8 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">รถบัส 849 กลับ Xindian + MRT กลับไทเป</div>
-                    <div class="tl-desc">ใช้เวลา ~1 ชม. กลับถึงเมือง</div>
+                    <div class="tl-title"><span class="th">รถบัส 849 กลับ Xindian + MRT กลับไทเป</span><span class="en">Bus 849 back to Xindian + MRT back to Taipei</span></div>
+                    <div class="tl-desc"><span class="th">ใช้เวลา ~1 ชม. กลับถึงเมือง</span><span class="en">~1 hr back to the city</span></div>
                 </div>
             </div>
 
@@ -1158,10 +1191,10 @@
                     <div class="tl-dot"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">ตลาดกลางคืนหนิงเซี่ย (Ningxia Night Market)</div>
-                    <div class="tl-desc">ตลาดเล็กแต่ของกินเยอะ! <strong>ห้ามพลาด:</strong> หอยทอด ซุปงูเห่า ลูกชิ้นปลาทอด</div>
+                    <div class="tl-title"><span class="th">ตลาดกลางคืนหนิงเซี่ย (Ningxia Night Market)</span><span class="en">Ningxia Night Market</span></div>
+                    <div class="tl-desc"><span class="th">ตลาดเล็กแต่ของกินเยอะ! <strong>ห้ามพลาด:</strong> หอยทอด ซุปงูเห่า ลูกชิ้นปลาทอด</span><span class="en">Small market but packed with food! <strong>Must try:</strong> Oyster omelette, snake soup, fried fish balls</span></div>
                     <span class="hl-chip hl-food">Street Food</span>
-                    <a href="https://www.google.com/maps/search/Ningxia+Night+Market+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Ningxia+Night+Market+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
         </div>
@@ -1176,9 +1209,8 @@
         <div class="day-header">
             <div class="day-num" style="background: var(--orange);">DAY<span>4</span></div>
             <div class="day-info">
-                <h3>วาร์ปสู่แดนใต้ &mdash; ตามรอยความอาร์ต "เกาสง"</h3>
-                <p>HSR ลงใต้ + ศิลปะ + สะพานหมุน + Dome of Light</p>
-                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">HSR to Kaohsiung &bull; Pier-2 Art Center &bull; Great Harbor Bridge &bull; Dome of Light</p>
+                <h3><span class="th">วาร์ปสู่แดนใต้ &mdash; ตามรอยความอาร์ต "เกาสง"</span><span class="en">Warp to the South &mdash; Art City "Kaohsiung"</span></h3>
+                <p><span class="th">HSR ลงใต้ + ศิลปะ + สะพานหมุน + Dome of Light</span><span class="en">HSR south + Art district + Rotating bridge + Dome of Light</span></p>
             </div>
         </div>
 
@@ -1190,9 +1222,9 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">HSR ไทเป &rarr; เกาสง (Zuoying)</div>
-                    <div class="tl-desc">รถไฟความเร็วสูง 1.5-2 ชม. นั่ง MRT ไปเช็คอินที่พัก</div>
-                    <a href="https://www.google.com/maps/search/Zuoying+HSR+Station+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> สถานี Zuoying</a>
+                    <div class="tl-title"><span class="th">HSR ไทเป &rarr; เกาสง (Zuoying)</span><span class="en">HSR Taipei &rarr; Kaohsiung (Zuoying)</span></div>
+                    <div class="tl-desc"><span class="th">รถไฟความเร็วสูง 1.5-2 ชม. นั่ง MRT ไปเช็คอินที่พัก</span><span class="en">High speed rail 1.5-2 hrs. Take MRT to check in at hotel</span></div>
+                    <a href="https://www.google.com/maps/search/Zuoying+HSR+Station+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">สถานี Zuoying</span><span class="en">Zuoying Station</span></a>
                 </div>
             </div>
 
@@ -1204,9 +1236,9 @@
                 </div>
                 <div class="tl-body">
                     <div class="tl-title">Pier-2 Art Center</div>
-                    <div class="tl-desc">โกดังเก่าริมอ่าวดัดแปลงเป็นพื้นที่ศิลปะ มีกราฟฟิตี้และงานประติมากรรมเพียบ</div>
-                    <span class="hl-chip hl-photo">ถ่ายรูปสวย</span>
-                    <a href="https://www.google.com/maps/search/Pier+2+Art+Center+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <div class="tl-desc"><span class="th">โกดังเก่าริมอ่าวดัดแปลงเป็นพื้นที่ศิลปะ มีกราฟฟิตี้และงานประติมากรรมเพียบ</span><span class="en">Old harbor warehouses converted to art spaces. Full of graffiti and sculptures</span></div>
+                    <span class="hl-chip hl-photo"><span class="th">ถ่ายรูปสวย</span><span class="en">Photo Spot</span></span>
+                    <a href="https://www.google.com/maps/search/Pier+2+Art+Center+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -1217,11 +1249,11 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">สะพาน Great Harbor Bridge</div>
-                    <div class="tl-desc">สะพานข้ามอ่าวที่สามารถ <strong>"หมุนสวิง 90 องศา"</strong> เพื่อให้เรือผ่านได้!</div>
-                    <div class="tl-desc"><strong>มีโชว์หมุนสะพานตอนบ่าย 3 โมงตรง</strong></div>
+                    <div class="tl-title"><span class="th">สะพาน Great Harbor Bridge</span><span class="en">Great Harbor Bridge</span></div>
+                    <div class="tl-desc"><span class="th">สะพานข้ามอ่าวที่สามารถ <strong>"หมุนสวิง 90 องศา"</strong> เพื่อให้เรือผ่านได้!</span><span class="en">A harbor bridge that can <strong>"swing 90 degrees"</strong> to let ships pass!</span></div>
+                    <div class="tl-desc"><span class="th"><strong>มีโชว์หมุนสะพานตอนบ่าย 3 โมงตรง</strong></span><span class="en"><strong>Bridge rotation show at 3:00 PM sharp</strong></span></div>
                     <span class="hl-chip hl-high">High Recommend!</span>
-                    <a href="https://www.google.com/maps/search/Great+Harbor+Bridge+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Great+Harbor+Bridge+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -1233,9 +1265,9 @@
                 </div>
                 <div class="tl-body">
                     <div class="tl-title">Love Pier &amp; Kaohsiung Music Center</div>
-                    <div class="tl-desc">นั่งรถราง LRT เลียบอ่าว (ใช้ EasyCard) ลงสถานี Love Pier ถ่ายรูปกับอาคาร <strong>Kaohsiung Music Center ทรงรังผึ้งสุดล้ำ</strong></div>
+                    <div class="tl-desc"><span class="th">นั่งรถราง LRT เลียบอ่าว (ใช้ EasyCard) ลงสถานี Love Pier ถ่ายรูปกับอาคาร <strong>Kaohsiung Music Center ทรงรังผึ้งสุดล้ำ</strong></span><span class="en">Take LRT along the harbor (EasyCard). Get off at Love Pier to photograph the <strong>honeycomb-shaped Kaohsiung Music Center</strong></span></div>
                     <span class="hl-chip hl-photo">Photo Spot</span>
-                    <a href="https://www.google.com/maps/search/Love+Pier+Kaohsiung+Music+Center" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Love+Pier+Kaohsiung+Music+Center" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -1247,9 +1279,9 @@
                 </div>
                 <div class="tl-body">
                     <div class="tl-title">Formosa Boulevard &mdash; Dome of Light</div>
-                    <div class="tl-desc"><strong>ศิลปะกระจกสีที่ใหญ่ที่สุดในโลก!</strong> อยู่ในสถานีรถไฟใต้ดิน ดูฟรี สวยงามมาก</div>
+                    <div class="tl-desc"><span class="th"><strong>ศิลปะกระจกสีที่ใหญ่ที่สุดในโลก!</strong> อยู่ในสถานีรถไฟใต้ดิน ดูฟรี สวยงามมาก</span><span class="en"><strong>World's largest stained glass artwork!</strong> Inside the MRT station. Free to view, absolutely stunning</span></div>
                     <span class="hl-chip hl-must">Must See</span>
-                    <a href="https://www.google.com/maps/search/Formosa+Boulevard+Station+Dome+of+Light" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Formosa+Boulevard+Station+Dome+of+Light" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -1259,10 +1291,10 @@
                     <div class="tl-dot"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">ตลาดกลางคืน Ruifeng Night Market</div>
-                    <div class="tl-desc">ตลาดที่คนเกาสงเดินเยอะ ของกินแปลกใหม่เพียบ!</div>
+                    <div class="tl-title"><span class="th">ตลาดกลางคืน Ruifeng Night Market</span><span class="en">Ruifeng Night Market</span></div>
+                    <div class="tl-desc"><span class="th">ตลาดที่คนเกาสงเดินเยอะ ของกินแปลกใหม่เพียบ!</span><span class="en">Popular with Kaohsiung locals. Tons of unique food!</span></div>
                     <span class="hl-chip hl-food">Street Food</span>
-                    <a href="https://www.google.com/maps/search/Ruifeng+Night+Market+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Ruifeng+Night+Market+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
         </div>
@@ -1277,9 +1309,8 @@
         <div class="day-header">
             <div class="day-num" style="background: var(--green);">DAY<span>5</span></div>
             <div class="day-info">
-                <h3>พลังศรัทธา &amp; ปั่นจักรยานรับลมทะเล</h3>
-                <p>พุทธอุทยาน + เกาะฉีจิน + ซีฟู้ดสด</p>
-                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">Fo Guang Shan Buddha Museum &bull; Cijin Island &bull; Seafood &bull; Starlight Tunnel</p>
+                <h3><span class="th">พลังศรัทธา &amp; ปั่นจักรยานรับลมทะเล</span><span class="en">Faith &amp; Cycling by the Sea</span></h3>
+                <p><span class="th">พุทธอุทยาน + เกาะฉีจิน + ซีฟู้ดสด</span><span class="en">Buddha Museum + Cijin Island + Fresh Seafood</span></p>
             </div>
         </div>
 
@@ -1291,11 +1322,11 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">ฝอกวงซัน (Fo Guang Shan Buddha Museum)</div>
-                    <div class="tl-desc">นั่งรถบัสสาย E02 จากสถานี HSR Zuoying</div>
-                    <div class="tl-desc">เดินผ่านทางเดิน <strong>เจดีย์ 8 องค์</strong> มุ่งหน้าสู่ <strong>พระพุทธรูปทองสัมฤทธิ์ขนาดมหึมา</strong> อลังการระดับโลก!</div>
+                    <div class="tl-title"><span class="th">ฝอกวงซัน (Fo Guang Shan Buddha Museum)</span><span class="en">Fo Guang Shan Buddha Museum</span></div>
+                    <div class="tl-desc"><span class="th">นั่งรถบัสสาย E02 จากสถานี HSR Zuoying</span><span class="en">Take bus E02 from HSR Zuoying Station</span></div>
+                    <div class="tl-desc"><span class="th">เดินผ่านทางเดิน <strong>เจดีย์ 8 องค์</strong> มุ่งหน้าสู่ <strong>พระพุทธรูปทองสัมฤทธิ์ขนาดมหึมา</strong> อลังการระดับโลก!</span><span class="en">Walk past <strong>8 pagodas</strong> toward the <strong>massive bronze Buddha statue</strong> &mdash; world-class grandeur!</span></div>
                     <span class="hl-chip hl-high">Highlight</span>
-                    <a href="https://www.google.com/maps/search/Fo+Guang+Shan+Buddha+Museum" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Fo+Guang+Shan+Buddha+Museum" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -1306,9 +1337,9 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">กลับเข้าเมือง &rarr; ท่าเรือ Gushan</div>
-                    <div class="tl-desc">นั่ง MRT ลงสถานี Sizihwan แล้วเดินไปท่าเรือ Gushan</div>
-                    <a href="https://www.google.com/maps/search/Gushan+Ferry+Pier+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> ท่าเรือ Gushan</a>
+                    <div class="tl-title"><span class="th">กลับเข้าเมือง &rarr; ท่าเรือ Gushan</span><span class="en">Return to city &rarr; Gushan Ferry Pier</span></div>
+                    <div class="tl-desc"><span class="th">นั่ง MRT ลงสถานี Sizihwan แล้วเดินไปท่าเรือ Gushan</span><span class="en">Take MRT to Sizihwan Station, then walk to Gushan Ferry Pier</span></div>
+                    <a href="https://www.google.com/maps/search/Gushan+Ferry+Pier+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">ท่าเรือ Gushan</span><span class="en">Gushan Ferry Pier</span></a>
                 </div>
             </div>
 
@@ -1319,13 +1350,13 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">เกาะฉีจิน (Cijin Island)</div>
-                    <div class="tl-desc">นั่งเรือเฟอร์รี่ข้ามไป <strong>แค่ 5 นาที</strong> เอามอเตอร์ไซค์/จักรยานขึ้นเรือได้</div>
-                    <div class="tl-desc"><strong>เช่าจักรยานไฟฟ้า</strong> ปั่นเที่ยวรอบเกาะ</div>
-                    <div class="tl-desc">จุดถ่ายรูป: <strong>ซุ้มประตูสีรุ้ง Rainbow Arch</strong>, พิพิธภัณฑ์เปลือกหอย</div>
-                    <div class="tl-desc">แวะเดินลอด <strong>อุโมงค์ดวงดาว (Starlight Tunnel)</strong> ทะลุไปดูวิวทะเลหน้าผา</div>
+                    <div class="tl-title"><span class="th">เกาะฉีจิน (Cijin Island)</span><span class="en">Cijin Island</span></div>
+                    <div class="tl-desc"><span class="th">นั่งเรือเฟอร์รี่ข้ามไป <strong>แค่ 5 นาที</strong> เอามอเตอร์ไซค์/จักรยานขึ้นเรือได้</span><span class="en">Ferry ride takes <strong>only 5 minutes</strong>. Can bring scooters/bikes on board</span></div>
+                    <div class="tl-desc"><span class="th"><strong>เช่าจักรยานไฟฟ้า</strong> ปั่นเที่ยวรอบเกาะ</span><span class="en"><strong>Rent an e-bike</strong> and cycle around the island</span></div>
+                    <div class="tl-desc"><span class="th">จุดถ่ายรูป: <strong>ซุ้มประตูสีรุ้ง Rainbow Arch</strong>, พิพิธภัณฑ์เปลือกหอย</span><span class="en">Photo spots: <strong>Rainbow Arch</strong>, Shell Museum</span></div>
+                    <div class="tl-desc"><span class="th">แวะเดินลอด <strong>อุโมงค์ดวงดาว (Starlight Tunnel)</strong> ทะลุไปดูวิวทะเลหน้าผา</span><span class="en">Walk through <strong>Starlight Tunnel</strong> to a cliffside ocean view</span></div>
                     <span class="hl-chip hl-high">High Recommend!</span>
-                    <span class="hl-chip hl-photo">Photo Spots เพียบ</span>
+                    <span class="hl-chip hl-photo"><span class="th">Photo Spots เพียบ</span><span class="en">Many Photo Spots</span></span>
                     <a href="https://www.google.com/maps/search/Cijin+Island+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Cijin Island</a>
                     <a href="https://www.google.com/maps/search/Cijin+Starlight+Tunnel+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Starlight Tunnel</a>
                 </div>
@@ -1338,9 +1369,9 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">อาหารทะเลสดบนเกาะ</div>
-                    <div class="tl-desc">เดินถนนคนเดินบนเกาะ <strong>เลือกชี้วัตถุดิบหน้าร้าน</strong> แล้วให้เขาทำได้เลย ราคาถูกและสดมาก!</div>
-                    <span class="hl-chip hl-food">Seafood สด ๆ</span>
+                    <div class="tl-title"><span class="th">อาหารทะเลสดบนเกาะ</span><span class="en">Fresh seafood on the island</span></div>
+                    <div class="tl-desc"><span class="th">เดินถนนคนเดินบนเกาะ <strong>เลือกชี้วัตถุดิบหน้าร้าน</strong> แล้วให้เขาทำได้เลย ราคาถูกและสดมาก!</span><span class="en">Walk the pedestrian street, <strong>point at the fresh catch at shopfronts</strong> and they'll cook it for you. Cheap and ultra-fresh!</span></div>
+                    <span class="hl-chip hl-food"><span class="th">Seafood สด ๆ</span><span class="en">Fresh Seafood</span></span>
                 </div>
             </div>
 
@@ -1350,8 +1381,8 @@
                     <div class="tl-dot"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">นั่งเรือกลับฝั่ง พักผ่อน</div>
-                    <div class="tl-desc">กลับที่พักเตรียมตัววันสุดท้าย</div>
+                    <div class="tl-title"><span class="th">นั่งเรือกลับฝั่ง พักผ่อน</span><span class="en">Ferry back to mainland, rest</span></div>
+                    <div class="tl-desc"><span class="th">กลับที่พักเตรียมตัววันสุดท้าย</span><span class="en">Return to hotel and prepare for the last day</span></div>
                 </div>
             </div>
         </div>
@@ -1366,9 +1397,8 @@
         <div class="day-header">
             <div class="day-num" style="background: var(--purple);">DAY<span>6</span></div>
             <div class="day-info">
-                <h3>สะเดาะเคราะห์ &amp; ซื้อของฝากก่อนกลับ</h3>
-                <p>เจดีย์มังกร-เสือ + Dream Mall + บินกลับ</p>
-                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">Dragon &amp; Tiger Pagodas &bull; Dream Mall &bull; Fly home from KHH Airport</p>
+                <h3><span class="th">สะเดาะเคราะห์ &amp; ซื้อของฝากก่อนกลับ</span><span class="en">Turn Luck Around &amp; Souvenir Shopping</span></h3>
+                <p><span class="th">เจดีย์มังกร-เสือ + Dream Mall + บินกลับ</span><span class="en">Dragon &amp; Tiger Pagodas + Dream Mall + Fly home</span></p>
             </div>
         </div>
 
@@ -1380,11 +1410,11 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">สระบัว (Lotus Pond) &mdash; เจดีย์มังกร-เสือ</div>
-                    <div class="tl-desc">นั่งแท็กซี่หรือรถบัสไป Dragon and Tiger Pagodas</div>
-                    <div class="tl-desc">ความเชื่อ: <strong>"เดินเข้าทางปากมังกร ออกทางปากเสือ"</strong> จะเปลี่ยนโชคร้ายเป็นโชคดี!</div>
+                    <div class="tl-title"><span class="th">สระบัว (Lotus Pond) &mdash; เจดีย์มังกร-เสือ</span><span class="en">Lotus Pond &mdash; Dragon &amp; Tiger Pagodas</span></div>
+                    <div class="tl-desc"><span class="th">นั่งแท็กซี่หรือรถบัสไป Dragon and Tiger Pagodas</span><span class="en">Take taxi or bus to Dragon and Tiger Pagodas</span></div>
+                    <div class="tl-desc"><span class="th">ความเชื่อ: <strong>"เดินเข้าทางปากมังกร ออกทางปากเสือ"</strong> จะเปลี่ยนโชคร้ายเป็นโชคดี!</span><span class="en">Tradition: <strong>"Enter through the dragon's mouth, exit through the tiger's"</strong> to turn bad luck into good luck!</span></div>
                     <span class="hl-chip hl-must">Must Do</span>
-                    <a href="https://www.google.com/maps/search/Dragon+and+Tiger+Pagodas+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <a href="https://www.google.com/maps/search/Dragon+and+Tiger+Pagodas+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -1395,10 +1425,10 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">ช้อปของฝากที่ Dream Mall</div>
-                    <div class="tl-desc">ห้างใหญ่ มีชิงช้าสวรรค์บนดาดฟ้า! ซื้อพายสับปะรด แครกเกอร์นูกัต</div>
-                    <span class="hl-chip hl-high">ของฝาก</span>
-                    <a href="https://www.google.com/maps/search/Dream+Mall+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                    <div class="tl-title"><span class="th">ช้อปของฝากที่ Dream Mall</span><span class="en">Souvenir shopping at Dream Mall</span></div>
+                    <div class="tl-desc"><span class="th">ห้างใหญ่ มีชิงช้าสวรรค์บนดาดฟ้า! ซื้อพายสับปะรด แครกเกอร์นูกัต</span><span class="en">Huge mall with a rooftop Ferris wheel! Buy pineapple cakes, nougat crackers</span></div>
+                    <span class="hl-chip hl-high"><span class="th">ของฝาก</span><span class="en">Souvenirs</span></span>
+                    <a href="https://www.google.com/maps/search/Dream+Mall+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
                 </div>
             </div>
 
@@ -1409,9 +1439,9 @@
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">MRT สายสีแดงไปสนามบิน KHH</div>
-                    <div class="tl-desc">สถานี Kaohsiung International Airport</div>
-                    <a href="https://www.google.com/maps/search/Kaohsiung+International+Airport+KHH" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> สนามบิน KHH</a>
+                    <div class="tl-title"><span class="th">MRT สายสีแดงไปสนามบิน KHH</span><span class="en">Red Line MRT to KHH Airport</span></div>
+                    <div class="tl-desc"><span class="th">สถานี Kaohsiung International Airport</span><span class="en">Kaohsiung International Airport Station</span></div>
+                    <a href="https://www.google.com/maps/search/Kaohsiung+International+Airport+KHH" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">สนามบิน KHH</span><span class="en">KHH Airport</span></a>
                 </div>
             </div>
 
@@ -1421,8 +1451,8 @@
                     <div class="tl-dot"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title">เช็คอิน + บินกลับไทย</div>
-                    <div class="tl-desc">เช็คอินโหลดกระเป๋า บินกลับประเทศไทยโดยสวัสดิภาพ &#9992;&#65039;</div>
+                    <div class="tl-title"><span class="th">เช็คอิน + บินกลับไทย</span><span class="en">Check in + Fly home to Thailand</span></div>
+                    <div class="tl-desc"><span class="th">เช็คอินโหลดกระเป๋า บินกลับประเทศไทยโดยสวัสดิภาพ &#9992;&#65039;</span><span class="en">Check in luggage and fly safely back to Thailand &#9992;&#65039;</span></div>
                 </div>
             </div>
         </div>
@@ -1435,13 +1465,13 @@
     <!-- ============================================ -->
     <section class="section" id="bonus">
         <div class="section-label"><i class="fa-solid fa-compass"></i> BONUS SPOTS</div>
-        <h2 class="section-title">สถานที่แนะนำเพิ่มเติม (ไทเป)</h2>
+        <h2 class="section-title"><span class="th">สถานที่แนะนำเพิ่มเติม (ไทเป)</span><span class="en">Additional Recommended Spots (Taipei)</span></h2>
 
         <div class="card" style="border-left: 3px solid var(--orange);">
-            <div class="card-title"><i class="fa-solid fa-fire"></i> สือเฟิ่น + โคมลอย (Shifen)</div>
-            <p><strong>เขียนคำอธิษฐานและปล่อยโคมลอยบนรางรถไฟ!</strong> ถ่ายรูปได้เก๋มาก</p>
-            <p><strong>น้ำตกสือเฟิ่น:</strong> "ไนแองการ่าแห่งไต้หวัน" น้ำตกกว้างใหญ่สวยงาม</p>
-            <p><strong>วิธีไป:</strong> ต่อรถไฟสาย Pingxi จากสถานี Ruifang</p>
+            <div class="card-title"><i class="fa-solid fa-fire"></i> <span class="th">สือเฟิ่น + โคมลอย (Shifen)</span><span class="en">Shifen + Sky Lanterns</span></div>
+            <p><span class="th"><strong>เขียนคำอธิษฐานและปล่อยโคมลอยบนรางรถไฟ!</strong> ถ่ายรูปได้เก๋มาก</span><span class="en"><strong>Write wishes and release sky lanterns on the train tracks!</strong> Amazing photo opportunity</span></p>
+            <p><span class="th"><strong>น้ำตกสือเฟิ่น:</strong> "ไนแองการ่าแห่งไต้หวัน" น้ำตกกว้างใหญ่สวยงาม</span><span class="en"><strong>Shifen Waterfall:</strong> "Niagara of Taiwan" &mdash; wide and majestic waterfall</span></p>
+            <p><span class="th"><strong>วิธีไป:</strong> ต่อรถไฟสาย Pingxi จากสถานี Ruifang</span><span class="en"><strong>How to get there:</strong> Take Pingxi Line train from Ruifang Station</span></p>
             <span class="hl-chip hl-must">Must Do</span>
             <span class="hl-chip hl-photo">Iconic Photo Spot</span>
             <a href="https://www.google.com/maps/search/Shifen+Old+Street" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Shifen</a>
@@ -1449,25 +1479,25 @@
         </div>
 
         <div class="tip" style="margin-bottom: 16px;">
-            <strong><i class="fa-solid fa-lightbulb"></i> แนะนำ</strong>
-            สือเฟิ่นอยู่ใกล้ Sandiaoling (สาย Pingxi Line) ถ้าอยากเพิ่มสือเฟิ่นใน Day 3 ให้ตัดอู่ไหลออกแล้วใส่สือเฟิ่นแทน (เทรลเช้า &rarr; สือเฟิ่นปล่อยโคมบ่าย)
+            <strong><i class="fa-solid fa-lightbulb"></i> <span class="th">แนะนำ</span><span class="en">Tip</span></strong>
+            <span class="th">สือเฟิ่นอยู่ใกล้ Sandiaoling (สาย Pingxi Line) ถ้าอยากเพิ่มสือเฟิ่นใน Day 3 ให้ตัดอู่ไหลออกแล้วใส่สือเฟิ่นแทน (เทรลเช้า &rarr; สือเฟิ่นปล่อยโคมบ่าย)</span><span class="en">Shifen is near Sandiaoling (Pingxi Line). To add Shifen to Day 3, replace Wulai with Shifen (morning trail &rarr; afternoon sky lanterns)</span>
         </div>
 
         <div class="card">
-            <div class="card-title"><i class="fa-solid fa-mug-hot"></i> ย่านคาเฟ่ &amp; ช้อปปิ้ง</div>
-            <p><strong>Fujin Tree 353 Caf&eacute;</strong> &mdash; คาเฟ่สไตล์ญี่ปุ่น เงียบสงบ ย่าน Fujin Street ที่เต็มไปด้วยร้านเก๋ ๆ</p>
-            <p><strong>FREITAG by FUJIN TREE GROUP</strong> &mdash; ร้านกระเป๋ารีไซเคิลจากสวิส ดีไซน์เท่</p>
-            <p><strong>TankQ Caf&eacute; &amp; Bar</strong> &mdash; คาเฟ่ย่านจงเซี่ยวตุนฮว่า (Zhongxiao Dunhua) ตกแต่งสวย ถ่ายรูปเก๋</p>
-            <p><strong>KA Sky Coffee</strong> &mdash; คาเฟ่วิวสูง บรรยากาศดี</p>
+            <div class="card-title"><i class="fa-solid fa-mug-hot"></i> <span class="th">ย่านคาเฟ่ &amp; ช้อปปิ้ง</span><span class="en">Caf&eacute; &amp; Shopping Districts</span></div>
+            <p><span class="th"><strong>Fujin Tree 353 Caf&eacute;</strong> &mdash; คาเฟ่สไตล์ญี่ปุ่น เงียบสงบ ย่าน Fujin Street ที่เต็มไปด้วยร้านเก๋ ๆ</span><span class="en"><strong>Fujin Tree 353 Caf&eacute;</strong> &mdash; Japanese-style caf&eacute;, quiet and cozy. Fujin Street is full of trendy shops</span></p>
+            <p><span class="th"><strong>FREITAG by FUJIN TREE GROUP</strong> &mdash; ร้านกระเป๋ารีไซเคิลจากสวิส ดีไซน์เท่</span><span class="en"><strong>FREITAG by FUJIN TREE GROUP</strong> &mdash; Swiss recycled bag store, cool design</span></p>
+            <p><span class="th"><strong>TankQ Caf&eacute; &amp; Bar</strong> &mdash; คาเฟ่ย่านจงเซี่ยวตุนฮว่า (Zhongxiao Dunhua) ตกแต่งสวย ถ่ายรูปเก๋</span><span class="en"><strong>TankQ Caf&eacute; &amp; Bar</strong> &mdash; Stylish caf&eacute; in Zhongxiao Dunhua area, great for photos</span></p>
+            <p><span class="th"><strong>KA Sky Coffee</strong> &mdash; คาเฟ่วิวสูง บรรยากาศดี</span><span class="en"><strong>KA Sky Coffee</strong> &mdash; High-rise caf&eacute; with great atmosphere</span></p>
             <a href="https://www.google.com/maps/search/Fujin+Tree+353+Cafe+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Fujin Tree 353</a>
             <a href="https://www.google.com/maps/search/TankQ+Cafe+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> TankQ Caf&eacute;</a>
         </div>
 
         <div class="card">
             <div class="card-title"><i class="fa-solid fa-building-columns"></i> Sisinan Village Museum (四四南村)</div>
-            <p>หมู่บ้านทหารเก่าแปลงเป็นพื้นที่วัฒนธรรม มีตลาดนัดวันหยุด คาเฟ่ ร้านของที่ระลึก อยู่ใกล้ Taipei 101 เดินไปได้</p>
+            <p><span class="th">หมู่บ้านทหารเก่าแปลงเป็นพื้นที่วัฒนธรรม มีตลาดนัดวันหยุด คาเฟ่ ร้านของที่ระลึก อยู่ใกล้ Taipei 101 เดินไปได้</span><span class="en">Old military village turned cultural hub. Weekend markets, caf&eacute;s, souvenir shops. Walking distance to Taipei 101</span></p>
             <span class="hl-chip hl-photo">Photo Spot</span>
-            <a href="https://www.google.com/maps/search/Sisinan+Village+44+South+Village+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+            <a href="https://www.google.com/maps/search/Sisinan+Village+44+South+Village+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
         </div>
     </section>
 
@@ -1478,39 +1508,39 @@
     <!-- ============================================ -->
     <section class="section" id="hotel">
         <div class="section-label"><i class="fa-solid fa-hotel"></i> ACCOMMODATION</div>
-        <h2 class="section-title">ที่พักแนะนำ</h2>
+        <h2 class="section-title"><span class="th">ที่พักแนะนำ</span><span class="en">Recommended Hotels</span></h2>
 
         <div class="hotel-card">
-            <div class="hotel-city">ไทเป (พัก 2 คืน) &bull; ใกล้ Taipei Main Station</div>
-            <h4>Hotel Relax (สาขา 1, 2, 3, 5)</h4>
-            <p>เดินทางง่ายสุด ลากกระเป๋าไปขึ้น HSR หรือรถไฟธรรมดาไปเดินป่าได้ทันที</p>
-            <a href="https://www.google.com/maps/search/Taipei+Main+Station" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+            <div class="hotel-city"><span class="th">ไทเป (พัก 2 คืน) &bull; ใกล้ Taipei Main Station</span><span class="en">Taipei (2 nights) &bull; Near Taipei Main Station</span></div>
+            <h4><span class="th">Hotel Relax (สาขา 1, 2, 3, 5)</span><span class="en">Hotel Relax (Branch 1, 2, 3, 5)</span></h4>
+            <p><span class="th">เดินทางง่ายสุด ลากกระเป๋าไปขึ้น HSR หรือรถไฟธรรมดาไปเดินป่าได้ทันที</span><span class="en">Best location for easy transport. Walk to HSR or local trains with luggage</span></p>
+            <a href="https://www.google.com/maps/search/Taipei+Main+Station" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
         </div>
 
         <div class="hotel-card">
-            <div class="hotel-city">ไทเป (ทางเลือก)</div>
+            <div class="hotel-city"><span class="th">ไทเป (ทางเลือก)</span><span class="en">Taipei (Alternative)</span></div>
             <h4>Finders Hotel</h4>
-            <p>ดีไซน์สวย ราคาคุ้มค่า <strong>มีมาม่าและขนมให้กินฟรีที่ล็อบบี้</strong></p>
+            <p><span class="th">ดีไซน์สวย ราคาคุ้มค่า <strong>มีมาม่าและขนมให้กินฟรีที่ล็อบบี้</strong></span><span class="en">Stylish design, great value. <strong>Free instant noodles &amp; snacks in the lobby</strong></span></p>
         </div>
 
         <div class="hotel-card">
-            <div class="hotel-city">ไทเป (ทางเลือก) &bull; ย่าน Ximen</div>
+            <div class="hotel-city"><span class="th">ไทเป (ทางเลือก) &bull; ย่าน Ximen</span><span class="en">Taipei (Alternative) &bull; Ximen Area</span></div>
             <h4>SOTETSU GRAND FRESA Taipei Ximen</h4>
-            <p>โรงแรมเครือญี่ปุ่น สะอาด สไตล์มินิมอล อยู่กลางย่าน Ximending เดินไปตลาดกลางคืนสะดวก</p>
-            <a href="https://www.google.com/maps/search/SOTETSU+GRAND+FRESA+Taipei+Ximen" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+            <p><span class="th">โรงแรมเครือญี่ปุ่น สะอาด สไตล์มินิมอล อยู่กลางย่าน Ximending เดินไปตลาดกลางคืนสะดวก</span><span class="en">Japanese hotel chain. Clean, minimal style. In the heart of Ximending, walk to night markets</span></p>
+            <a href="https://www.google.com/maps/search/SOTETSU+GRAND+FRESA+Taipei+Ximen" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
         </div>
 
         <div class="hotel-card">
-            <div class="hotel-city">เกาสง (พัก 2 คืน) &bull; ใกล้ Pier-2 / LRT</div>
+            <div class="hotel-city"><span class="th">เกาสง (พัก 2 คืน) &bull; ใกล้ Pier-2 / LRT</span><span class="en">Kaohsiung (2 nights) &bull; Near Pier-2 / LRT</span></div>
             <h4>City Suites Kaohsiung Chenai</h4>
-            <p>อยู่ติดอ่าว Pier-2 และรถราง LRT <strong>มองเห็นวิวสะพาน Great Harbor Bridge จากห้องพัก!</strong></p>
-            <a href="https://www.google.com/maps/search/Pier+2+Art+Center+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+            <p><span class="th">อยู่ติดอ่าว Pier-2 และรถราง LRT <strong>มองเห็นวิวสะพาน Great Harbor Bridge จากห้องพัก!</strong></span><span class="en">Right by Pier-2 harbor and LRT. <strong>Great Harbor Bridge view from your room!</strong></span></p>
+            <a href="https://www.google.com/maps/search/Pier+2+Art+Center+Kaohsiung" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
         </div>
 
         <div class="hotel-card">
-            <div class="hotel-city">เกาสง (ทางเลือก)</div>
+            <div class="hotel-city"><span class="th">เกาสง (ทางเลือก)</span><span class="en">Kaohsiung (Alternative)</span></div>
             <h4>Kindness Hotel (Formosa Boulevard / Liouhe)</h4>
-            <p>เครือโรงแรมที่ดังเรื่อง <strong>"ของกินฟรี 24 ชม." และไอศกรีมกินไม่อั้น</strong> คุ้มมาก!</p>
+            <p><span class="th">เครือโรงแรมที่ดังเรื่อง <strong>"ของกินฟรี 24 ชม." และไอศกรีมกินไม่อั้น</strong> คุ้มมาก!</span><span class="en">Famous hotel chain for <strong>"free snacks 24 hrs" and unlimited ice cream</strong> &mdash; amazing value!</span></p>
         </div>
     </section>
 
@@ -1521,14 +1551,14 @@
     <!-- ============================================ -->
     <section class="section" id="food">
         <div class="section-label"><i class="fa-solid fa-utensils"></i> FOOD GUIDE</div>
-        <h2 class="section-title">ของกินห้ามพลาด</h2>
+        <h2 class="section-title"><span class="th">ของกินห้ามพลาด</span><span class="en">Must-Try Food</span></h2>
 
         <div class="food-item">
             <span class="food-emoji">🧋</span>
             <div class="food-info">
-                <h4>ชานมไข่มุก</h4>
+                <h4><span class="th">ชานมไข่มุก</span><span class="en">Bubble Milk Tea</span></h4>
                 <div class="food-en">Bubble Milk Tea (珍珠奶茶)</div>
-                <p>ต้นกำเนิดชานมไข่มุก! แนะนำ 50 Lan, CoCo, Tiger Sugar</p>
+                <p><span class="th">ต้นกำเนิดชานมไข่มุก! แนะนำ 50 Lan, CoCo, Tiger Sugar</span><span class="en">The birthplace of bubble tea! Try 50 Lan, CoCo, Tiger Sugar</span></p>
                 <div class="food-price">35-60 TWD</div>
             </div>
         </div>
@@ -1536,19 +1566,19 @@
         <div class="food-item">
             <span class="food-emoji">🥟</span>
             <div class="food-info">
-                <h4>เสี่ยวหลงเปา</h4>
+                <h4><span class="th">เสี่ยวหลงเปา</span><span class="en">Xiao Long Bao</span></h4>
                 <div class="food-en">Xiao Long Bao (小籠包)</div>
-                <p>ซุปดัมพลิ่งไส้หมูน้ำซุปเต็ม ดังสุด Din Tai Fung</p>
-                <div class="food-price">200-250 TWD / 10 ชิ้น</div>
+                <p><span class="th">ซุปดัมพลิ่งไส้หมูน้ำซุปเต็ม ดังสุด Din Tai Fung</span><span class="en">Soup dumplings filled with pork broth. Most famous: Din Tai Fung</span></p>
+                <div class="food-price"><span class="th">200-250 TWD / 10 ชิ้น</span><span class="en">200-250 TWD / 10 pcs</span></div>
             </div>
         </div>
 
         <div class="food-item">
             <span class="food-emoji">🫓</span>
             <div class="food-info">
-                <h4>ซาลาเปาอบโอ่ง</h4>
+                <h4><span class="th">ซาลาเปาอบโอ่ง</span><span class="en">Black Pepper Bun</span></h4>
                 <div class="food-en">Black Pepper Bun (胡椒餅)</div>
-                <p>ไส้หมูพริกไทยอบในโอ่งดิน กรอบนอกนุ่มใน ของดีตลาดเหราเหอ</p>
+                <p><span class="th">ไส้หมูพริกไทยอบในโอ่งดิน กรอบนอกนุ่มใน ของดีตลาดเหราเหอ</span><span class="en">Pork &amp; pepper filling baked in clay oven. Crispy outside, soft inside. Raohe market specialty</span></p>
                 <div class="food-price">50-60 TWD</div>
             </div>
         </div>
@@ -1556,9 +1586,9 @@
         <div class="food-item">
             <span class="food-emoji">🍜</span>
             <div class="food-info">
-                <h4>บะหมี่เนื้อตุ๋น</h4>
+                <h4><span class="th">บะหมี่เนื้อตุ๋น</span><span class="en">Beef Noodle Soup</span></h4>
                 <div class="food-en">Beef Noodle Soup (牛肉麵)</div>
-                <p>อาหารประจำชาติ น้ำซุปเข้มข้น เนื้อเปื่อยนุ่ม</p>
+                <p><span class="th">อาหารประจำชาติ น้ำซุปเข้มข้น เนื้อเปื่อยนุ่ม</span><span class="en">Taiwan's national dish. Rich broth with tender braised beef</span></p>
                 <div class="food-price">150-250 TWD</div>
             </div>
         </div>
@@ -1566,9 +1596,9 @@
         <div class="food-item">
             <span class="food-emoji">🍗</span>
             <div class="food-info">
-                <h4>ไก่ทอด Hot Star</h4>
+                <h4><span class="th">ไก่ทอด Hot Star</span><span class="en">Hot Star Fried Chicken</span></h4>
                 <div class="food-en">Hot-Star Large Fried Chicken (豪大大雞排)</div>
-                <p>ไก่ทอดแผ่นใหญ่เท่าหน้า กรอบนอกนุ่มใน</p>
+                <p><span class="th">ไก่ทอดแผ่นใหญ่เท่าหน้า กรอบนอกนุ่มใน</span><span class="en">Giant fried chicken cutlet as big as your face. Crispy and juicy</span></p>
                 <div class="food-price">70-90 TWD</div>
             </div>
         </div>
@@ -1576,9 +1606,9 @@
         <div class="food-item">
             <span class="food-emoji">🍠</span>
             <div class="food-info">
-                <h4>เผือกทอดไส้หมูหยอง</h4>
+                <h4><span class="th">เผือกทอดไส้หมูหยอง</span><span class="en">Taro Ball w/ Pork Floss</span></h4>
                 <div class="food-en">Taro Ball w/ Pork Floss</div>
-                <p>ของดีตลาด Ningxia กรอบนอก เผือกเนียนใน</p>
+                <p><span class="th">ของดีตลาด Ningxia กรอบนอก เผือกเนียนใน</span><span class="en">Ningxia market specialty. Crispy shell, creamy taro inside</span></p>
                 <div class="food-price">50-70 TWD</div>
             </div>
         </div>
@@ -1586,11 +1616,11 @@
         <div class="food-item" style="border-left: 3px solid var(--orange);">
             <span class="food-emoji">🍚</span>
             <div class="food-info">
-                <h4>Wang's Broth &mdash; ข้าวหมูมิชลิน</h4>
+                <h4><span class="th">Wang's Broth &mdash; ข้าวหมูมิชลิน</span><span class="en">Wang's Broth &mdash; Michelin Pork Rice</span></h4>
                 <div class="food-en">Wang's Broth (王品牛肉湯)</div>
-                <p><strong>ร้านมิชลิน!</strong> ข้าวหมูตุ๋นน้ำซุปใส รสชาติเข้มข้นละเอียดอ่อน ต้องลองสักครั้ง</p>
+                <p><span class="th"><strong>ร้านมิชลิน!</strong> ข้ามหมูตุ๋นน้ำซุปใส รสชาติเข้มข้นละเอียดอ่อน ต้องลองสักครั้ง</span><span class="en"><strong>Michelin restaurant!</strong> Braised pork with clear broth. Rich yet delicate flavor. A must-try</span></p>
                 <div class="food-price">150-300 TWD</div>
-                <a href="https://www.google.com/maps/search/Wang+Broth+Taipei" target="_blank" rel="noopener" class="map-link" style="margin-top: 6px;"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                <a href="https://www.google.com/maps/search/Wang+Broth+Taipei" target="_blank" rel="noopener" class="map-link" style="margin-top: 6px;"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
             </div>
         </div>
 
@@ -1599,7 +1629,7 @@
             <div class="food-info">
                 <h4>Shabu Le &mdash; Wagyu Hot Pot</h4>
                 <div class="food-en">しゃぶ楽 Wagyu Shabu</div>
-                <p>ชาบูเนื้อวากิว ย่าน Ximen เนื้อนุ่มละลายในปาก บริการดีมาก</p>
+                <p><span class="th">ชาบูเนื้อวากิว ย่าน Ximen เนื้อนุ่มละลายในปาก บริการดีมาก</span><span class="en">Wagyu shabu-shabu in Ximen. Melt-in-your-mouth beef, excellent service</span></p>
                 <div class="food-price">400-800 TWD</div>
             </div>
         </div>
@@ -1612,29 +1642,29 @@
     <!-- ============================================ -->
     <section class="section" id="phrases">
         <div class="section-label"><i class="fa-solid fa-comments"></i> LANGUAGE</div>
-        <h2 class="section-title">ประโยคภาษาจีนที่ใช้บ่อย</h2>
+        <h2 class="section-title"><span class="th">ประโยคภาษาจีนที่ใช้บ่อย</span><span class="en">Useful Chinese Phrases</span></h2>
 
         <div class="phrase-list">
             <div class="phrase-row" style="background: var(--bg-light); font-weight: 700; font-size: 12px; color: var(--text-tertiary);">
-                <div class="phrase-th">ไทย</div>
-                <div class="phrase-cn">จีน</div>
-                <div class="phrase-py">คำอ่าน</div>
+                <div class="phrase-th"><span class="th">ไทย</span><span class="en">English</span></div>
+                <div class="phrase-cn"><span class="th">จีน</span><span class="en">Chinese</span></div>
+                <div class="phrase-py"><span class="th">คำอ่าน</span><span class="en">Pronunciation</span></div>
             </div>
-            <div class="phrase-row"><div class="phrase-th">สวัสดี</div><div class="phrase-cn">你好</div><div class="phrase-py">หนี่ห่าว</div></div>
-            <div class="phrase-row"><div class="phrase-th">ขอบคุณ</div><div class="phrase-cn">謝謝</div><div class="phrase-py">เซี่ยเซีย</div></div>
-            <div class="phrase-row"><div class="phrase-th">เท่าไหร่?</div><div class="phrase-cn">多少錢？</div><div class="phrase-py">ตัวเส่าเฉียน</div></div>
-            <div class="phrase-row"><div class="phrase-th">อันนี้ 1 อัน</div><div class="phrase-cn">這個一個</div><div class="phrase-py">เจ้อเก้อ อีเก้อ</div></div>
-            <div class="phrase-row"><div class="phrase-th">ห้องน้ำอยู่ไหน?</div><div class="phrase-cn">廁所在哪裡？</div><div class="phrase-py">เช่อสั่ว ไจ้หน่าหลี่</div></div>
-            <div class="phrase-row"><div class="phrase-th">อร่อยมาก!</div><div class="phrase-cn">很好吃！</div><div class="phrase-py">เหิ่นห่าวชื่อ</div></div>
-            <div class="phrase-row"><div class="phrase-th">ไม่เผ็ด</div><div class="phrase-cn">不要辣</div><div class="phrase-py">ปู๋เย่าล่า</div></div>
-            <div class="phrase-row"><div class="phrase-th">ช่วยด้วย</div><div class="phrase-cn">幫幫忙</div><div class="phrase-py">ปังปังหมาง</div></div>
-            <div class="phrase-row"><div class="phrase-th">ไปสถานี ___</div><div class="phrase-cn">到___站</div><div class="phrase-py">เต้า ___ จั้น</div></div>
-            <div class="phrase-row"><div class="phrase-th">ลดได้ไหม?</div><div class="phrase-cn">可以便宜嗎？</div><div class="phrase-py">เข่อหยี่ เพียนอี้ มา</div></div>
+            <div class="phrase-row"><div class="phrase-th"><span class="th">สวัสดี</span><span class="en">Hello</span></div><div class="phrase-cn">你好</div><div class="phrase-py"><span class="th">หนี่ห่าว</span><span class="en">Nǐ hǎo</span></div></div>
+            <div class="phrase-row"><div class="phrase-th"><span class="th">ขอบคุณ</span><span class="en">Thank you</span></div><div class="phrase-cn">謝謝</div><div class="phrase-py"><span class="th">เซี่ยเซีย</span><span class="en">Xi&egrave; xi&egrave;</span></div></div>
+            <div class="phrase-row"><div class="phrase-th"><span class="th">เท่าไหร่?</span><span class="en">How much?</span></div><div class="phrase-cn">多少錢？</div><div class="phrase-py"><span class="th">ตัวเส่าเฉียน</span><span class="en">Duōshǎo qi&aacute;n</span></div></div>
+            <div class="phrase-row"><div class="phrase-th"><span class="th">อันนี้ 1 อัน</span><span class="en">This one, 1 piece</span></div><div class="phrase-cn">這個一個</div><div class="phrase-py"><span class="th">เจ้อเก้อ อีเก้อ</span><span class="en">Zh&egrave;ge y&iacute;g&egrave;</span></div></div>
+            <div class="phrase-row"><div class="phrase-th"><span class="th">ห้องน้ำอยู่ไหน?</span><span class="en">Where is the toilet?</span></div><div class="phrase-cn">廁所在哪裡？</div><div class="phrase-py"><span class="th">เช่อสั่ว ไจ้หน่าหลี่</span><span class="en">C&egrave;suǒ z&agrave;i nǎlǐ</span></div></div>
+            <div class="phrase-row"><div class="phrase-th"><span class="th">อร่อยมาก!</span><span class="en">Very delicious!</span></div><div class="phrase-cn">很好吃！</div><div class="phrase-py"><span class="th">เหิ่นห่าวชื่อ</span><span class="en">Hěn hǎo chī</span></div></div>
+            <div class="phrase-row"><div class="phrase-th"><span class="th">ไม่เผ็ด</span><span class="en">Not spicy</span></div><div class="phrase-cn">不要辣</div><div class="phrase-py"><span class="th">ปู๋เย่าล่า</span><span class="en">B&ugrave; y&agrave;o l&agrave;</span></div></div>
+            <div class="phrase-row"><div class="phrase-th"><span class="th">ช่วยด้วย</span><span class="en">Help please</span></div><div class="phrase-cn">幫幫忙</div><div class="phrase-py"><span class="th">ปังปังหมาง</span><span class="en">Bāng bāng m&aacute;ng</span></div></div>
+            <div class="phrase-row"><div class="phrase-th"><span class="th">ไปสถานี ___</span><span class="en">Go to ___ station</span></div><div class="phrase-cn">到___站</div><div class="phrase-py"><span class="th">เต้า ___ จั้น</span><span class="en">D&agrave;o ___ zh&agrave;n</span></div></div>
+            <div class="phrase-row"><div class="phrase-th"><span class="th">ลดได้ไหม?</span><span class="en">Can you discount?</span></div><div class="phrase-cn">可以便宜嗎？</div><div class="phrase-py"><span class="th">เข่อหยี่ เพียนอี้ มา</span><span class="en">Kěyǐ pi&aacute;nyi ma</span></div></div>
         </div>
 
         <div class="tip tip-blue" style="margin-top: 12px;">
-            <strong><i class="fa-solid fa-mobile-screen-button"></i> แนะนำ</strong>
-            ดาวน์โหลด Google Translate ไว้ offline + ใช้โหมดกล้องแปลป้ายภาษาจีนได้ทันที
+            <strong><i class="fa-solid fa-mobile-screen-button"></i> <span class="th">แนะนำ</span><span class="en">Tip</span></strong>
+            <span class="th">ดาวน์โหลด Google Translate ไว้ offline + ใช้โหมดกล้องแปลป้ายภาษาจีนได้ทันที</span><span class="en">Download Google Translate for offline use + use camera mode to translate Chinese signs instantly</span>
         </div>
     </section>
 
@@ -1645,35 +1675,35 @@
     <!-- ============================================ -->
     <section class="section" id="tips">
         <div class="section-label"><i class="fa-solid fa-star"></i> PRO TIPS</div>
-        <h2 class="section-title">เคล็ดลับ &amp; สิ่งควรรู้</h2>
+        <h2 class="section-title"><span class="th">เคล็ดลับ &amp; สิ่งควรรู้</span><span class="en">Tips &amp; Good to Know</span></h2>
 
         <div class="card">
-            <div class="card-title"><i class="fa-solid fa-ban"></i> สิ่งที่ห้ามทำ</div>
-            <p><strong>ห้ามกิน-ดื่มบน MRT</strong> &mdash; ปรับ 1,500-7,500 TWD (รวมหมากฝรั่ง+น้ำเปล่า)</p>
-            <p><strong>ห้ามสูบบุหรี่ในที่สาธารณะ</strong> &mdash; ปรับ 2,000-10,000 TWD</p>
+            <div class="card-title"><i class="fa-solid fa-ban"></i> <span class="th">สิ่งที่ห้ามทำ</span><span class="en">Don'ts</span></div>
+            <p><span class="th"><strong>ห้ามกิน-ดื่มบน MRT</strong> &mdash; ปรับ 1,500-7,500 TWD (รวมหมากฝรั่ง+น้ำเปล่า)</span><span class="en"><strong>No eating or drinking on MRT</strong> &mdash; Fine 1,500-7,500 TWD (incl. gum &amp; water)</span></p>
+            <p><span class="th"><strong>ห้ามสูบบุหรี่ในที่สาธารณะ</strong> &mdash; ปรับ 2,000-10,000 TWD</span><span class="en"><strong>No smoking in public areas</strong> &mdash; Fine 2,000-10,000 TWD</span></p>
         </div>
 
         <div class="card">
-            <div class="card-title"><i class="fa-solid fa-check-double"></i> ควรรู้</div>
-            <p><strong>ไม่มีถุงพลาสติกแจก</strong> &mdash; ไต้หวันงดแจกถุงพลาสติกทุกร้าน พกถุงผ้าไปเอง!</p>
-            <p><strong>ไม่ต้องให้ทิป</strong> &mdash; ไม่มีวัฒนธรรมทิปในไต้หวัน</p>
-            <p><strong>7-11 มีทุกที่</strong> &mdash; เปิด 24 ชม. มีทุกอย่าง ใช้ EasyCard จ่ายได้</p>
-            <p><strong>ปลั๊กไฟเหมือนไทย</strong> &mdash; หัวแบน 2 ขา 110V ไม่ต้องพกหัวแปลง</p>
+            <div class="card-title"><i class="fa-solid fa-check-double"></i> <span class="th">ควรรู้</span><span class="en">Good to Know</span></div>
+            <p><span class="th"><strong>ไม่มีถุงพลาสติกแจก</strong> &mdash; ไต้หวันงดแจกถุงพลาสติกทุกร้าน พกถุงผ้าไปเอง!</span><span class="en"><strong>No free plastic bags</strong> &mdash; Taiwan bans free bags at all stores. Bring your own!</span></p>
+            <p><span class="th"><strong>ไม่ต้องให้ทิป</strong> &mdash; ไม่มีวัฒนธรรมทิปในไต้หวัน</span><span class="en"><strong>No tipping</strong> &mdash; There is no tipping culture in Taiwan</span></p>
+            <p><span class="th"><strong>7-11 มีทุกที่</strong> &mdash; เปิด 24 ชม. มีทุกอย่าง ใช้ EasyCard จ่ายได้</span><span class="en"><strong>7-11 everywhere</strong> &mdash; Open 24 hrs, has everything. Pay with EasyCard</span></p>
+            <p><span class="th"><strong>ปลั๊กไฟเหมือนไทย</strong> &mdash; หัวแบน 2 ขา 110V ไม่ต้องพกหัวแปลง</span><span class="en"><strong>Same plug as Thailand</strong> &mdash; Flat 2-pin 110V, no adapter needed</span></p>
         </div>
 
         <div class="card">
-            <div class="card-title"><i class="fa-solid fa-mobile-screen-button"></i> แอปที่ควรมี</div>
-            <p><strong>Google Maps</strong> &mdash; นำทาง (โหลด offline map ไว้ด้วย)</p>
-            <p><strong>Google Translate</strong> &mdash; แปลภาษาจีน + โหมดกล้องแปลป้าย</p>
-            <p><strong>Klook / KKday</strong> &mdash; จองตั๋ว HSR + บัตรท่องเที่ยวราคาพิเศษ</p>
+            <div class="card-title"><i class="fa-solid fa-mobile-screen-button"></i> <span class="th">แอปที่ควรมี</span><span class="en">Essential Apps</span></div>
+            <p><span class="th"><strong>Google Maps</strong> &mdash; นำทาง (โหลด offline map ไว้ด้วย)</span><span class="en"><strong>Google Maps</strong> &mdash; Navigation (download offline maps too)</span></p>
+            <p><span class="th"><strong>Google Translate</strong> &mdash; แปลภาษาจีน + โหมดกล้องแปลป้าย</span><span class="en"><strong>Google Translate</strong> &mdash; Translate Chinese + camera mode for signs</span></p>
+            <p><span class="th"><strong>Klook / KKday</strong> &mdash; จองตั๋ว HSR + บัตรท่องเที่ยวราคาพิเศษ</span><span class="en"><strong>Klook / KKday</strong> &mdash; Book HSR tickets + discount tourist passes</span></p>
         </div>
 
         <div class="card">
-            <div class="card-title"><i class="fa-solid fa-gift"></i> ของฝากแนะนำ</div>
-            <p><strong>พายสับปะรด (鳳梨酥)</strong> &mdash; ของฝากอันดับ 1 แนะนำ Chia Te, SunnyHills</p>
-            <p><strong>แครกเกอร์นูกัต</strong> &mdash; นุ่ม หวานพอดี ซื้อได้ทุก 7-11</p>
-            <p><strong>L'Atelier Lotus</strong> &mdash; ร้านขาย Nougat พรีเมียม รสชาติหลากหลาย แพ็คเกจสวยเหมาะเป็นของฝาก</p>
-            <p><strong>ชาอู่หลง</strong> &mdash; ชาชั้นดีจากภูเขา หอมละมุน</p>
+            <div class="card-title"><i class="fa-solid fa-gift"></i> <span class="th">ของฝากแนะนำ</span><span class="en">Recommended Souvenirs</span></div>
+            <p><span class="th"><strong>พายสับปะรด (鳳梨酥)</strong> &mdash; ของฝากอันดับ 1 แนะนำ Chia Te, SunnyHills</span><span class="en"><strong>Pineapple Cake (鳳梨酥)</strong> &mdash; #1 souvenir. Try Chia Te, SunnyHills</span></p>
+            <p><span class="th"><strong>แครกเกอร์นูกัต</strong> &mdash; นุ่ม หวานพอดี ซื้อได้ทุก 7-11</span><span class="en"><strong>Nougat Crackers</strong> &mdash; Soft, perfectly sweet. Available at every 7-11</span></p>
+            <p><span class="th"><strong>L'Atelier Lotus</strong> &mdash; ร้านขาย Nougat พรีเมียม รสชาติหลากหลาย แพ็คเกจสวยเหมาะเป็นของฝาก</span><span class="en"><strong>L'Atelier Lotus</strong> &mdash; Premium nougat shop, many flavors, beautiful packaging for gifts</span></p>
+            <p><span class="th"><strong>ชาอู่หลง</strong> &mdash; ชาชั้นดีจากภูเขา หอมละมุน</span><span class="en"><strong>Oolong Tea</strong> &mdash; Premium mountain tea, smooth and fragrant</span></p>
         </div>
     </section>
 
@@ -1684,24 +1714,24 @@
     <!-- ============================================ -->
     <section class="section" id="checklist">
         <div class="section-label"><i class="fa-solid fa-clipboard-check"></i> CHECKLIST</div>
-        <h2 class="section-title">ไอเทมเด็ดก่อนจัดกระเป๋า</h2>
+        <h2 class="section-title"><span class="th">ไอเทมเด็ดก่อนจัดกระเป๋า</span><span class="en">Packing Checklist</span></h2>
 
-        <div class="check-item"><div class="check-box"></div>พาสปอร์ต (ไม่ต้องขอวีซ่า อยู่ได้ 14 วัน)</div>
-        <div class="check-item"><div class="check-box"></div>ตั๋วเครื่องบิน Multi-City (BKK &rarr; TPE / KHH &rarr; BKK)</div>
-        <div class="check-item"><div class="check-box"></div>ตั๋ว HSR จอง Klook/KKday</div>
-        <div class="check-item"><div class="check-box"></div>eSIM / SIM Card ซื้อล่วงหน้า</div>
-        <div class="check-item"><div class="check-box"></div>แลกเงิน TWD + สมัคร Travel Card</div>
-        <div class="check-item"><div class="check-box"></div>เสื้อกันฝนแบบพับได้ / ร่มพับ (ฝนตกบ่อย + ใช้ตอนมุดน้ำตก)</div>
-        <div class="check-item"><div class="check-box"></div><strong>รองเท้าผ้าใบดอกยางลึก</strong> (สำคัญมากสำหรับเดินเขาหยางหมิงซาน!)</div>
-        <div class="check-item"><div class="check-box"></div>ถุงผ้า (ไต้หวันงดแจกถุงพลาสติกทุกร้าน)</div>
-        <div class="check-item"><div class="check-box"></div>โหลด Google Maps + Google Translate offline</div>
-        <div class="check-item"><div class="check-box"></div>กรอก Arrival Card ออนไลน์ล่วงหน้า</div>
+        <div class="check-item"><div class="check-box"></div><span class="th">พาสปอร์ต (ไม่ต้องขอวีซ่า อยู่ได้ 14 วัน)</span><span class="en">Passport (Visa-free, stay up to 14 days)</span></div>
+        <div class="check-item"><div class="check-box"></div><span class="th">ตั๋วเครื่องบิน Multi-City (BKK &rarr; TPE / KHH &rarr; BKK)</span><span class="en">Multi-City flight tickets (BKK &rarr; TPE / KHH &rarr; BKK)</span></div>
+        <div class="check-item"><div class="check-box"></div><span class="th">ตั๋ว HSR จอง Klook/KKday</span><span class="en">HSR tickets booked via Klook/KKday</span></div>
+        <div class="check-item"><div class="check-box"></div><span class="th">eSIM / SIM Card ซื้อล่วงหน้า</span><span class="en">eSIM / SIM Card purchased in advance</span></div>
+        <div class="check-item"><div class="check-box"></div><span class="th">แลกเงิน TWD + สมัคร Travel Card</span><span class="en">Exchange TWD + apply for Travel Card</span></div>
+        <div class="check-item"><div class="check-box"></div><span class="th">เสื้อกันฝนแบบพับได้ / ร่มพับ (ฝนตกบ่อย + ใช้ตอนมุดน้ำตก)</span><span class="en">Foldable rain jacket / umbrella (frequent rain + for behind-waterfall walk)</span></div>
+        <div class="check-item"><div class="check-box"></div><span class="th"><strong>รองเท้าผ้าใบดอกยางลึก</strong> (สำคัญมากสำหรับเดินเขาหยางหมิงซาน!)</span><span class="en"><strong>Non-slip sneakers</strong> (essential for Yangmingshan hiking!)</span></div>
+        <div class="check-item"><div class="check-box"></div><span class="th">ถุงผ้า (ไต้หวันงดแจกถุงพลาสติกทุกร้าน)</span><span class="en">Reusable bag (Taiwan bans free plastic bags)</span></div>
+        <div class="check-item"><div class="check-box"></div><span class="th">โหลด Google Maps + Google Translate offline</span><span class="en">Download Google Maps + Google Translate offline</span></div>
+        <div class="check-item"><div class="check-box"></div><span class="th">กรอก Arrival Card ออนไลน์ล่วงหน้า</span><span class="en">Fill in Arrival Card online in advance</span></div>
     </section>
 
     <!-- ===== FOOTER ===== -->
     <div class="footer">
-        <p><strong>Taiwan Travel Guidebook V1.4</strong></p>
-        <p>เที่ยวสนุก กลับมาปลอดภัย &#9992;&#65039;&#127481;&#127484;</p>
+        <p><strong>Taiwan Travel Guidebook V1.5</strong></p>
+        <p><span class="th">เที่ยวสนุก กลับมาปลอดภัย &#9992;&#65039;&#127481;&#127484;</span><span class="en">Have a great trip, come back safe &#9992;&#65039;&#127481;&#127484;</span></p>
     </div>
 
 </div>
@@ -1716,12 +1746,12 @@
         <a href="#day5" class="bnav-item"><i class="fa-solid fa-5"></i>DAY 5</a>
         <a href="#day6" class="bnav-item"><i class="fa-solid fa-6"></i>DAY 6</a>
         <a href="#bonus" class="bnav-item"><i class="fa-solid fa-compass"></i>Bonus</a>
-        <a href="budget.html" class="bnav-item"><i class="fa-solid fa-wallet"></i>เงิน</a>
+        <a href="budget.html" class="bnav-item"><i class="fa-solid fa-wallet"></i><span class="th">เงิน</span><span class="en">Budget</span></a>
     </div>
 </nav>
 
 <!-- ===== BACK TO TOP ===== -->
-<button class="btt" id="btt" aria-label="กลับขึ้นด้านบน"><i class="fa-solid fa-chevron-up"></i></button>
+<button class="btt" id="btt" aria-label="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
 
 <script>
     // Back to top
@@ -1749,6 +1779,20 @@
         const el = document.getElementById(id);
         if (el) observer.observe(el);
     });
+
+    // Language toggle
+    function setLang(lang) {
+        const html = document.documentElement;
+        html.className = 'lang-' + lang;
+        html.lang = lang;
+        document.querySelectorAll('.lang-toggle button').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+        });
+        localStorage.setItem('tw_guide_lang', lang);
+    }
+    // Restore saved language
+    const savedLang = localStorage.getItem('tw_guide_lang');
+    if (savedLang === 'en') setLang('en');
 </script>
 
 </body>
