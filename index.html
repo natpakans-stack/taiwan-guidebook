@@ -525,26 +525,33 @@
 
         .bottom-nav-inner {
             display: flex;
-            justify-content: space-around;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
             max-width: 640px;
             margin: 0 auto;
             height: 56px;
+            gap: 0;
         }
+
+        .bottom-nav-inner::-webkit-scrollbar { display: none; }
 
         .bnav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
             gap: 2px;
             text-decoration: none;
             color: var(--text-tertiary);
             font-size: 10px;
             font-weight: 700;
-            padding: 4px 8px;
+            padding: 4px 10px;
             -webkit-tap-highlight-color: transparent;
             transition: color 0.2s;
-            min-width: 52px;
+            min-width: 56px;
         }
 
         .bnav-item i { font-size: 18px; }
@@ -613,7 +620,7 @@
 <!-- ===== HERO ===== -->
 <header class="hero" id="top">
     <span class="hero-flag">&#127481;&#127484;</span>
-    <h1>คู่มือเที่ยวไต้หวัน<span>Taiwan Travel Guidebook V1.3</span></h1>
+    <h1>คู่มือเที่ยวไต้หวัน<span>Taiwan Travel Guidebook V1.4</span></h1>
     <p class="hero-sub">ไทเป &rarr; หยางหมิงซาน &rarr; ซานเตียวหลิ่ง &amp; อู่ไหล &rarr; เกาสง<br>เที่ยวครบทุกรส: เมืองหลวง &bull; ภูเขาไฟ &amp; ทุ่งหญ้า &bull; เทรลน้ำตก &amp; หมู่บ้านอาตายัล &bull; เมืองท่าศิลปะริมทะเล</p>
     <div class="hero-chips">
         <span class="hero-chip">1&ndash;6 พ.ค. 2568</span>
@@ -635,6 +642,7 @@
 
         <div class="card" style="border-left: 3px solid var(--green);">
             <div class="card-title"><i class="fa-solid fa-calendar-days"></i> ช่วงเวลาเดินทาง: 1&ndash;6 พ.ค. 2568</div>
+            <p style="font-size:12px; color:var(--text-tertiary); margin-bottom:4px;">Travel Period: 1&ndash;6 May 2025 &bull; Taipei (3 nights) &rarr; Kaohsiung (2 nights)</p>
             <table style="width:100%; border-collapse:collapse; font-size:14px; margin-top:8px;">
                 <thead>
                     <tr style="text-align:left; border-bottom:2px solid var(--border);">
@@ -816,6 +824,7 @@
             <div class="day-info">
                 <h3>สวัสดีไทเป &mdash; เช็คอิน & สายมู</h3>
                 <p>เดินทางถึง + เที่ยวรอบเมืองหลวง</p>
+                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">Arrive Taipei &bull; Check-in &bull; Temples &bull; Night Market</p>
             </div>
         </div>
 
@@ -916,6 +925,7 @@
             <div class="day-info">
                 <h3>หยางหมิงซาน &mdash; ภูเขาไฟ &amp; ทุ่งหญ้าบนยอดเขา</h3>
                 <p>Xiaoyoukeng ควันกำมะถัน + Qingtiangang ทุ่งหญ้าสุดปัง</p>
+                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">Yangmingshan National Park &bull; Xiaoyoukeng Fumaroles &bull; Qingtiangang Grassland</p>
             </div>
         </div>
 
@@ -1033,6 +1043,7 @@
             <div class="day-info">
                 <h3>เทรลน้ำตก &amp; หมู่บ้านอาตายัล</h3>
                 <p>Sandiaoling เทรลเช้า + อู่ไหลน้ำตก &amp; รถรางบ่าย</p>
+                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">Sandiaoling Waterfall Trail &bull; Wulai Aboriginal Village &bull; Wulai Waterfall &bull; Log Cart</p>
             </div>
         </div>
 
@@ -1167,6 +1178,7 @@
             <div class="day-info">
                 <h3>วาร์ปสู่แดนใต้ &mdash; ตามรอยความอาร์ต "เกาสง"</h3>
                 <p>HSR ลงใต้ + ศิลปะ + สะพานหมุน + Dome of Light</p>
+                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">HSR to Kaohsiung &bull; Pier-2 Art Center &bull; Great Harbor Bridge &bull; Dome of Light</p>
             </div>
         </div>
 
@@ -1267,6 +1279,7 @@
             <div class="day-info">
                 <h3>พลังศรัทธา &amp; ปั่นจักรยานรับลมทะเล</h3>
                 <p>พุทธอุทยาน + เกาะฉีจิน + ซีฟู้ดสด</p>
+                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">Fo Guang Shan Buddha Museum &bull; Cijin Island &bull; Seafood &bull; Starlight Tunnel</p>
             </div>
         </div>
 
@@ -1355,6 +1368,7 @@
             <div class="day-info">
                 <h3>สะเดาะเคราะห์ &amp; ซื้อของฝากก่อนกลับ</h3>
                 <p>เจดีย์มังกร-เสือ + Dream Mall + บินกลับ</p>
+                <p style="font-size:12px; color:var(--text-tertiary); margin-top:2px;">Dragon &amp; Tiger Pagodas &bull; Dream Mall &bull; Fly home from KHH Airport</p>
             </div>
         </div>
 
@@ -1686,7 +1700,7 @@
 
     <!-- ===== FOOTER ===== -->
     <div class="footer">
-        <p><strong>Taiwan Travel Guidebook V1.3</strong></p>
+        <p><strong>Taiwan Travel Guidebook V1.4</strong></p>
         <p>เที่ยวสนุก กลับมาปลอดภัย &#9992;&#65039;&#127481;&#127484;</p>
     </div>
 
@@ -1695,7 +1709,6 @@
 <!-- ===== BOTTOM NAV ===== -->
 <nav class="bottom-nav">
     <div class="bottom-nav-inner">
-        <a href="#prep" class="bnav-item"><i class="fa-solid fa-clipboard-list"></i>เตรียมตัว</a>
         <a href="#day1" class="bnav-item"><i class="fa-solid fa-1"></i>DAY 1</a>
         <a href="#day2" class="bnav-item"><i class="fa-solid fa-2"></i>DAY 2</a>
         <a href="#day3" class="bnav-item"><i class="fa-solid fa-3"></i>DAY 3</a>
@@ -1703,6 +1716,7 @@
         <a href="#day5" class="bnav-item"><i class="fa-solid fa-5"></i>DAY 5</a>
         <a href="#day6" class="bnav-item"><i class="fa-solid fa-6"></i>DAY 6</a>
         <a href="#bonus" class="bnav-item"><i class="fa-solid fa-compass"></i>Bonus</a>
+        <a href="budget.html" class="bnav-item"><i class="fa-solid fa-wallet"></i>เงิน</a>
     </div>
 </nav>
 
@@ -1718,7 +1732,7 @@
     btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
     // Active nav highlight
-    const sections = ['prep','day1','day2','day3','day4','day5','day6','bonus','tips'];
+    const sections = ['day1','day2','day3','day4','day5','day6','bonus','tips'];
     const navItems = document.querySelectorAll('.bnav-item');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {

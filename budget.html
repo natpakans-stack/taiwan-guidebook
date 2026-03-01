@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Budget Tracker | Taiwan Trip 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+Sans+TH:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #E74C5E;
+            --primary-light: #FFF0F2;
+            --secondary: #2A6FDB;
+            --secondary-light: #EBF2FF;
+            --green: #3BA676;
+            --green-light: #EDFAF3;
+            --orange: #E8913A;
+            --orange-light: #FFF5EA;
+            --purple: #7B61FF;
+            --purple-light: #F0EDFF;
+            --text-primary: #1B1D22;
+            --text-secondary: #5A5E6E;
+            --text-tertiary: #9A9DAD;
+            --bg-page: #F6F7FA;
+            --bg-card: #FFFFFF;
+            --border: #EBECEF;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'LINE Seed Sans TH', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-bottom: calc(68px + var(--safe-bottom));
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, var(--secondary), var(--purple));
+            color: white;
+            padding: 48px 16px 24px;
+            text-align: center;
+        }
+
+        .header h1 { font-size: 22px; font-weight: 700; }
+        .header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+
+        .header-back {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ===== SUMMARY CARDS ===== */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 16px;
+            margin-top: -20px;
+        }
+
+        .summary-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .summary-card .label { font-size: 10px; color: var(--text-tertiary); font-weight: 700; text-transform: uppercase; }
+        .summary-card .amount { font-size: 18px; font-weight: 700; margin-top: 2px; }
+        .summary-card .currency { font-size: 10px; color: var(--text-tertiary); }
+        .summary-card.planned .amount { color: var(--secondary); }
+        .summary-card.actual .amount { color: var(--primary); }
+        .summary-card.diff .amount { color: var(--green); }
+        .summary-card.diff .amount.over { color: var(--primary); }
+
+        /* ===== CONTENT ===== */
+        .content { padding: 0 16px 24px; max-width: 640px; margin: 0 auto; }
+
+        /* ===== FORM ===== */
+        .form-section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 16px;
+        }
+
+        .form-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-title i { color: var(--secondary); }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .form-row.full { grid-template-columns: 1fr; }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--secondary);
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn:active { opacity: 0.8; }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: var(--bg-page);
+            color: var(--text-secondary);
+            flex: 0 0 auto;
+            padding: 12px 20px;
+        }
+
+        .btn-cancel.hidden { display: none; }
+
+        /* ===== TABS ===== */
+        .tab-bar {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 12px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tab-bar::-webkit-scrollbar { display: none; }
+
+        .tab {
+            flex-shrink: 0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        /* ===== TABLE ===== */
+        .table-section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table-header i { color: var(--secondary); margin-right: 6px; }
+
+        .expense-list { list-style: none; }
+
+        .expense-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            gap: 10px;
+            transition: background 0.15s;
+        }
+
+        .expense-item:last-child { border-bottom: none; }
+        .expense-item:active { background: var(--bg-page); }
+
+        .expense-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .expense-icon.fixed { background: var(--purple-light); color: var(--purple); }
+        .expense-icon.variable { background: var(--orange-light); color: var(--orange); }
+
+        .expense-info { flex: 1; min-width: 0; }
+        .expense-name { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .expense-meta { font-size: 11px; color: var(--text-tertiary); display: flex; gap: 8px; }
+
+        .expense-amounts { text-align: right; flex-shrink: 0; }
+        .expense-planned { font-size: 11px; color: var(--text-tertiary); }
+        .expense-actual { font-size: 14px; font-weight: 700; }
+        .expense-actual.over { color: var(--primary); }
+        .expense-actual.under { color: var(--green); }
+
+        .expense-actions {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .expense-actions button {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-edit { background: var(--secondary-light); color: var(--secondary); }
+        .btn-delete { background: var(--primary-light); color: var(--primary); }
+
+        .empty-state {
+            text-align: center;
+            padding: 32px 16px;
+            color: var(--text-tertiary);
+            font-size: 13px;
+        }
+
+        .empty-state i { font-size: 32px; margin-bottom: 8px; display: block; }
+
+        /* ===== TYPE BADGE ===== */
+        .type-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .type-badge.fixed { background: var(--purple-light); color: var(--purple); }
+        .type-badge.variable { background: var(--orange-light); color: var(--orange); }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border);
+            z-index: 100;
+            padding-bottom: var(--safe-bottom);
+        }
+
+        .bottom-nav-inner {
+            display: flex;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            max-width: 640px;
+            margin: 0 auto;
+            height: 56px;
+        }
+
+        .bottom-nav-inner::-webkit-scrollbar { display: none; }
+
+        .bnav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            gap: 2px;
+            text-decoration: none;
+            color: var(--text-tertiary);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            -webkit-tap-highlight-color: transparent;
+            transition: color 0.2s;
+            min-width: 56px;
+        }
+
+        .bnav-item i { font-size: 18px; }
+        .bnav-item.active { color: var(--primary); }
+
+        @media (min-width: 768px) {
+            .bottom-nav { display: none; }
+            body { padding-bottom: 0; }
+            .summary-grid { max-width: 640px; margin-left: auto; margin-right: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header" style="position: relative;">
+    <a href="index.html" class="header-back"><i class="fa-solid fa-chevron-left"></i> แผนเที่ยว</a>
+    <h1><i class="fa-solid fa-wallet"></i> Budget Tracker</h1>
+    <p>Taiwan Trip &bull; 1&ndash;6 May 2025</p>
+</div>
+
+<!-- ===== SUMMARY ===== -->
+<div class="summary-grid">
+    <div class="summary-card planned">
+        <div class="label">แผน</div>
+        <div class="amount" id="totalPlanned">0</div>
+        <div class="currency">TWD</div>
+    </div>
+    <div class="summary-card actual">
+        <div class="label">จ่ายจริง</div>
+        <div class="amount" id="totalActual">0</div>
+        <div class="currency">TWD</div>
+    </div>
+    <div class="summary-card diff">
+        <div class="label">ส่วนต่าง</div>
+        <div class="amount" id="totalDiff">0</div>
+        <div class="currency">TWD</div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- ===== ADD/EDIT FORM ===== -->
+    <div class="form-section">
+        <div class="form-title"><i class="fa-solid fa-plus-circle"></i> <span id="formTitle">เพิ่มรายการ</span></div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>รายการ</label>
+                <input type="text" id="itemName" placeholder="เช่น ตั๋วเครื่องบิน">
+            </div>
+            <div class="form-group">
+                <label>หมวด</label>
+                <select id="itemCategory">
+                    <option value="transport">การเดินทาง</option>
+                    <option value="hotel">ที่พัก</option>
+                    <option value="food">อาหาร</option>
+                    <option value="ticket">ตั๋ว/ค่าเข้าชม</option>
+                    <option value="shopping">ช้อปปิ้ง</option>
+                    <option value="other">อื่น ๆ</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>ประเภท</label>
+                <select id="itemType">
+                    <option value="fixed">Fixed Cost (จ่ายล่วงหน้า)</option>
+                    <option value="variable">Variable Cost (จ่ายตอนเที่ยว)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>วัน</label>
+                <select id="itemDay">
+                    <option value="0">ก่อนเดินทาง</option>
+                    <option value="1">Day 1 — ไทเป</option>
+                    <option value="2">Day 2 — หยางหมิงซาน</option>
+                    <option value="3">Day 3 — Sandiaoling + อู่ไหล</option>
+                    <option value="4">Day 4 — เกาสง</option>
+                    <option value="5">Day 5 — ฉีจิน</option>
+                    <option value="6">Day 6 — บินกลับ</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>บัดเจท (TWD)</label>
+                <input type="number" id="itemPlanned" placeholder="0" min="0">
+            </div>
+            <div class="form-group">
+                <label>จ่ายจริง (TWD)</label>
+                <input type="number" id="itemActual" placeholder="0" min="0">
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn btn-cancel hidden" id="btnCancel" onclick="cancelEdit()">ยกเลิก</button>
+            <button class="btn btn-primary" id="btnSave" onclick="saveItem()"><i class="fa-solid fa-check"></i> บันทึก</button>
+        </div>
+    </div>
+
+    <!-- ===== FILTER TABS ===== -->
+    <div class="tab-bar" id="tabBar">
+        <div class="tab active" data-filter="all">ทั้งหมด</div>
+        <div class="tab" data-filter="fixed">Fixed</div>
+        <div class="tab" data-filter="variable">Variable</div>
+        <div class="tab" data-filter="0">ก่อนเที่ยว</div>
+        <div class="tab" data-filter="1">Day 1</div>
+        <div class="tab" data-filter="2">Day 2</div>
+        <div class="tab" data-filter="3">Day 3</div>
+        <div class="tab" data-filter="4">Day 4</div>
+        <div class="tab" data-filter="5">Day 5</div>
+        <div class="tab" data-filter="6">Day 6</div>
+    </div>
+
+    <!-- ===== EXPENSE TABLE ===== -->
+    <div class="table-section">
+        <div class="table-header">
+            <span><i class="fa-solid fa-list"></i> รายการค่าใช้จ่าย</span>
+            <span id="itemCount" style="font-size:12px; color:var(--text-tertiary);">0 รายการ</span>
+        </div>
+        <ul class="expense-list" id="expenseList">
+            <li class="empty-state" id="emptyState">
+                <i class="fa-solid fa-receipt"></i>
+                ยังไม่มีรายการ<br>เพิ่มรายการแรกได้เลย!
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+        <a href="index.html#day1" class="bnav-item"><i class="fa-solid fa-1"></i>DAY 1</a>
+        <a href="index.html#day2" class="bnav-item"><i class="fa-solid fa-2"></i>DAY 2</a>
+        <a href="index.html#day3" class="bnav-item"><i class="fa-solid fa-3"></i>DAY 3</a>
+        <a href="index.html#day4" class="bnav-item"><i class="fa-solid fa-4"></i>DAY 4</a>
+        <a href="index.html#day5" class="bnav-item"><i class="fa-solid fa-5"></i>DAY 5</a>
+        <a href="index.html#day6" class="bnav-item"><i class="fa-solid fa-6"></i>DAY 6</a>
+        <a href="index.html#bonus" class="bnav-item"><i class="fa-solid fa-compass"></i>Bonus</a>
+        <a href="budget.html" class="bnav-item active"><i class="fa-solid fa-wallet"></i>เงิน</a>
+    </div>
+</nav>
+
+<script>
+const STORAGE_KEY = 'taiwan_budget_2025';
+let expenses = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+let editingId = null;
+let currentFilter = 'all';
+
+const categoryIcons = {
+    transport: 'fa-plane',
+    hotel: 'fa-bed',
+    food: 'fa-utensils',
+    ticket: 'fa-ticket',
+    shopping: 'fa-bag-shopping',
+    other: 'fa-ellipsis'
+};
+
+const categoryNames = {
+    transport: 'การเดินทาง',
+    hotel: 'ที่พัก',
+    food: 'อาหาร',
+    ticket: 'ตั๋ว/ค่าเข้าชม',
+    shopping: 'ช้อปปิ้ง',
+    other: 'อื่น ๆ'
+};
+
+const dayLabels = {
+    '0': 'ก่อนเที่ยว',
+    '1': 'Day 1',
+    '2': 'Day 2',
+    '3': 'Day 3',
+    '4': 'Day 4',
+    '5': 'Day 5',
+    '6': 'Day 6'
+};
+
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+}
+
+function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
+}
+
+function saveItem() {
+    const name = document.getElementById('itemName').value.trim();
+    const category = document.getElementById('itemCategory').value;
+    const type = document.getElementById('itemType').value;
+    const day = document.getElementById('itemDay').value;
+    const planned = parseInt(document.getElementById('itemPlanned').value) || 0;
+    const actual = parseInt(document.getElementById('itemActual').value) || 0;
+
+    if (!name) {
+        document.getElementById('itemName').focus();
+        return;
+    }
+
+    if (editingId) {
+        const idx = expenses.findIndex(e => e.id === editingId);
+        if (idx !== -1) {
+            expenses[idx] = { ...expenses[idx], name, category, type, day, planned, actual };
+        }
+        editingId = null;
+        document.getElementById('formTitle').textContent = 'เพิ่มรายการ';
+        document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-check"></i> บันทึก';
+        document.getElementById('btnCancel').classList.add('hidden');
+    } else {
+        expenses.push({ id: generateId(), name, category, type, day, planned, actual });
+    }
+
+    save();
+    clearForm();
+    render();
+}
+
+function editItem(id) {
+    const item = expenses.find(e => e.id === id);
+    if (!item) return;
+
+    editingId = id;
+    document.getElementById('itemName').value = item.name;
+    document.getElementById('itemCategory').value = item.category;
+    document.getElementById('itemType').value = item.type;
+    document.getElementById('itemDay').value = item.day;
+    document.getElementById('itemPlanned').value = item.planned || '';
+    document.getElementById('itemActual').value = item.actual || '';
+    document.getElementById('formTitle').textContent = 'แก้ไขรายการ';
+    document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-pen"></i> อัปเดต';
+    document.getElementById('btnCancel').classList.remove('hidden');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function deleteItem(id) {
+    if (!confirm('ลบรายการนี้?')) return;
+    expenses = expenses.filter(e => e.id !== id);
+    save();
+    if (editingId === id) cancelEdit();
+    render();
+}
+
+function cancelEdit() {
+    editingId = null;
+    document.getElementById('formTitle').textContent = 'เพิ่มรายการ';
+    document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-check"></i> บันทึก';
+    document.getElementById('btnCancel').classList.add('hidden');
+    clearForm();
+}
+
+function clearForm() {
+    document.getElementById('itemName').value = '';
+    document.getElementById('itemPlanned').value = '';
+    document.getElementById('itemActual').value = '';
+}
+
+function getFiltered() {
+    if (currentFilter === 'all') return expenses;
+    if (currentFilter === 'fixed' || currentFilter === 'variable') {
+        return expenses.filter(e => e.type === currentFilter);
+    }
+    return expenses.filter(e => e.day === currentFilter);
+}
+
+function render() {
+    const filtered = getFiltered();
+    const list = document.getElementById('expenseList');
+    const empty = document.getElementById('emptyState');
+
+    // Summary
+    const totalP = expenses.reduce((s, e) => s + (e.planned || 0), 0);
+    const totalA = expenses.reduce((s, e) => s + (e.actual || 0), 0);
+    const diff = totalP - totalA;
+
+    document.getElementById('totalPlanned').textContent = totalP.toLocaleString();
+    document.getElementById('totalActual').textContent = totalA.toLocaleString();
+
+    const diffEl = document.getElementById('totalDiff');
+    diffEl.textContent = (diff >= 0 ? '-' : '+') + Math.abs(diff).toLocaleString();
+    diffEl.className = 'amount' + (diff < 0 ? ' over' : '');
+
+    // List
+    document.getElementById('itemCount').textContent = filtered.length + ' รายการ';
+
+    if (filtered.length === 0) {
+        list.innerHTML = '<li class="empty-state"><i class="fa-solid fa-receipt"></i>ไม่มีรายการในหมวดนี้</li>';
+        return;
+    }
+
+    list.innerHTML = filtered.map(e => {
+        const icon = categoryIcons[e.category] || 'fa-ellipsis';
+        const catName = categoryNames[e.category] || e.category;
+        const dayLabel = dayLabels[e.day] || '';
+        const diff = (e.planned || 0) - (e.actual || 0);
+        const diffClass = e.actual > 0 ? (diff < 0 ? 'over' : 'under') : '';
+
+        return `<li class="expense-item">
+            <div class="expense-icon ${e.type}"><i class="fa-solid ${icon}"></i></div>
+            <div class="expense-info">
+                <div class="expense-name">${e.name}</div>
+                <div class="expense-meta">
+                    <span class="type-badge ${e.type}">${e.type === 'fixed' ? 'Fixed' : 'Variable'}</span>
+                    <span>${catName}</span>
+                    <span>${dayLabel}</span>
+                </div>
+            </div>
+            <div class="expense-amounts">
+                <div class="expense-planned">${e.planned ? e.planned.toLocaleString() : '-'}</div>
+                <div class="expense-actual ${diffClass}">${e.actual ? e.actual.toLocaleString() : '-'}</div>
+            </div>
+            <div class="expense-actions">
+                <button class="btn-edit" onclick="editItem('${e.id}')" aria-label="แก้ไข"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-delete" onclick="deleteItem('${e.id}')" aria-label="ลบ"><i class="fa-solid fa-trash"></i></button>
+            </div>
+        </li>`;
+    }).join('');
+}
+
+// Tab handling
+document.getElementById('tabBar').addEventListener('click', (e) => {
+    const tab = e.target.closest('.tab');
+    if (!tab) return;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentFilter = tab.dataset.filter;
+    render();
+});
+
+// Initial render
+render();
+</script>
+
+</body>
+</html>
