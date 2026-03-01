@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Taiwan Travel Guide | คู่มือเที่ยวไต้หวัน</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+Sans+TH:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #E74C5E;
+            --primary-light: #FFF0F2;
+            --secondary: #2A6FDB;
+            --secondary-light: #EBF2FF;
+            --green: #3BA676;
+            --green-light: #EDFAF3;
+            --orange: #E8913A;
+            --orange-light: #FFF5EA;
+            --purple: #7B61FF;
+            --purple-light: #F0EDFF;
+            --text-primary: #1B1D22;
+            --text-secondary: #5A5E6E;
+            --text-tertiary: #9A9DAD;
+            --bg-page: #F6F7FA;
+            --bg-white: #FFFFFF;
+            --bg-light: #F0F1F5;
+            --border: #E4E6ED;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 18px;
+            --radius-full: 999px;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+        body {
+            font-family: 'LINE Seed Sans TH', -apple-system, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 15px;
+            padding-bottom: calc(72px + var(--safe-bottom));
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+            color: white;
+            padding: 48px 20px 36px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-flag { font-size: 48px; display: block; margin-bottom: 12px; }
+
+        .hero h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 6px;
+        }
+
+        .hero h1 span {
+            display: block;
+            font-size: 13px;
+            font-weight: 400;
+            opacity: 0.6;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+
+        .hero-sub {
+            font-size: 14px;
+            opacity: 0.75;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .hero-chips {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .hero-chip {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius-full);
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* ===== SECTION ===== */
+        .content { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+
+        .section {
+            margin-top: 32px;
+            scroll-margin-top: 16px;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p, .card-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .card p:last-child, .card-text:last-child { margin-bottom: 0; }
+
+        /* ===== INFO GRID ===== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .info-box {
+            background: var(--bg-white);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .info-box .ii { font-size: 22px; margin-bottom: 4px; display: block; }
+        .info-box .il { font-size: 11px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-box .iv { font-size: 15px; font-weight: 700; margin: 2px 0; }
+        .info-box .id { font-size: 12px; color: var(--text-secondary); }
+
+        /* ===== TIP BOX ===== */
+        .tip {
+            background: var(--orange-light);
+            border-left: 3px solid var(--orange);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 14px 16px;
+            margin: 12px 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .tip strong { color: var(--orange); display: block; margin-bottom: 2px; font-size: 12px; }
+
+        .tip-blue {
+            background: var(--secondary-light);
+            border-left-color: var(--secondary);
+        }
+
+        .tip-blue strong { color: var(--secondary); }
+
+        .tip-red {
+            background: var(--primary-light);
+            border-left-color: var(--primary);
+        }
+
+        .tip-red strong { color: var(--primary); }
+
+        /* ===== TRANSPORT ===== */
+        .transport-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: var(--bg-white);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+        }
+
+        .transport-badge {
+            width: 40px; height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; flex-shrink: 0;
+        }
+
+        .transport-badge.mrt { background: #E8F5E9; color: #2E7D32; }
+        .transport-badge.hsr { background: #FFF3E0; color: #E65100; }
+        .transport-badge.tra { background: #E3F2FD; color: #1565C0; }
+        .transport-badge.bus { background: #F3E5F5; color: #7B1FA2; }
+        .transport-badge.taxi { background: #FFF9C4; color: #F9A825; }
+
+        .transport-info { flex: 1; }
+        .transport-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+        .transport-info p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+        .badge-sm {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+
+        .badge-green { background: var(--green-light); color: var(--green); }
+        .badge-red { background: var(--primary-light); color: var(--primary); }
+        .badge-orange { background: var(--orange-light); color: var(--orange); }
+        .badge-blue { background: var(--secondary-light); color: var(--secondary); }
+
+        /* ===== DAY SECTION ===== */
+        .day-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-top: 8px;
+        }
+
+        .day-num {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            flex-shrink: 0;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .day-num span { font-size: 20px; }
+
+        .day-info h3 { font-size: 18px; font-weight: 700; line-height: 1.3; }
+        .day-info p { font-size: 13px; color: var(--text-tertiary); }
+
+        /* ===== TIMELINE ===== */
+        .tl-item {
+            display: flex;
+            gap: 12px;
+            padding-bottom: 16px;
+            position: relative;
+        }
+
+        .tl-item:last-child { padding-bottom: 0; }
+
+        .tl-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 52px;
+            flex-shrink: 0;
+        }
+
+        .tl-time {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--secondary);
+            white-space: nowrap;
+        }
+
+        .tl-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--secondary);
+            margin: 6px 0 4px;
+            flex-shrink: 0;
+        }
+
+        .tl-line {
+            width: 2px;
+            flex: 1;
+            background: var(--border);
+        }
+
+        .tl-item:last-child .tl-line { display: none; }
+
+        .tl-body { flex: 1; padding-top: 0; }
+
+        .tl-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .tl-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+
+        /* MAP LINK */
+        .map-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--secondary-light);
+            color: var(--secondary);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            margin-top: 4px;
+            margin-right: 6px;
+            transition: opacity 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .map-link:active { opacity: 0.7; }
+
+        /* HIGHLIGHT CHIP */
+        .hl-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-top: 4px;
+            margin-right: 4px;
+        }
+
+        .hl-must { background: #FDECEA; color: #D32F2F; }
+        .hl-high { background: #FFF3E0; color: #E65100; }
+        .hl-food { background: #E8F5E9; color: #2E7D32; }
+        .hl-photo { background: var(--purple-light); color: var(--purple); }
+
+        /* ===== FOOD GRID ===== */
+        .food-item {
+            display: flex;
+            gap: 12px;
+            background: var(--bg-white);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+        }
+
+        .food-emoji { font-size: 28px; flex-shrink: 0; }
+        .food-info { flex: 1; }
+        .food-info h4 { font-size: 14px; font-weight: 700; margin-bottom: 1px; }
+        .food-info .food-en { font-size: 11px; color: var(--text-tertiary); margin-bottom: 4px; }
+        .food-info p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+        .food-price { font-size: 12px; font-weight: 700; color: var(--green); margin-top: 4px; }
+
+        /* ===== HOTEL ===== */
+        .hotel-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+        }
+
+        .hotel-city {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .hotel-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .hotel-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+        /* ===== PHRASE TABLE ===== */
+        .phrase-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-white);
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .phrase-row:first-child { border-radius: var(--radius-md) var(--radius-md) 0 0; }
+        .phrase-row:last-child { border-radius: 0 0 var(--radius-md) var(--radius-md); border-bottom: none; }
+
+        .phrase-th { flex: 1; font-weight: 700; }
+        .phrase-cn { flex: 1; }
+        .phrase-py { flex: 1.3; font-size: 12px; color: var(--secondary); }
+
+        .phrase-list {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        /* ===== CHECKLIST ===== */
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: var(--bg-white);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .check-box {
+            width: 20px; height: 20px;
+            border-radius: 5px;
+            border: 2px solid var(--border);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* ===== BUDGET TABLE ===== */
+        .budget-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: var(--bg-white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .budget-table th {
+            background: var(--bg-light);
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            text-align: left;
+        }
+
+        .budget-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .budget-table tr:last-child td { border-bottom: none; }
+
+        .budget-table .total td {
+            font-weight: 700;
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border);
+            z-index: 100;
+            padding-bottom: var(--safe-bottom);
+        }
+
+        .bottom-nav-inner {
+            display: flex;
+            justify-content: space-around;
+            max-width: 640px;
+            margin: 0 auto;
+            height: 56px;
+        }
+
+        .bnav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            text-decoration: none;
+            color: var(--text-tertiary);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            -webkit-tap-highlight-color: transparent;
+            transition: color 0.2s;
+            min-width: 52px;
+        }
+
+        .bnav-item i { font-size: 18px; }
+
+        .bnav-item.active, .bnav-item:active {
+            color: var(--primary);
+        }
+
+        /* ===== BACK TO TOP ===== */
+        .btt {
+            position: fixed;
+            bottom: calc(68px + var(--safe-bottom));
+            right: 16px;
+            width: 40px; height: 40px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btt.show { display: flex; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 32px 16px 24px;
+            color: var(--text-tertiary);
+            font-size: 12px;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 28px 0;
+        }
+
+        /* ===== DESKTOP ===== */
+        @media (min-width: 768px) {
+            .hero { padding: 64px 24px 48px; }
+            .hero h1 { font-size: 36px; }
+            .content { padding: 0 24px; }
+            .info-grid { grid-template-columns: repeat(4, 1fr); }
+            .bottom-nav { display: none; }
+            body { padding-bottom: 0; }
+            .btt { bottom: 24px; }
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            .bottom-nav, .btt { display: none !important; }
+            body { padding-bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+    <span class="hero-flag">&#127481;&#127484;</span>
+    <h1>คู่มือเที่ยวไต้หวัน<span>Taiwan Travel Guidebook V1.0</span></h1>
+    <p class="hero-sub">ไทเป &rarr; ซานเตียวหลิ่ง &rarr; สือเฟิ่น &rarr; เกาสง<br>เที่ยวครบทุกรส: เมืองหลวง &bull; ธรรมชาติลุยป่า &bull; เมืองท่าศิลปะริมทะเล</p>
+    <div class="hero-chips">
+        <span class="hero-chip">5 วัน 4 คืน</span>
+        <span class="hero-chip">2 เมือง</span>
+        <span class="hero-chip">~25K บาท</span>
+    </div>
+</header>
+
+<div class="content">
+
+    <!-- ============================================ -->
+    <!-- PREPARATION -->
+    <!-- ============================================ -->
+    <section class="section" id="prep">
+        <div class="section-label"><i class="fa-solid fa-clipboard-list"></i> STEP 0</div>
+        <h2 class="section-title">การเตรียมตัวจากไทย</h2>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-plane"></i> ตั๋วเครื่องบิน (สำคัญมาก!)</div>
+            <p>จองแบบ <strong>Multi-City</strong> (ไป-กลับคนละสนามบิน)</p>
+            <p><strong>ขาไป:</strong> กรุงเทพฯ (BKK/DMK) &#9992;&#65039; ไทเป (TPE - เถาหยวน)</p>
+            <p><strong>ขากลับ:</strong> เกาสง (KHH) &#9992;&#65039; กรุงเทพฯ (BKK/DMK)</p>
+            <div class="tip" style="margin-top: 10px;">
+                <strong><i class="fa-solid fa-piggy-bank"></i> ประหยัดเงิน+เวลา</strong>
+                ไม่ต้องนั่งรถไฟย้อนกลับไทเป ประหยัดได้ ~1,500 บาท และ 3-4 ชั่วโมง
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-train"></i> ตั๋ว HSR (รถไฟความเร็วสูง)</div>
+            <p>จองเส้นทาง <strong>Taipei &rarr; Zuoying</strong> ผ่านแอป Klook หรือ KKday</p>
+            <p>มักมีโปร <strong>1 แถม 1</strong> หรือส่วนลด 20% สำหรับนักท่องเที่ยว</p>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-wallet"></i> การเงิน</div>
+            <p><strong>แลกเงินสด TWD</strong> ไปส่วนหนึ่ง สำหรับตลาดกลางคืน</p>
+            <p><strong>สมัครบัตร Travel Card</strong> (YouTrip, Planet SCB) รูดซื้อของตามร้านสะดวกซื้อและห้าง เรทดีมาก ไม่มีชาร์จ 2.5%</p>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-sim-card"></i> อินเทอร์เน็ต</div>
+            <p>ซื้อ <strong>SIM Card หรือ eSIM</strong> ล่วงหน้าจากไทย ไปถึงเปิดใช้งานได้เลย</p>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- BASIC INFO -->
+    <!-- ============================================ -->
+    <section class="section" id="info">
+        <div class="section-label"><i class="fa-solid fa-circle-info"></i> ESSENTIALS</div>
+        <h2 class="section-title">ข้อมูลพื้นฐาน</h2>
+
+        <div class="info-grid">
+            <div class="info-box">
+                <span class="ii"><i class="fa-solid fa-passport"></i></span>
+                <div class="il">วีซ่า</div>
+                <div class="iv">ไม่ต้องขอ</div>
+                <div class="id">อยู่ได้ 14 วัน</div>
+            </div>
+            <div class="info-box">
+                <span class="ii"><i class="fa-solid fa-money-bill-wave"></i></span>
+                <div class="il">สกุลเงิน</div>
+                <div class="iv">TWD (NT$)</div>
+                <div class="id">1 TWD &asymp; 1.1 บาท</div>
+            </div>
+            <div class="info-box">
+                <span class="ii"><i class="fa-solid fa-plug"></i></span>
+                <div class="il">ปลั๊กไฟ</div>
+                <div class="iv">หัวแบน 2 ขา</div>
+                <div class="id">110V เหมือนไทย!</div>
+            </div>
+            <div class="info-box">
+                <span class="ii"><i class="fa-solid fa-clock"></i></span>
+                <div class="il">เวลา</div>
+                <div class="iv">GMT+8</div>
+                <div class="id">เร็วกว่าไทย 1 ชม.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- TRANSPORT -->
+    <!-- ============================================ -->
+    <section class="section" id="transport">
+        <div class="section-label"><i class="fa-solid fa-train-subway"></i> TRANSPORT</div>
+        <h2 class="section-title">ระบบขนส่ง</h2>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-credit-card"></i> EasyCard (悠遊卡)</div>
+            <p>บัตรเติมเงินใช้ได้ทุกระบบขนส่ง + ร้านสะดวกซื้อ (7-11, FamilyMart)</p>
+            <p>ซื้อที่สนามบินหรือสถานี MRT ราคา 100 TWD แนะนำเติม <strong>1,000 TWD</strong></p>
+            <span class="badge-sm badge-green">ส่วนลด 20% ค่า MRT</span>
+        </div>
+
+        <div class="transport-row">
+            <div class="transport-badge mrt"><i class="fa-solid fa-train-subway"></i></div>
+            <div class="transport-info">
+                <h4>MRT (รถไฟฟ้า)</h4>
+                <p>สะดวก สะอาด ป้ายอังกฤษชัด วิ่ง 06:00-00:00</p>
+                <span class="badge-sm badge-red">ห้ามกินดื่ม! ปรับ 1,500-7,500 TWD</span>
+            </div>
+        </div>
+
+        <div class="transport-row">
+            <div class="transport-badge hsr"><i class="fa-solid fa-train"></i></div>
+            <div class="transport-info">
+                <h4>HSR (รถไฟความเร็วสูง)</h4>
+                <p>ไทเป-เกาสง 1.5 ชม. ตั๋ว ~1,490 TWD</p>
+                <span class="badge-sm badge-green">จองผ่าน Klook ได้โปร 1 แถม 1</span>
+            </div>
+        </div>
+
+        <div class="transport-row">
+            <div class="transport-badge tra"><i class="fa-solid fa-train-tram"></i></div>
+            <div class="transport-info">
+                <h4>TRA (รถไฟท้องถิ่น)</h4>
+                <p>ครอบคลุมทั่วเกาะ ใช้ EasyCard แตะได้เลย ไปสือเฟิ่น/ซานเตียวหลิ่ง</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- DAY 1 -->
+    <!-- ============================================ -->
+    <section class="section" id="day1">
+        <div class="day-header">
+            <div class="day-num">DAY<span>1</span></div>
+            <div class="day-info">
+                <h3>สวัสดีไทเป &mdash; เช็คอิน & สายมู</h3>
+                <p>เดินทางถึง + เที่ยวรอบเมืองหลวง</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">11:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">ถึงสนามบินเถาหยวน (TPE)</div>
+                    <div class="tl-desc">ผ่าน ตม. &rarr; ซื้อ EasyCard + เติมเงิน 1,000 TWD &rarr; เปิดใช้ eSIM</div>
+                    <span class="hl-chip hl-must">Must Do</span>
+                    <a href="https://maps.app.goo.gl/Fxd9PKzSGDyAJqHt9" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">13:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">Airport MRT Express เข้าเมือง</div>
+                    <div class="tl-desc">สายสีม่วง Express ไป Taipei Main Station (35 นาที, 160 TWD)</div>
+                    <a href="https://maps.app.goo.gl/YWpQH4GcRR5JNDvk6" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Taipei Main Station</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">14:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">เช็คอินที่พัก</div>
+                    <div class="tl-desc">แนะนำย่าน Taipei Main Station เช่น <strong>Hotel Relax</strong> เดินทางง่าย ลากกระเป๋าไปขึ้นรถไฟได้ทันที</div>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">16:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">วัดหลงซาน (Longshan Temple)</div>
+                    <div class="tl-desc">ไหว้ขอพรความรักกับ <strong>"เฒ่าจันทรา"</strong> และซื้อเครื่องราง วัดเก่าแก่กว่า 280 ปี บรรยากาศศักดิ์สิทธิ์</div>
+                    <span class="hl-chip hl-high">Highlight</span>
+                    <a href="https://maps.app.goo.gl/UJqC5g8x7dfwPcWr7" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">18:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">ซีเหมินติง (Ximending)</div>
+                    <div class="tl-desc">สยามสแควร์แห่งไต้หวัน! ช้อปปิ้ง + สตรีทฟู้ด</div>
+                    <div class="tl-desc"><strong>ห้ามพลาด:</strong> บะหมี่หอยนางรมอาจง (Ay-Chung), ไก่ทอดไซส์ยักษ์ Hot Star</div>
+                    <span class="hl-chip hl-food">Street Food</span>
+                    <a href="https://maps.app.goo.gl/jJmpD8zWGz1pKCfr8" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">20:00</span>
+                    <div class="tl-dot"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">ตลาดกลางคืน Ningxia Night Market</div>
+                    <div class="tl-desc">ตลาดที่คนไต้หวันบอกว่า <strong>ของกินอร่อยที่สุด!</strong></div>
+                    <div class="tl-desc"><strong>ห้ามพลาด:</strong> เผือกทอดไส้หมูหยอง, ข้าวหน้าหมูพะโล้</div>
+                    <span class="hl-chip hl-food">Street Food</span>
+                    <span class="hl-chip hl-must">Must Eat</span>
+                    <a href="https://maps.app.goo.gl/X3WcvEcghWZ3PXm39" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- DAY 2 -->
+    <!-- ============================================ -->
+    <section class="section" id="day2">
+        <div class="day-header">
+            <div class="day-num">DAY<span>2</span></div>
+            <div class="day-info">
+                <h3>วันแห่งธรรมชาติ &mdash; เทรล Unseen & โคมลอย</h3>
+                <p>เดินป่าน้ำตก + ปล่อยโคมลอยบนรางรถไฟ</p>
+            </div>
+        </div>
+
+        <div class="tip tip-red" style="margin-bottom: 16px;">
+            <strong><i class="fa-solid fa-shoe-prints"></i> สิ่งที่ต้องเตรียม</strong>
+            ใส่รองเท้าผ้าใบกันลื่น + พกน้ำดื่ม + เสื้อกันฝนติดกระเป๋า
+        </div>
+
+        <div class="card">
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">08:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">นั่งรถไฟ TRA ไป Sandiaoling</div>
+                    <div class="tl-desc">จาก Taipei Main Station สาย Yilan Line ใช้เวลา ~1 ชม. ใช้ EasyCard แตะเข้าได้เลย</div>
+                    <a href="https://maps.app.goo.gl/pFx6UMfGCBPmC8GFA" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> สถานี Sandiaoling</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">09:30</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">เดินเทรล Sandiaoling Waterfall Trail</div>
+                    <div class="tl-desc">ระยะทาง ~3.2 กม. ใช้เวลา 2.5-3 ชม.</div>
+                    <div class="tl-desc"><strong>น้ำตกชั้น 1 (Hegu):</strong> ชมวิวจากจุดชมวิว</div>
+                    <div class="tl-desc"><strong>น้ำตกชั้น 2 (Motian):</strong> ไฮไลต์ของทริป! เดินมุดเข้าไป <strong>ด้านหลังม่านน้ำตก</strong> ถ่ายรูปเท่มาก</div>
+                    <div class="tl-desc"><strong>น้ำตกชั้น 3 (Pipa Dong):</strong> ปีนบันไดขึ้นไป ชมน้ำตกที่ตกลงมาในแอ่งหิน</div>
+                    <span class="hl-chip hl-high">High Recommend!</span>
+                    <span class="hl-chip hl-photo">ถ่ายรูปสวยมาก</span>
+                    <a href="https://maps.app.goo.gl/VXCTiSqjqmWQ44q38" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> จุดเริ่มเทรล</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">14:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">สือเฟิ่น (Shifen Old Street)</div>
+                    <div class="tl-desc"><strong>เขียนคำอธิษฐานและปล่อยโคมลอยบนรางรถไฟ!</strong> ถ่ายรูปได้เก๋มาก</div>
+                    <span class="hl-chip hl-must">Must Do</span>
+                    <span class="hl-chip hl-photo">Iconic Photo Spot</span>
+                    <a href="https://maps.app.goo.gl/PQJqFzM4WmXaJQcc7" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">15:30</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">น้ำตกสือเฟิ่น (Shifen Waterfall)</div>
+                    <div class="tl-desc"><strong>"ไนแองการ่าแห่งไต้หวัน"</strong> น้ำตกกว้างใหญ่สวยงาม</div>
+                    <span class="hl-chip hl-high">Highlight</span>
+                    <a href="https://maps.app.goo.gl/XQJT2r6Md5Z9kSc68" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">17:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">นั่งรถไฟสาย Pingxi กลับไทเป</div>
+                    <div class="tl-desc">ชมวิวสวยตลอดทาง</div>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">18:30</span>
+                    <div class="tl-dot"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">ตลาดกลางคืนเหราเหอ (Raohe Night Market)</div>
+                    <div class="tl-desc"><strong>ห้ามพลาด:</strong> ซาลาเปาอบโอ่ง (Fuzhou Black Pepper Bun) คิวล้นหลามแต่อร่อยคุ้มค่ารอ!</div>
+                    <span class="hl-chip hl-food">Street Food</span>
+                    <span class="hl-chip hl-must">Must Eat</span>
+                    <a href="https://maps.app.goo.gl/qkkQnHq1BKFSgx3K9" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- DAY 3 -->
+    <!-- ============================================ -->
+    <section class="section" id="day3">
+        <div class="day-header">
+            <div class="day-num" style="background: var(--orange);">DAY<span>3</span></div>
+            <div class="day-info">
+                <h3>วาร์ปสู่แดนใต้ &mdash; ตามรอยความอาร์ต "เกาสง"</h3>
+                <p>HSR ลงใต้ + ศิลปะ + สะพานหมุน + Dome of Light</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">09:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">HSR ไทเป &rarr; เกาสง (Zuoying)</div>
+                    <div class="tl-desc">รถไฟความเร็วสูง 1.5-2 ชม. นั่ง MRT ไปเช็คอินที่พัก</div>
+                    <a href="https://maps.app.goo.gl/bNMv8BwXPWPtX3vk6" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> สถานี Zuoying</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">13:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">Pier-2 Art Center</div>
+                    <div class="tl-desc">โกดังเก่าริมอ่าวดัดแปลงเป็นพื้นที่ศิลปะ มีกราฟฟิตี้และงานประติมากรรมเพียบ</div>
+                    <span class="hl-chip hl-photo">ถ่ายรูปสวย</span>
+                    <a href="https://maps.app.goo.gl/PaCqEVDfUBTiC7Q69" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">15:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">สะพาน Great Harbor Bridge</div>
+                    <div class="tl-desc">สะพานข้ามอ่าวที่สามารถ <strong>"หมุนสวิง 90 องศา"</strong> เพื่อให้เรือผ่านได้!</div>
+                    <div class="tl-desc"><strong>มีโชว์หมุนสะพานตอนบ่าย 3 โมงตรง</strong></div>
+                    <span class="hl-chip hl-high">High Recommend!</span>
+                    <a href="https://maps.app.goo.gl/rBbFQypNxHjZGMGp9" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">16:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">Love Pier &amp; Kaohsiung Music Center</div>
+                    <div class="tl-desc">นั่งรถราง LRT เลียบอ่าว (ใช้ EasyCard) ลงสถานี Love Pier ถ่ายรูปกับอาคาร <strong>Kaohsiung Music Center ทรงรังผึ้งสุดล้ำ</strong></div>
+                    <span class="hl-chip hl-photo">Photo Spot</span>
+                    <a href="https://maps.app.goo.gl/kqevBv3e5nGGHMKm6" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">18:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">Formosa Boulevard &mdash; Dome of Light</div>
+                    <div class="tl-desc"><strong>ศิลปะกระจกสีที่ใหญ่ที่สุดในโลก!</strong> อยู่ในสถานีรถไฟใต้ดิน ดูฟรี สวยงามมาก</div>
+                    <span class="hl-chip hl-must">Must See</span>
+                    <a href="https://maps.app.goo.gl/Yq2K5nCz7HFPm9Un8" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">19:30</span>
+                    <div class="tl-dot"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">ตลาดกลางคืน Ruifeng Night Market</div>
+                    <div class="tl-desc">ตลาดที่คนเกาสงเดินเยอะ ของกินแปลกใหม่เพียบ!</div>
+                    <span class="hl-chip hl-food">Street Food</span>
+                    <a href="https://maps.app.goo.gl/MGZWF6dXN7JHi9xV8" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- DAY 4 -->
+    <!-- ============================================ -->
+    <section class="section" id="day4">
+        <div class="day-header">
+            <div class="day-num" style="background: var(--green);">DAY<span>4</span></div>
+            <div class="day-info">
+                <h3>พลังศรัทธา &amp; ปั่นจักรยานรับลมทะเล</h3>
+                <p>พุทธอุทยาน + เกาะฉีจิน + ซีฟู้ดสด</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">09:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">ฝอกวงซัน (Fo Guang Shan Buddha Museum)</div>
+                    <div class="tl-desc">นั่งรถบัสสาย E02 จากสถานี HSR Zuoying</div>
+                    <div class="tl-desc">เดินผ่านทางเดิน <strong>เจดีย์ 8 องค์</strong> มุ่งหน้าสู่ <strong>พระพุทธรูปทองสัมฤทธิ์ขนาดมหึมา</strong> อลังการระดับโลก!</div>
+                    <span class="hl-chip hl-high">Highlight</span>
+                    <a href="https://maps.app.goo.gl/VRqSZhAe1fFvJ44BA" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">13:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">กลับเข้าเมือง &rarr; ท่าเรือ Gushan</div>
+                    <div class="tl-desc">นั่ง MRT ลงสถานี Sizihwan แล้วเดินไปท่าเรือ Gushan</div>
+                    <a href="https://maps.app.goo.gl/VpWnBHWjUuaQxkGy5" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> ท่าเรือ Gushan</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">14:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">เกาะฉีจิน (Cijin Island)</div>
+                    <div class="tl-desc">นั่งเรือเฟอร์รี่ข้ามไป <strong>แค่ 5 นาที</strong> เอามอเตอร์ไซค์/จักรยานขึ้นเรือได้</div>
+                    <div class="tl-desc"><strong>เช่าจักรยานไฟฟ้า</strong> ปั่นเที่ยวรอบเกาะ</div>
+                    <div class="tl-desc">จุดถ่ายรูป: <strong>ซุ้มประตูสีรุ้ง Rainbow Arch</strong>, พิพิธภัณฑ์เปลือกหอย</div>
+                    <div class="tl-desc">แวะเดินลอด <strong>อุโมงค์ดวงดาว (Starlight Tunnel)</strong> ทะลุไปดูวิวทะเลหน้าผา</div>
+                    <span class="hl-chip hl-high">High Recommend!</span>
+                    <span class="hl-chip hl-photo">Photo Spots เพียบ</span>
+                    <a href="https://maps.app.goo.gl/bBbWJ3Kw3QZyvA7v5" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Cijin Island</a>
+                    <a href="https://maps.app.goo.gl/kzLGfDU5Tg1WTJwh6" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Starlight Tunnel</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">18:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">อาหารทะเลสดบนเกาะ</div>
+                    <div class="tl-desc">เดินถนนคนเดินบนเกาะ <strong>เลือกชี้วัตถุดิบหน้าร้าน</strong> แล้วให้เขาทำได้เลย ราคาถูกและสดมาก!</div>
+                    <span class="hl-chip hl-food">Seafood สด ๆ</span>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">20:00</span>
+                    <div class="tl-dot"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">นั่งเรือกลับฝั่ง พักผ่อน</div>
+                    <div class="tl-desc">กลับที่พักเตรียมตัววันสุดท้าย</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- DAY 5 -->
+    <!-- ============================================ -->
+    <section class="section" id="day5">
+        <div class="day-header">
+            <div class="day-num" style="background: var(--purple);">DAY<span>5</span></div>
+            <div class="day-info">
+                <h3>สะเดาะเคราะห์ &amp; ซื้อของฝากก่อนกลับ</h3>
+                <p>เจดีย์มังกร-เสือ + Dream Mall + บินกลับ</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">09:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">สระบัว (Lotus Pond) &mdash; เจดีย์มังกร-เสือ</div>
+                    <div class="tl-desc">นั่งแท็กซี่หรือรถบัสไป Dragon and Tiger Pagodas</div>
+                    <div class="tl-desc">ความเชื่อ: <strong>"เดินเข้าทางปากมังกร ออกทางปากเสือ"</strong> จะเปลี่ยนโชคร้ายเป็นโชคดี!</div>
+                    <span class="hl-chip hl-must">Must Do</span>
+                    <a href="https://maps.app.goo.gl/4GZLqVMX6SYpCwXi7" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">11:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">ช้อปของฝากที่ Dream Mall</div>
+                    <div class="tl-desc">ห้างใหญ่ มีชิงช้าสวรรค์บนดาดฟ้า! ซื้อพายสับปะรด แครกเกอร์นูกัต</div>
+                    <span class="hl-chip hl-high">ของฝาก</span>
+                    <a href="https://maps.app.goo.gl/yjsm2UrTbFjJQE6n7" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">13:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">MRT สายสีแดงไปสนามบิน KHH</div>
+                    <div class="tl-desc">สถานี Kaohsiung International Airport</div>
+                    <a href="https://maps.app.goo.gl/DJXKnJnS5vg9XcG58" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> สนามบิน KHH</a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">15:00</span>
+                    <div class="tl-dot"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title">เช็คอิน + บินกลับไทย</div>
+                    <div class="tl-desc">เช็คอินโหลดกระเป๋า บินกลับประเทศไทยโดยสวัสดิภาพ &#9992;&#65039;</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- BONUS SPOTS -->
+    <!-- ============================================ -->
+    <section class="section" id="bonus">
+        <div class="section-label"><i class="fa-solid fa-compass"></i> BONUS SPOTS</div>
+        <h2 class="section-title">สถานที่แนะนำเพิ่มเติม (ไทเป)</h2>
+
+        <div class="card" style="border-left: 3px solid var(--green);">
+            <div class="card-title"><i class="fa-solid fa-mountain-sun"></i> Qingtiangang Grassland (擎天崗)</div>
+            <p><strong>ทุ่งหญ้าบนยอดเขาสุดอลังการ!</strong> อยู่ในเขตอุทยาน Yangmingshan ทุ่งหญ้าเขียวขจีกว้างสุดลูกหูลูกตา มีวัวกระทิงเดินเล่น อากาศเย็นสบาย วิวพาโนรามา 360 องศา เหมาะสำหรับเดินเล่นพักผ่อนจากเมือง</p>
+            <p><strong>วิธีไป:</strong> นั่ง MRT ไปสถานี Jiantan แล้วต่อรถบัสสาย S15 ขึ้นเขา (~40 นาที)</p>
+            <p><strong>แนะนำ:</strong> ไปเช้า ๆ อากาศดี ไม่ร้อน ใช้เวลาเที่ยว 2-3 ชม.</p>
+            <span class="hl-chip hl-must">Must Visit</span>
+            <span class="hl-chip hl-photo">วิวสุดปัง</span>
+            <a href="https://maps.app.goo.gl/aJP1x9EXmPbR7TP77" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Qingtiangang</a>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-volcano"></i> Yangmingshan &mdash; Xiaoyoukeng</div>
+            <p>พื้นที่ภูเขาไฟยังมีพลัง! เห็นไอกำมะถัน ควันพวยพุ่งจากพื้นดิน บรรยากาศเหมือนอีกดาว เดินเส้นทางไม่ยาก เหมาะถ่ายรูป</p>
+            <p><strong>วิธีไป:</strong> นั่งรถบัสสาย S15 หรือ 108 จาก MRT Jiantan</p>
+            <span class="hl-chip hl-high">Highlight</span>
+            <a href="https://maps.app.goo.gl/p5A71bQJp7FnHXQo8" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Xiaoyoukeng</a>
+        </div>
+
+        <div class="tip" style="margin-bottom: 16px;">
+            <strong><i class="fa-solid fa-lightbulb"></i> แนะนำการจัดแผน</strong>
+            หากมีเวลาเพิ่ม 1 วันในไทเป สามารถจัด <strong>Yangmingshan Day Trip</strong> ได้ โดยไป Xiaoyoukeng ตอนเช้า &rarr; Qingtiangang ตอนบ่าย หรือจะสลับวัน Sandiaoling ออกแล้วใส่วัน Yangmingshan แทนก็ได้
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-hot-tub-person"></i> อู่ไหล (Wulai / 烏來)</div>
+            <p>หมู่บ้านชนพื้นเมืองอาตายัล มีน้ำตกสวย + <strong>รถรางโบราณ Wulai Log Cart</strong> (รถรางไม้วิ่งเลียบหน้าผา สนุกมาก!) + แช่น้ำพุร้อนธรรมชาติ</p>
+            <p><strong>วิธีไป:</strong> นั่ง MRT ไป Xindian แล้วต่อรถบัสสาย 849 ไป Wulai (~40 นาที)</p>
+            <p><strong>คาเฟ่แนะนำ:</strong> Wulai Three Caf&eacute; (บรรยากาศดี วิวน้ำตก)</p>
+            <span class="hl-chip hl-high">Day Trip</span>
+            <a href="https://maps.app.goo.gl/fHBzuJPEjsJ4DJKV6" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Wulai</a>
+            <a href="https://maps.app.goo.gl/1q3VPuVcFFibrEkb9" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Wulai Falls</a>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-mug-hot"></i> ย่านคาเฟ่ &amp; ช้อปปิ้ง</div>
+            <p><strong>Fujin Tree 353 Caf&eacute;</strong> &mdash; คาเฟ่สไตล์ญี่ปุ่น เงียบสงบ ย่าน Fujin Street ที่เต็มไปด้วยร้านเก๋ ๆ</p>
+            <p><strong>FREITAG by FUJIN TREE GROUP</strong> &mdash; ร้านกระเป๋ารีไซเคิลจากสวิส ดีไซน์เท่</p>
+            <p><strong>TankQ Caf&eacute; &amp; Bar</strong> &mdash; คาเฟ่ย่านจงเซี่ยวตุนฮว่า (Zhongxiao Dunhua) ตกแต่งสวย ถ่ายรูปเก๋</p>
+            <p><strong>KA Sky Coffee</strong> &mdash; คาเฟ่วิวสูง บรรยากาศดี</p>
+            <a href="https://maps.app.goo.gl/Nq4e1TFxk4g7GJKQ6" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> Fujin Tree 353</a>
+            <a href="https://maps.app.goo.gl/iGwEeCcwXMRjH6rRA" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> TankQ Caf&eacute;</a>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-building-columns"></i> Sisinan Village Museum (四四南村)</div>
+            <p>หมู่บ้านทหารเก่าแปลงเป็นพื้นที่วัฒนธรรม มีตลาดนัดวันหยุด คาเฟ่ ร้านของที่ระลึก อยู่ใกล้ Taipei 101 เดินไปได้</p>
+            <span class="hl-chip hl-photo">Photo Spot</span>
+            <a href="https://maps.app.goo.gl/2DQn8F3i5Y8u2pUp6" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- HOTEL -->
+    <!-- ============================================ -->
+    <section class="section" id="hotel">
+        <div class="section-label"><i class="fa-solid fa-hotel"></i> ACCOMMODATION</div>
+        <h2 class="section-title">ที่พักแนะนำ</h2>
+
+        <div class="hotel-card">
+            <div class="hotel-city">ไทเป (พัก 2 คืน) &bull; ใกล้ Taipei Main Station</div>
+            <h4>Hotel Relax (สาขา 1, 2, 3, 5)</h4>
+            <p>เดินทางง่ายสุด ลากกระเป๋าไปขึ้น HSR หรือรถไฟธรรมดาไปเดินป่าได้ทันที</p>
+            <a href="https://maps.app.goo.gl/YWpQH4GcRR5JNDvk6" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+        </div>
+
+        <div class="hotel-card">
+            <div class="hotel-city">ไทเป (ทางเลือก)</div>
+            <h4>Finders Hotel</h4>
+            <p>ดีไซน์สวย ราคาคุ้มค่า <strong>มีมาม่าและขนมให้กินฟรีที่ล็อบบี้</strong></p>
+        </div>
+
+        <div class="hotel-card">
+            <div class="hotel-city">ไทเป (ทางเลือก) &bull; ย่าน Ximen</div>
+            <h4>SOTETSU GRAND FRESA Taipei Ximen</h4>
+            <p>โรงแรมเครือญี่ปุ่น สะอาด สไตล์มินิมอล อยู่กลางย่าน Ximending เดินไปตลาดกลางคืนสะดวก</p>
+            <a href="https://maps.app.goo.gl/wTYuAMXM3RY1vxue7" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+        </div>
+
+        <div class="hotel-card">
+            <div class="hotel-city">เกาสง (พัก 2 คืน) &bull; ใกล้ Pier-2 / LRT</div>
+            <h4>City Suites Kaohsiung Chenai</h4>
+            <p>อยู่ติดอ่าว Pier-2 และรถราง LRT <strong>มองเห็นวิวสะพาน Great Harbor Bridge จากห้องพัก!</strong></p>
+            <a href="https://maps.app.goo.gl/PaCqEVDfUBTiC7Q69" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+        </div>
+
+        <div class="hotel-card">
+            <div class="hotel-city">เกาสง (ทางเลือก)</div>
+            <h4>Kindness Hotel (Formosa Boulevard / Liouhe)</h4>
+            <p>เครือโรงแรมที่ดังเรื่อง <strong>"ของกินฟรี 24 ชม." และไอศกรีมกินไม่อั้น</strong> คุ้มมาก!</p>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- FOOD -->
+    <!-- ============================================ -->
+    <section class="section" id="food">
+        <div class="section-label"><i class="fa-solid fa-utensils"></i> FOOD GUIDE</div>
+        <h2 class="section-title">ของกินห้ามพลาด</h2>
+
+        <div class="food-item">
+            <span class="food-emoji">🧋</span>
+            <div class="food-info">
+                <h4>ชานมไข่มุก</h4>
+                <div class="food-en">Bubble Milk Tea (珍珠奶茶)</div>
+                <p>ต้นกำเนิดชานมไข่มุก! แนะนำ 50 Lan, CoCo, Tiger Sugar</p>
+                <div class="food-price">35-60 TWD</div>
+            </div>
+        </div>
+
+        <div class="food-item">
+            <span class="food-emoji">🥟</span>
+            <div class="food-info">
+                <h4>เสี่ยวหลงเปา</h4>
+                <div class="food-en">Xiao Long Bao (小籠包)</div>
+                <p>ซุปดัมพลิ่งไส้หมูน้ำซุปเต็ม ดังสุด Din Tai Fung</p>
+                <div class="food-price">200-250 TWD / 10 ชิ้น</div>
+            </div>
+        </div>
+
+        <div class="food-item">
+            <span class="food-emoji">🫓</span>
+            <div class="food-info">
+                <h4>ซาลาเปาอบโอ่ง</h4>
+                <div class="food-en">Black Pepper Bun (胡椒餅)</div>
+                <p>ไส้หมูพริกไทยอบในโอ่งดิน กรอบนอกนุ่มใน ของดีตลาดเหราเหอ</p>
+                <div class="food-price">50-60 TWD</div>
+            </div>
+        </div>
+
+        <div class="food-item">
+            <span class="food-emoji">🍜</span>
+            <div class="food-info">
+                <h4>บะหมี่เนื้อตุ๋น</h4>
+                <div class="food-en">Beef Noodle Soup (牛肉麵)</div>
+                <p>อาหารประจำชาติ น้ำซุปเข้มข้น เนื้อเปื่อยนุ่ม</p>
+                <div class="food-price">150-250 TWD</div>
+            </div>
+        </div>
+
+        <div class="food-item">
+            <span class="food-emoji">🍗</span>
+            <div class="food-info">
+                <h4>ไก่ทอด Hot Star</h4>
+                <div class="food-en">Hot-Star Large Fried Chicken (豪大大雞排)</div>
+                <p>ไก่ทอดแผ่นใหญ่เท่าหน้า กรอบนอกนุ่มใน</p>
+                <div class="food-price">70-90 TWD</div>
+            </div>
+        </div>
+
+        <div class="food-item">
+            <span class="food-emoji">🍠</span>
+            <div class="food-info">
+                <h4>เผือกทอดไส้หมูหยอง</h4>
+                <div class="food-en">Taro Ball w/ Pork Floss</div>
+                <p>ของดีตลาด Ningxia กรอบนอก เผือกเนียนใน</p>
+                <div class="food-price">50-70 TWD</div>
+            </div>
+        </div>
+
+        <div class="food-item" style="border-left: 3px solid var(--orange);">
+            <span class="food-emoji">🍚</span>
+            <div class="food-info">
+                <h4>Wang's Broth &mdash; ข้าวหมูมิชลิน</h4>
+                <div class="food-en">Wang's Broth (王品牛肉湯)</div>
+                <p><strong>ร้านมิชลิน!</strong> ข้าวหมูตุ๋นน้ำซุปใส รสชาติเข้มข้นละเอียดอ่อน ต้องลองสักครั้ง</p>
+                <div class="food-price">150-300 TWD</div>
+                <a href="https://maps.app.goo.gl/A9pN8u9GKb4o59Rf6" target="_blank" rel="noopener" class="map-link" style="margin-top: 6px;"><i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่</a>
+            </div>
+        </div>
+
+        <div class="food-item" style="border-left: 3px solid var(--orange);">
+            <span class="food-emoji">🍖</span>
+            <div class="food-info">
+                <h4>Shabu Le &mdash; Wagyu Hot Pot</h4>
+                <div class="food-en">しゃぶ楽 Wagyu Shabu</div>
+                <p>ชาบูเนื้อวากิว ย่าน Ximen เนื้อนุ่มละลายในปาก บริการดีมาก</p>
+                <div class="food-price">400-800 TWD</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- PHRASES -->
+    <!-- ============================================ -->
+    <section class="section" id="phrases">
+        <div class="section-label"><i class="fa-solid fa-comments"></i> LANGUAGE</div>
+        <h2 class="section-title">ประโยคภาษาจีนที่ใช้บ่อย</h2>
+
+        <div class="phrase-list">
+            <div class="phrase-row" style="background: var(--bg-light); font-weight: 700; font-size: 12px; color: var(--text-tertiary);">
+                <div class="phrase-th">ไทย</div>
+                <div class="phrase-cn">จีน</div>
+                <div class="phrase-py">คำอ่าน</div>
+            </div>
+            <div class="phrase-row"><div class="phrase-th">สวัสดี</div><div class="phrase-cn">你好</div><div class="phrase-py">หนี่ห่าว</div></div>
+            <div class="phrase-row"><div class="phrase-th">ขอบคุณ</div><div class="phrase-cn">謝謝</div><div class="phrase-py">เซี่ยเซีย</div></div>
+            <div class="phrase-row"><div class="phrase-th">เท่าไหร่?</div><div class="phrase-cn">多少錢？</div><div class="phrase-py">ตัวเส่าเฉียน</div></div>
+            <div class="phrase-row"><div class="phrase-th">อันนี้ 1 อัน</div><div class="phrase-cn">這個一個</div><div class="phrase-py">เจ้อเก้อ อีเก้อ</div></div>
+            <div class="phrase-row"><div class="phrase-th">ห้องน้ำอยู่ไหน?</div><div class="phrase-cn">廁所在哪裡？</div><div class="phrase-py">เช่อสั่ว ไจ้หน่าหลี่</div></div>
+            <div class="phrase-row"><div class="phrase-th">อร่อยมาก!</div><div class="phrase-cn">很好吃！</div><div class="phrase-py">เหิ่นห่าวชื่อ</div></div>
+            <div class="phrase-row"><div class="phrase-th">ไม่เผ็ด</div><div class="phrase-cn">不要辣</div><div class="phrase-py">ปู๋เย่าล่า</div></div>
+            <div class="phrase-row"><div class="phrase-th">ช่วยด้วย</div><div class="phrase-cn">幫幫忙</div><div class="phrase-py">ปังปังหมาง</div></div>
+            <div class="phrase-row"><div class="phrase-th">ไปสถานี ___</div><div class="phrase-cn">到___站</div><div class="phrase-py">เต้า ___ จั้น</div></div>
+            <div class="phrase-row"><div class="phrase-th">ลดได้ไหม?</div><div class="phrase-cn">可以便宜嗎？</div><div class="phrase-py">เข่อหยี่ เพียนอี้ มา</div></div>
+        </div>
+
+        <div class="tip tip-blue" style="margin-top: 12px;">
+            <strong><i class="fa-solid fa-mobile-screen-button"></i> แนะนำ</strong>
+            ดาวน์โหลด Google Translate ไว้ offline + ใช้โหมดกล้องแปลป้ายภาษาจีนได้ทันที
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- TIPS -->
+    <!-- ============================================ -->
+    <section class="section" id="tips">
+        <div class="section-label"><i class="fa-solid fa-star"></i> PRO TIPS</div>
+        <h2 class="section-title">เคล็ดลับ &amp; สิ่งควรรู้</h2>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-ban"></i> สิ่งที่ห้ามทำ</div>
+            <p><strong>ห้ามกิน-ดื่มบน MRT</strong> &mdash; ปรับ 1,500-7,500 TWD (รวมหมากฝรั่ง+น้ำเปล่า)</p>
+            <p><strong>ห้ามสูบบุหรี่ในที่สาธารณะ</strong> &mdash; ปรับ 2,000-10,000 TWD</p>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-check-double"></i> ควรรู้</div>
+            <p><strong>ไม่มีถุงพลาสติกแจก</strong> &mdash; ไต้หวันงดแจกถุงพลาสติกทุกร้าน พกถุงผ้าไปเอง!</p>
+            <p><strong>ไม่ต้องให้ทิป</strong> &mdash; ไม่มีวัฒนธรรมทิปในไต้หวัน</p>
+            <p><strong>7-11 มีทุกที่</strong> &mdash; เปิด 24 ชม. มีทุกอย่าง ใช้ EasyCard จ่ายได้</p>
+            <p><strong>ปลั๊กไฟเหมือนไทย</strong> &mdash; หัวแบน 2 ขา 110V ไม่ต้องพกหัวแปลง</p>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-mobile-screen-button"></i> แอปที่ควรมี</div>
+            <p><strong>Google Maps</strong> &mdash; นำทาง (โหลด offline map ไว้ด้วย)</p>
+            <p><strong>Google Translate</strong> &mdash; แปลภาษาจีน + โหมดกล้องแปลป้าย</p>
+            <p><strong>Klook / KKday</strong> &mdash; จองตั๋ว HSR + บัตรท่องเที่ยวราคาพิเศษ</p>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fa-solid fa-gift"></i> ของฝากแนะนำ</div>
+            <p><strong>พายสับปะรด (鳳梨酥)</strong> &mdash; ของฝากอันดับ 1 แนะนำ Chia Te, SunnyHills</p>
+            <p><strong>แครกเกอร์นูกัต</strong> &mdash; นุ่ม หวานพอดี ซื้อได้ทุก 7-11</p>
+            <p><strong>L'Atelier Lotus</strong> &mdash; ร้านขาย Nougat พรีเมียม รสชาติหลากหลาย แพ็คเกจสวยเหมาะเป็นของฝาก</p>
+            <p><strong>ชาอู่หลง</strong> &mdash; ชาชั้นดีจากภูเขา หอมละมุน</p>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- CHECKLIST -->
+    <!-- ============================================ -->
+    <section class="section" id="checklist">
+        <div class="section-label"><i class="fa-solid fa-clipboard-check"></i> CHECKLIST</div>
+        <h2 class="section-title">ไอเทมเด็ดก่อนจัดกระเป๋า</h2>
+
+        <div class="check-item"><div class="check-box"></div>พาสปอร์ต (ไม่ต้องขอวีซ่า อยู่ได้ 14 วัน)</div>
+        <div class="check-item"><div class="check-box"></div>ตั๋วเครื่องบิน Multi-City (BKK &rarr; TPE / KHH &rarr; BKK)</div>
+        <div class="check-item"><div class="check-box"></div>ตั๋ว HSR จอง Klook/KKday</div>
+        <div class="check-item"><div class="check-box"></div>eSIM / SIM Card ซื้อล่วงหน้า</div>
+        <div class="check-item"><div class="check-box"></div>แลกเงิน TWD + สมัคร Travel Card</div>
+        <div class="check-item"><div class="check-box"></div>เสื้อกันฝนแบบพับได้ / ร่มพับ (ฝนตกบ่อย + ใช้ตอนมุดน้ำตก)</div>
+        <div class="check-item"><div class="check-box"></div><strong>รองเท้าผ้าใบดอกยางลึก</strong> (สำคัญมากสำหรับเดินเทรลวันที่ 2!)</div>
+        <div class="check-item"><div class="check-box"></div>ถุงผ้า (ไต้หวันงดแจกถุงพลาสติกทุกร้าน)</div>
+        <div class="check-item"><div class="check-box"></div>โหลด Google Maps + Google Translate offline</div>
+        <div class="check-item"><div class="check-box"></div>กรอก Arrival Card ออนไลน์ล่วงหน้า</div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p><strong>Taiwan Travel Guidebook V1.0</strong></p>
+        <p>เที่ยวสนุก กลับมาปลอดภัย &#9992;&#65039;&#127481;&#127484;</p>
+    </div>
+
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+        <a href="#prep" class="bnav-item"><i class="fa-solid fa-clipboard-list"></i>เตรียมตัว</a>
+        <a href="#day1" class="bnav-item"><i class="fa-solid fa-1"></i>DAY 1</a>
+        <a href="#day2" class="bnav-item"><i class="fa-solid fa-2"></i>DAY 2</a>
+        <a href="#day3" class="bnav-item"><i class="fa-solid fa-3"></i>DAY 3</a>
+        <a href="#day4" class="bnav-item"><i class="fa-solid fa-4"></i>DAY 4</a>
+        <a href="#day5" class="bnav-item"><i class="fa-solid fa-5"></i>DAY 5</a>
+        <a href="#bonus" class="bnav-item"><i class="fa-solid fa-compass"></i>Bonus</a>
+    </div>
+</nav>
+
+<!-- ===== BACK TO TOP ===== -->
+<button class="btt" id="btt" aria-label="กลับขึ้นด้านบน"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script>
+    // Back to top
+    const btt = document.getElementById('btt');
+    window.addEventListener('scroll', () => {
+        btt.classList.toggle('show', window.scrollY > 400);
+    }, { passive: true });
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Active nav highlight
+    const sections = ['prep','day1','day2','day3','day4','day5','bonus','tips'];
+    const navItems = document.querySelectorAll('.bnav-item');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+                });
+            }
+        });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+    });
+</script>
+
+</body>
+</html>
