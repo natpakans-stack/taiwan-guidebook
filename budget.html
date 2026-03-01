@@ -332,6 +332,20 @@
 
         .empty-state i { font-size: 32px; margin-bottom: 8px; display: block; }
 
+        /* ===== SYNC BADGE ===== */
+        .sync-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-top: 6px;
+        }
+        .sync-badge.online { background: var(--green-light); color: var(--green); }
+        .sync-badge.offline { background: var(--orange-light); color: var(--orange); }
+
         /* ===== CURRENCY CONVERTER ===== */
         .converter-section {
             background: var(--bg-card);
@@ -789,6 +803,9 @@
     <a href="index.html" class="header-back"><i class="fa-solid fa-chevron-left"></i> แผนเที่ยว</a>
     <h1><i class="fa-solid fa-wallet"></i> Budget Tracker</h1>
     <p>Taiwan Trip &bull; 1&ndash;6 May 2025</p>
+    <div id="syncBadge" class="sync-badge offline" title="ใช้ localStorage (offline)">
+        <i class="fa-solid fa-database"></i> <span>Local</span>
+    </div>
 
     <div class="summary-strip">
         <div class="s-col">
@@ -1133,7 +1150,37 @@
     </div>
 </nav>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <script>
+/* ===== FIREBASE REALTIME SYNC ===== */
+// ผู้ใช้ต้องใส่ config จาก Firebase Console → Project Settings → Web App
+const firebaseConfig = {
+    apiKey: "AIzaSyAeiPBnTiUV02GND60TD4YCzcoHcLB63bI",
+    authDomain: "taiwan-budget.firebaseapp.com",
+    databaseURL: "https://taiwan-budget-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "taiwan-budget",
+    storageBucket: "taiwan-budget.firebasestorage.app",
+    messagingSenderId: "1070949920623",
+    appId: "1:1070949920623:web:127605fa62f55daf24029a"
+};
+
+let db = null;
+let firebaseReady = false;
+let _fbIncoming = false; // guard to prevent write-back loops
+
+try {
+    if (firebaseConfig.apiKey && typeof firebase !== 'undefined') {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.database();
+        firebaseReady = true;
+    }
+} catch(e) {
+    console.warn('Firebase init failed, using localStorage fallback:', e);
+}
+
 /* ===== CURRENCY CONVERTER ===== */
 let isSwapped = false;
 let exchangeRate = parseFloat(localStorage.getItem('taiwan_exchange_rate') || '0.92');
@@ -1228,6 +1275,9 @@ function updateRate() {
     if (isNaN(newRate) || newRate <= 0) return;
     exchangeRate = newRate;
     localStorage.setItem('taiwan_exchange_rate', newRate.toString());
+    if (firebaseReady && !_fbIncoming) {
+        db.ref('/settings/exchangeRate').set(newRate).catch(err => console.warn('Firebase write error:', err));
+    }
     const rateValue = document.getElementById('rateValue');
     if (rateValue) rateValue.textContent = newRate;
     // Reconvert from left side
@@ -1253,15 +1303,21 @@ const OV_CAT = {
 };
 const CAT_PLANNED = { transport: 20700, hotel: 7000, food: 8000, ticket: 1000, shopping: 4000, other: 4400 };
 
-function loadOverview() {
-    const saved = JSON.parse(localStorage.getItem(OV_STORAGE_KEY) || '{}');
+function applyOverviewData(saved) {
     document.querySelectorAll('.actual-input').forEach(input => {
         const key = input.dataset.ov;
         if (saved[key] !== undefined && saved[key] !== null) {
             input.value = saved[key];
+        } else {
+            input.value = '';
         }
     });
     calcOverview();
+}
+
+function loadOverview() {
+    const saved = JSON.parse(localStorage.getItem(OV_STORAGE_KEY) || '{}');
+    applyOverviewData(saved);
 }
 
 function saveOverview() {
@@ -1271,6 +1327,9 @@ function saveOverview() {
         data[input.dataset.ov] = val;
     });
     localStorage.setItem(OV_STORAGE_KEY, JSON.stringify(data));
+    if (firebaseReady && !_fbIncoming) {
+        db.ref('/overview').set(data).catch(err => console.warn('Firebase write error:', err));
+    }
 }
 
 function calcOverview() {
@@ -1480,6 +1539,9 @@ function generateId() {
 
 function save() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
+    if (firebaseReady && !_fbIncoming) {
+        db.ref('/expenses').set(expenses).catch(err => console.warn('Firebase write error:', err));
+    }
 }
 
 function saveItem() {
@@ -1611,6 +1673,82 @@ document.getElementById('tabBar').addEventListener('click', (e) => {
 
 // Initial render
 render();
+
+/* ===== FIREBASE REAL-TIME LISTENERS ===== */
+if (firebaseReady) {
+    const badge = document.getElementById('syncBadge');
+
+    // Connection state indicator
+    db.ref('.info/connected').on('value', snap => {
+        if (snap.val() === true) {
+            badge.className = 'sync-badge online';
+            badge.innerHTML = '<i class="fa-solid fa-cloud"></i> <span>Synced</span>';
+            badge.title = 'ซิงค์ Firebase real-time';
+        } else {
+            badge.className = 'sync-badge offline';
+            badge.innerHTML = '<i class="fa-solid fa-database"></i> <span>Local</span>';
+            badge.title = 'ใช้ localStorage (offline)';
+        }
+    });
+
+    // Overview listener
+    db.ref('/overview').on('value', snapshot => {
+        if (_fbIncoming) return;
+        _fbIncoming = true;
+        const data = snapshot.val() || {};
+        localStorage.setItem(OV_STORAGE_KEY, JSON.stringify(data));
+        applyOverviewData(data);
+        _fbIncoming = false;
+    });
+
+    // Expenses listener
+    db.ref('/expenses').on('value', snapshot => {
+        if (_fbIncoming) return;
+        _fbIncoming = true;
+        const data = snapshot.val();
+        if (data !== null) {
+            expenses = (Array.isArray(data) ? data : Object.values(data)).filter(e => e !== null);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
+            render();
+        }
+        _fbIncoming = false;
+    });
+
+    // Exchange rate listener
+    db.ref('/settings/exchangeRate').on('value', snapshot => {
+        if (_fbIncoming) return;
+        _fbIncoming = true;
+        const rate = snapshot.val();
+        if (rate !== null) {
+            exchangeRate = rate;
+            localStorage.setItem('taiwan_exchange_rate', rate.toString());
+            document.getElementById('rateInput').value = rate;
+            const rv = document.getElementById('rateValue');
+            if (rv) rv.textContent = rate;
+            if (document.getElementById('fromAmount').value) convertCurrency('from');
+        }
+        _fbIncoming = false;
+    });
+
+    // One-time migration: push localStorage → Firebase if Firebase is empty
+    db.ref('/overview').once('value', snap => {
+        if (snap.val() === null) {
+            const d = JSON.parse(localStorage.getItem(OV_STORAGE_KEY) || '{}');
+            if (Object.keys(d).length > 0) db.ref('/overview').set(d);
+        }
+    });
+    db.ref('/expenses').once('value', snap => {
+        if (snap.val() === null && expenses.length > 0) {
+            db.ref('/expenses').set(expenses);
+        }
+    });
+    db.ref('/settings/exchangeRate').once('value', snap => {
+        if (snap.val() === null) {
+            const r = localStorage.getItem('taiwan_exchange_rate');
+            if (r) db.ref('/settings/exchangeRate').set(parseFloat(r));
+        }
+    });
+}
 </script>
 
 </body>
