@@ -6,7 +6,7 @@
     <title>Budget Tracker | Taiwan Trip 2025</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+Sans+TH:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -22,7 +22,7 @@
             --purple-light: #F0EDFF;
             --text-primary: #1B1D22;
             --text-secondary: #5A5E6E;
-            --text-tertiary: #9A9DAD;
+            --text-tertiary: #717484;
             --bg-page: #F6F7FA;
             --bg-card: #FFFFFF;
             --border: #EBECEF;
@@ -34,7 +34,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'LINE Seed Sans TH', sans-serif;
+            font-family: 'IBM Plex Sans Thai', sans-serif;
             background: var(--bg-page);
             color: var(--text-primary);
             line-height: 1.6;
@@ -46,12 +46,12 @@
         .header {
             background: linear-gradient(135deg, var(--secondary), var(--purple));
             color: white;
-            padding: 48px 16px 24px;
+            padding: 48px 16px 0;
             text-align: center;
         }
 
         .header h1 { font-size: 22px; font-weight: 700; }
-        .header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+        .header p { font-size: 13px; opacity: 1; margin-top: 4px; }
 
         .header-back {
             position: absolute;
@@ -65,30 +65,55 @@
             gap: 6px;
         }
 
-        /* ===== SUMMARY CARDS ===== */
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            padding: 16px;
-            margin-top: -20px;
+        /* ===== SUMMARY — glass inside header ===== */
+        .summary-strip {
+            display: flex;
+            justify-content: center;
+            gap: 1px;
+            padding: 0 16px 20px;
+            margin-top: 16px;
         }
 
-        .summary-card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 12px 8px;
+        .summary-strip .s-col {
+            flex: 1;
             text-align: center;
-            box-shadow: var(--shadow-sm);
+            padding: 10px 4px;
+            position: relative;
         }
 
-        .summary-card .label { font-size: 10px; color: var(--text-tertiary); font-weight: 700; text-transform: uppercase; }
-        .summary-card .amount { font-size: 18px; font-weight: 700; margin-top: 2px; }
-        .summary-card .currency { font-size: 10px; color: var(--text-tertiary); }
-        .summary-card.planned .amount { color: var(--secondary); }
-        .summary-card.actual .amount { color: var(--primary); }
-        .summary-card.diff .amount { color: var(--green); }
-        .summary-card.diff .amount.over { color: var(--primary); }
+        .summary-strip .s-col:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background: rgba(255,255,255,0.25);
+        }
+
+        .summary-strip .s-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.7;
+            color: white;
+        }
+
+        .summary-strip .s-amount {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin-top: 2px;
+        }
+
+        .summary-strip .s-sub {
+            font-size: 10px;
+            opacity: 0.6;
+            color: white;
+        }
+
+        .summary-strip .s-amount.over { color: #FFB3C1; }
+        .summary-strip .s-amount.under { color: #A5F3CF; }
 
         /* ===== CONTENT ===== */
         .content { padding: 0 16px 24px; max-width: 640px; margin: 0 auto; }
@@ -258,8 +283,14 @@
             flex-shrink: 0;
         }
 
-        .expense-icon.fixed { background: var(--purple-light); color: var(--purple); }
-        .expense-icon.variable { background: var(--orange-light); color: var(--orange); }
+        .expense-icon.fixed { background: var(--purple-light); color: #5A47C8; }
+        .expense-icon.variable { background: var(--orange-light); color: #9D6227; }
+        .expense-icon.cat-transport { background: var(--secondary-light); color: var(--secondary); }
+        .expense-icon.cat-hotel { background: var(--purple-light); color: #5A47C8; }
+        .expense-icon.cat-food { background: var(--orange-light); color: #9D6227; }
+        .expense-icon.cat-ticket { background: var(--primary-light); color: var(--primary); }
+        .expense-icon.cat-shopping { background: var(--green-light); color: #2D7D56; }
+        .expense-icon.cat-other { background: #F3F4F6; color: var(--text-secondary); }
 
         .expense-info { flex: 1; min-width: 0; }
         .expense-name { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -301,6 +332,123 @@
 
         .empty-state i { font-size: 32px; margin-bottom: 8px; display: block; }
 
+        /* ===== CURRENCY CONVERTER ===== */
+        .converter-section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 16px;
+        }
+
+        .converter-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .converter-title i { color: #2D7D56; }
+
+        .converter-body {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .converter-field {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .converter-field label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .converter-field label .flag { font-size: 16px; }
+
+        .converter-field input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .converter-field input:focus { border-color: var(--green); }
+
+        .btn-swap {
+            width: 36px;
+            height: 36px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            background: var(--bg-card);
+            color: #2D7D56;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 16px;
+            transition: all 0.3s;
+        }
+
+        .btn-swap:active {
+            background: var(--green);
+            color: white;
+            border-color: var(--green);
+        }
+
+        .btn-swap.flipped { transform: rotate(180deg); }
+
+        .converter-rate {
+            margin-top: 8px;
+            font-size: 11px;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rate-edit {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .rate-edit input {
+            width: 52px;
+            padding: 2px 6px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--secondary);
+            outline: none;
+        }
+
+        .rate-edit input:focus { border-color: var(--secondary); }
+
         /* ===== TYPE BADGE ===== */
         .type-badge {
             font-size: 10px;
@@ -309,8 +457,159 @@
             border-radius: 4px;
         }
 
-        .type-badge.fixed { background: var(--purple-light); color: var(--purple); }
-        .type-badge.variable { background: var(--orange-light); color: var(--orange); }
+        .type-badge.fixed { background: var(--purple-light); color: #5A47C8; }
+        .type-badge.variable { background: var(--orange-light); color: #9D6227; }
+
+        /* ===== OVERVIEW TABLE ===== */
+        .overview-section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .overview-section .section-header {
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .overview-section .section-header i { font-size: 14px; }
+        .overview-section .section-header.fixed i { color: #5A47C8; }
+        .overview-section .section-header.variable i { color: #9D6227; }
+
+        .overview-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .overview-table thead th {
+            background: var(--secondary-light);
+            color: var(--secondary);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .overview-table thead th:nth-child(1) { width: 28px; text-align: center; }
+        .overview-table thead th:nth-child(3) { width: 72px; text-align: center; }
+        .overview-table thead th:nth-child(4),
+        .overview-table thead th:nth-child(5) { text-align: right; width: 90px; }
+
+        .overview-table tbody tr { border-bottom: 1px solid var(--border); }
+        .overview-table tbody tr:nth-child(even) { background: var(--bg-page); }
+        .overview-table tbody tr:last-child { border-bottom: none; }
+
+        .overview-table td {
+            padding: 8px 12px;
+            vertical-align: middle;
+        }
+
+        .overview-table td:nth-child(1) {
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .overview-table td:nth-child(3) { text-align: center; }
+        .overview-table td:nth-child(4),
+        .overview-table td:nth-child(5) { text-align: right; }
+
+        /* Category badges */
+        .cat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .cat-badge i { font-size: 9px; }
+        .cat-badge.transport { background: var(--secondary-light); color: var(--secondary); }
+        .cat-badge.hotel { background: var(--purple-light); color: #5A47C8; }
+        .cat-badge.food { background: var(--orange-light); color: #9D6227; }
+        .cat-badge.ticket { background: var(--primary-light); color: var(--primary); }
+        .cat-badge.shopping { background: var(--green-light); color: #2D7D56; }
+        .cat-badge.other { background: #F3F4F6; color: var(--text-secondary); }
+
+        .overview-table .row-total {
+            background: var(--bg-page) !important;
+            font-weight: 700;
+        }
+
+        .overview-table .row-total td { border-top: 2px solid var(--border); }
+
+        .overview-table .actual-input {
+            width: 80px;
+            padding: 4px 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: right;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .overview-table .actual-input:focus { border-color: var(--secondary); }
+        .overview-table .actual-input::placeholder { color: var(--text-tertiary); }
+
+        .exp-sum {
+            display: block;
+            font-size: 10px;
+            color: var(--orange);
+            font-weight: 400;
+            margin-top: 3px;
+            text-align: right;
+            line-height: 1.4;
+        }
+
+        .exp-sum:empty { display: none; }
+
+        /* Grand Total Card */
+        .grand-total-card {
+            background: linear-gradient(135deg, var(--secondary), var(--purple));
+            border-radius: 12px;
+            padding: 16px;
+            color: white;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .grand-total-card .gt-label {
+            font-size: 12px;
+            font-weight: 700;
+            opacity: 0.85;
+            margin-bottom: 8px;
+        }
+
+        .grand-total-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .grand-total-grid .gt-col { text-align: center; }
+        .grand-total-grid .gt-col .gt-num { font-size: 20px; font-weight: 700; }
+        .grand-total-grid .gt-col .gt-sub { font-size: 10px; opacity: 0.8; }
+        .grand-total-grid .gt-col.diff-positive .gt-num { color: #A5F3CF; }
+        .grand-total-grid .gt-col.diff-negative .gt-num { color: #FFB3C1; }
 
         /* ===== BOTTOM NAV ===== */
         .bottom-nav {
@@ -357,79 +656,409 @@
         }
 
         .bnav-item i { font-size: 18px; }
-        .bnav-item.active { color: var(--primary); }
+        .bnav-item.active { color: #C43D4E; }
+
+        /* ===== DESKTOP NAV ===== */
+        .desktop-nav {
+            display: none;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+        }
+
+        .desktop-nav-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 52px;
+        }
+
+        .desktop-nav-brand {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .desktop-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .desktop-nav-links a {
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .desktop-nav-links a:hover {
+            background: var(--bg-page);
+            color: var(--text-primary);
+        }
+
+        .desktop-nav-links a.active {
+            background: var(--secondary-light);
+            color: #2260BF;
+        }
+
+        /* ===== CATEGORY STRIP ===== */
+        .cat-strip {
+            display: flex;
+            gap: 10px;
+            padding: 16px 16px 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            max-width: 672px;
+            margin: 0 auto;
+        }
+
+        .cat-strip::-webkit-scrollbar { display: none; }
+
+        .cat-chip {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 14px 20px 14px 14px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        .cat-chip .cc-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .cat-chip.transport .cc-icon { background: var(--secondary-light); color: var(--secondary); }
+        .cat-chip.hotel .cc-icon { background: var(--purple-light); color: #5A47C8; }
+        .cat-chip.food .cc-icon { background: var(--orange-light); color: #9D6227; }
+        .cat-chip.ticket .cc-icon { background: var(--primary-light); color: var(--primary); }
+        .cat-chip.shopping .cc-icon { background: var(--green-light); color: #2D7D56; }
+        .cat-chip.other .cc-icon { background: #F3F4F6; color: var(--text-secondary); }
+
+        .cat-chip .cc-info { line-height: 1.3; }
+        .cat-chip .cc-label { font-size: 12px; color: var(--text-tertiary); font-weight: 700; }
+        .cat-chip .cc-amount { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+        .cat-chip .cc-actual { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+        .cat-chip .cc-actual span { font-weight: 700; }
+        .cat-chip .cc-actual span.under { color: var(--green); }
+        .cat-chip .cc-actual span.over { color: var(--primary); }
 
         @media (min-width: 768px) {
+            .desktop-nav { display: block; position: sticky; top: 0; z-index: 100; }
             .bottom-nav { display: none; }
+            .header-back { display: none; }
             body { padding-bottom: 0; }
-            .summary-grid { max-width: 640px; margin-left: auto; margin-right: auto; }
+            .summary-strip { max-width: 640px; margin-left: auto; margin-right: auto; }
         }
     </style>
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
-<div class="header" style="position: relative;">
+<!-- ===== DESKTOP NAV ===== -->
+<nav class="desktop-nav">
+    <div class="desktop-nav-inner">
+        <a href="index.html" class="desktop-nav-brand">🇹🇼 Taiwan Guidebook</a>
+        <div class="desktop-nav-links">
+            <a href="index.html"><i class="fa-solid fa-map"></i> แผนเที่ยว</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== HEADER + SUMMARY ===== -->
+<div class="header" style="position: relative; padding-bottom: 16px;">
     <a href="index.html" class="header-back"><i class="fa-solid fa-chevron-left"></i> แผนเที่ยว</a>
     <h1><i class="fa-solid fa-wallet"></i> Budget Tracker</h1>
     <p>Taiwan Trip &bull; 1&ndash;6 May 2025</p>
+
+    <div class="summary-strip">
+        <div class="s-col">
+            <div class="s-label">แผน</div>
+            <div class="s-amount" id="totalPlanned">฿45,100</div>
+            <div class="s-sub">THB</div>
+        </div>
+        <div class="s-col">
+            <div class="s-label">จ่ายจริง</div>
+            <div class="s-amount" id="totalActual">—</div>
+            <div class="s-sub">THB</div>
+        </div>
+        <div class="s-col">
+            <div class="s-label">ส่วนต่าง</div>
+            <div class="s-amount" id="totalDiff">—</div>
+            <div class="s-sub">THB</div>
+        </div>
+    </div>
 </div>
 
-<!-- ===== SUMMARY ===== -->
-<div class="summary-grid">
-    <div class="summary-card planned">
-        <div class="label">แผน</div>
-        <div class="amount" id="totalPlanned">0</div>
-        <div class="currency">TWD</div>
+<!-- ===== CATEGORY CHIPS ===== -->
+<div class="cat-strip">
+    <div class="cat-chip transport">
+        <div class="cc-icon"><i class="fa-solid fa-plane"></i></div>
+        <div class="cc-info">
+            <div class="cc-label">เดินทาง</div>
+            <div class="cc-amount">฿20,700</div>
+            <div class="cc-actual">จริง <span id="csActualTransport">—</span></div>
+        </div>
     </div>
-    <div class="summary-card actual">
-        <div class="label">จ่ายจริง</div>
-        <div class="amount" id="totalActual">0</div>
-        <div class="currency">TWD</div>
+    <div class="cat-chip hotel">
+        <div class="cc-icon"><i class="fa-solid fa-bed"></i></div>
+        <div class="cc-info">
+            <div class="cc-label">ที่พัก</div>
+            <div class="cc-amount">฿7,000</div>
+            <div class="cc-actual">จริง <span id="csActualHotel">—</span></div>
+        </div>
     </div>
-    <div class="summary-card diff">
-        <div class="label">ส่วนต่าง</div>
-        <div class="amount" id="totalDiff">0</div>
-        <div class="currency">TWD</div>
+    <div class="cat-chip food">
+        <div class="cc-icon"><i class="fa-solid fa-utensils"></i></div>
+        <div class="cc-info">
+            <div class="cc-label">อาหาร</div>
+            <div class="cc-amount">฿8,000</div>
+            <div class="cc-actual">จริง <span id="csActualFood">—</span></div>
+        </div>
+    </div>
+    <div class="cat-chip ticket">
+        <div class="cc-icon"><i class="fa-solid fa-ticket"></i></div>
+        <div class="cc-info">
+            <div class="cc-label">ตั๋ว/กิจกรรม</div>
+            <div class="cc-amount">฿1,000</div>
+            <div class="cc-actual">จริง <span id="csActualTicket">—</span></div>
+        </div>
+    </div>
+    <div class="cat-chip shopping">
+        <div class="cc-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+        <div class="cc-info">
+            <div class="cc-label">ช้อปปิ้ง</div>
+            <div class="cc-amount">฿4,000</div>
+            <div class="cc-actual">จริง <span id="csActualShopping">—</span></div>
+        </div>
+    </div>
+    <div class="cat-chip other">
+        <div class="cc-icon"><i class="fa-solid fa-ellipsis"></i></div>
+        <div class="cc-info">
+            <div class="cc-label">อื่นๆ/สำรอง</div>
+            <div class="cc-amount">฿4,400</div>
+            <div class="cc-actual">จริง <span id="csActualOther">—</span></div>
+        </div>
     </div>
 </div>
 
 <div class="content">
 
+    <!-- ===== CURRENCY CONVERTER ===== -->
+    <div class="converter-section">
+        <div class="converter-title"><i class="fa-solid fa-arrows-rotate"></i> แปลงค่าเงิน</div>
+        <div class="converter-body">
+            <div class="converter-field" id="converterFrom">
+                <label><span class="flag">🇹🇭</span> <span id="fromLabel">THB (บาท)</span></label>
+                <input type="number" id="fromAmount" placeholder="0" min="0" oninput="convertCurrency('from')">
+            </div>
+            <button class="btn-swap" id="btnSwap" onclick="swapCurrency()" aria-label="สลับสกุลเงิน">
+                <i class="fa-solid fa-right-left"></i>
+            </button>
+            <div class="converter-field" id="converterTo">
+                <label><span class="flag">🇹🇼</span> <span id="toLabel">TWD (ดอลลาร์ไต้หวัน)</span></label>
+                <input type="number" id="toAmount" placeholder="0" min="0" oninput="convertCurrency('to')">
+            </div>
+        </div>
+        <div class="converter-rate">
+            <span id="rateDisplay">1 THB = <span id="rateValue">0.92</span> TWD</span>
+            <span class="rate-edit">
+                <input type="number" id="rateInput" value="0.92" step="0.01" min="0.01" oninput="updateRate()">
+            </span>
+        </div>
+        <div id="rateStatus" style="font-size:10px; color:var(--text-tertiary); margin-top:4px;"></div>
+    </div>
+
+    <!-- ===== OVERVIEW TABLE ===== -->
+    <div class="overview-section">
+        <div class="section-header fixed">
+            <i class="fa-solid fa-lock"></i> ค่าใช้จ่ายจองล่วงหน้า (Fixed / Pre-Trip)
+        </div>
+        <table class="overview-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>รายการ (ต่อ 2 คน)</th>
+                    <th>หมวด</th>
+                    <th>ประมาณ ฿</th>
+                    <th>จ่ายจริง ฿</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>ตั๋วเครื่องบิน (BKK→TPE / KHH→BKK)</td>
+                    <td><span class="cat-badge transport"><i class="fa-solid fa-plane"></i> เดินทาง</span></td>
+                    <td>12,000</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f1" placeholder="—"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>ที่พักไทเป 2 คืน</td>
+                    <td><span class="cat-badge hotel"><i class="fa-solid fa-bed"></i> ที่พัก</span></td>
+                    <td>4,000</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f2" placeholder="—"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>ที่พักเกาสง 2 คืน</td>
+                    <td><span class="cat-badge hotel"><i class="fa-solid fa-bed"></i> ที่พัก</span></td>
+                    <td>3,000</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f3" placeholder="—"></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>ตั๋ว HSR (Taipei→Zuoying)</td>
+                    <td><span class="cat-badge transport"><i class="fa-solid fa-train"></i> เดินทาง</span></td>
+                    <td>3,300</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f4" placeholder="—"></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>eSIM / SIM Card ×2</td>
+                    <td><span class="cat-badge other"><i class="fa-solid fa-sim-card"></i> อื่นๆ</span></td>
+                    <td>600</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f5" placeholder="—"></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>ประกันการเดินทาง ×2</td>
+                    <td><span class="cat-badge other"><i class="fa-solid fa-shield-halved"></i> อื่นๆ</span></td>
+                    <td>800</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f6" placeholder="—"></td>
+                </tr>
+                <tr class="row-total">
+                    <td></td>
+                    <td>รวม Fixed</td>
+                    <td></td>
+                    <td>23,700</td>
+                    <td id="fixedActualTotal" style="font-weight:700;">—</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="overview-section">
+        <div class="section-header variable">
+            <i class="fa-solid fa-shuffle"></i> ค่าใช้จ่ายระหว่างเที่ยว (Variable / On-Trip)
+        </div>
+        <table class="overview-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>รายการ (ต่อ 2 คน)</th>
+                    <th>หมวด</th>
+                    <th>ประมาณ ฿</th>
+                    <th>จ่ายจริง ฿</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>7</td>
+                    <td>EasyCard ×2 (ค่าบัตร+เติมเงิน)</td>
+                    <td><span class="cat-badge transport"><i class="fa-solid fa-credit-card"></i> เดินทาง</span></td>
+                    <td>2,400</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v7" placeholder="—"><span class="exp-sum" id="expSum-transport-v7"></span></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>ค่าอาหาร 6 วัน</td>
+                    <td><span class="cat-badge food"><i class="fa-solid fa-utensils"></i> อาหาร</span></td>
+                    <td>8,000</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v8" placeholder="—"><span class="exp-sum" id="expSum-food"></span></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>ค่าเดินทางในเมือง (MRT/Bus/Taxi)</td>
+                    <td><span class="cat-badge transport"><i class="fa-solid fa-bus"></i> เดินทาง</span></td>
+                    <td>3,000</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v9" placeholder="—"><span class="exp-sum" id="expSum-transport-v9"></span></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>ค่าเข้าชม/กิจกรรม</td>
+                    <td><span class="cat-badge ticket"><i class="fa-solid fa-ticket"></i> ตั๋ว</span></td>
+                    <td>1,000</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v10" placeholder="—"><span class="exp-sum" id="expSum-ticket"></span></td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>ช้อปปิ้ง/ของฝาก</td>
+                    <td><span class="cat-badge shopping"><i class="fa-solid fa-bag-shopping"></i> ช้อป</span></td>
+                    <td>4,000</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v11" placeholder="—"><span class="exp-sum" id="expSum-shopping"></span></td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>สำรองฉุกเฉิน</td>
+                    <td><span class="cat-badge other"><i class="fa-solid fa-piggy-bank"></i> สำรอง</span></td>
+                    <td>3,000</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v12" placeholder="—"><span class="exp-sum" id="expSum-other"></span></td>
+                </tr>
+                <tr class="row-total">
+                    <td></td>
+                    <td>รวม Variable</td>
+                    <td></td>
+                    <td>21,400</td>
+                    <td id="varActualTotal" style="font-weight:700;">—</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Grand Total -->
+    <div class="grand-total-card">
+        <div class="gt-label"><i class="fa-solid fa-calculator"></i> สรุปรวมทั้งทริป (ต่อ 2 คน)</div>
+        <div class="grand-total-grid">
+            <div class="gt-col">
+                <div class="gt-num" id="gtPlanned">฿45,100</div>
+                <div class="gt-sub">ประมาณ</div>
+            </div>
+            <div class="gt-col">
+                <div class="gt-num" id="gtActual">—</div>
+                <div class="gt-sub">จ่ายจริง</div>
+            </div>
+            <div class="gt-col" id="gtDiffCol">
+                <div class="gt-num" id="gtDiff">—</div>
+                <div class="gt-sub">ส่วนต่าง</div>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== ADD/EDIT FORM ===== -->
     <div class="form-section">
         <div class="form-title"><i class="fa-solid fa-plus-circle"></i> <span id="formTitle">เพิ่มรายการ</span></div>
 
-        <div class="form-row">
+        <div class="form-row full">
             <div class="form-group">
                 <label>รายการ</label>
-                <input type="text" id="itemName" placeholder="เช่น ตั๋วเครื่องบิน">
-            </div>
-            <div class="form-group">
-                <label>หมวด</label>
-                <select id="itemCategory">
-                    <option value="transport">การเดินทาง</option>
-                    <option value="hotel">ที่พัก</option>
-                    <option value="food">อาหาร</option>
-                    <option value="ticket">ตั๋ว/ค่าเข้าชม</option>
-                    <option value="shopping">ช้อปปิ้ง</option>
-                    <option value="other">อื่น ๆ</option>
-                </select>
+                <input type="text" id="itemName" placeholder="เช่น ชานมไข่มุก, รถไฟ MRT">
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
-                <label>ประเภท</label>
-                <select id="itemType">
-                    <option value="fixed">Fixed Cost (จ่ายล่วงหน้า)</option>
-                    <option value="variable">Variable Cost (จ่ายตอนเที่ยว)</option>
-                </select>
-            </div>
-            <div class="form-group">
                 <label>วัน</label>
                 <select id="itemDay">
-                    <option value="0">ก่อนเดินทาง</option>
                     <option value="1">Day 1 — ไทเป</option>
                     <option value="2">Day 2 — หยางหมิงซาน</option>
                     <option value="3">Day 3 — Sandiaoling + อู่ไหล</option>
@@ -438,15 +1067,21 @@
                     <option value="6">Day 6 — บินกลับ</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label>หมวด</label>
+                <select id="itemCategory">
+                    <option value="food">อาหาร</option>
+                    <option value="transport">การเดินทาง</option>
+                    <option value="ticket">ตั๋ว/ค่าเข้าชม</option>
+                    <option value="shopping">ช้อปปิ้ง</option>
+                    <option value="other">อื่น ๆ</option>
+                </select>
+            </div>
         </div>
 
-        <div class="form-row">
+        <div class="form-row full">
             <div class="form-group">
-                <label>บัดเจท (TWD)</label>
-                <input type="number" id="itemPlanned" placeholder="0" min="0">
-            </div>
-            <div class="form-group">
-                <label>จ่ายจริง (TWD)</label>
+                <label>จ่ายจริง (THB)</label>
                 <input type="number" id="itemActual" placeholder="0" min="0">
             </div>
         </div>
@@ -460,9 +1095,6 @@
     <!-- ===== FILTER TABS ===== -->
     <div class="tab-bar" id="tabBar">
         <div class="tab active" data-filter="all">ทั้งหมด</div>
-        <div class="tab" data-filter="fixed">Fixed</div>
-        <div class="tab" data-filter="variable">Variable</div>
-        <div class="tab" data-filter="0">ก่อนเที่ยว</div>
         <div class="tab" data-filter="1">Day 1</div>
         <div class="tab" data-filter="2">Day 2</div>
         <div class="tab" data-filter="3">Day 3</div>
@@ -502,10 +1134,317 @@
 </nav>
 
 <script>
+/* ===== CURRENCY CONVERTER ===== */
+let isSwapped = false;
+let exchangeRate = parseFloat(localStorage.getItem('taiwan_exchange_rate') || '0.92');
+
+document.getElementById('rateInput').value = exchangeRate;
+
+// Fetch live exchange rate
+(async function fetchLiveRate() {
+    const status = document.getElementById('rateStatus');
+    status.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังดึงเรทล่าสุด...';
+    try {
+        const res = await fetch('https://open.er-api.com/v6/latest/THB');
+        const data = await res.json();
+        if (data.result === 'success' && data.rates && data.rates.TWD) {
+            const liveRate = parseFloat(data.rates.TWD.toFixed(4));
+            exchangeRate = liveRate;
+            localStorage.setItem('taiwan_exchange_rate', liveRate.toString());
+            document.getElementById('rateInput').value = liveRate;
+            const rv = document.getElementById('rateValue');
+            if (rv) rv.textContent = liveRate;
+            // Reconvert if there's a value
+            if (document.getElementById('fromAmount').value) convertCurrency('from');
+            const now = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+            status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:var(--green);"></i> เรทสด อัปเดตเมื่อ ' + now;
+        } else {
+            status.innerHTML = '<i class="fa-solid fa-wifi" style="color:var(--orange);"></i> ใช้เรทที่บันทึกไว้';
+        }
+    } catch (e) {
+        status.innerHTML = '<i class="fa-solid fa-wifi" style="color:var(--orange);"></i> ออฟไลน์ — ใช้เรทที่บันทึกไว้';
+    }
+})();
+
+function convertCurrency(source) {
+    const fromInput = document.getElementById('fromAmount');
+    const toInput = document.getElementById('toAmount');
+    const rate = exchangeRate;
+
+    if (source === 'from') {
+        const val = parseFloat(fromInput.value);
+        if (isNaN(val) || val === 0) { toInput.value = ''; return; }
+        if (!isSwapped) {
+            toInput.value = (val * rate).toFixed(2);
+        } else {
+            toInput.value = (val / rate).toFixed(2);
+        }
+    } else {
+        const val = parseFloat(toInput.value);
+        if (isNaN(val) || val === 0) { fromInput.value = ''; return; }
+        if (!isSwapped) {
+            fromInput.value = (val / rate).toFixed(2);
+        } else {
+            fromInput.value = (val * rate).toFixed(2);
+        }
+    }
+}
+
+function swapCurrency() {
+    isSwapped = !isSwapped;
+    const btn = document.getElementById('btnSwap');
+    btn.classList.toggle('flipped');
+
+    const fromLabel = document.getElementById('fromLabel');
+    const toLabel = document.getElementById('toLabel');
+    const fromFlag = document.querySelector('#converterFrom .flag');
+    const toFlag = document.querySelector('#converterTo .flag');
+    const rateDisplay = document.getElementById('rateDisplay');
+
+    if (isSwapped) {
+        fromLabel.textContent = 'TWD (ดอลลาร์ไต้หวัน)';
+        toLabel.textContent = 'THB (บาท)';
+        fromFlag.textContent = '🇹🇼';
+        toFlag.textContent = '🇹🇭';
+        rateDisplay.innerHTML = '1 THB = <span id="rateValue">' + exchangeRate + '</span> TWD';
+    } else {
+        fromLabel.textContent = 'THB (บาท)';
+        toLabel.textContent = 'TWD (ดอลลาร์ไต้หวัน)';
+        fromFlag.textContent = '🇹🇭';
+        toFlag.textContent = '🇹🇼';
+        rateDisplay.innerHTML = '1 THB = <span id="rateValue">' + exchangeRate + '</span> TWD';
+    }
+
+    // Swap values and reconvert
+    const fromInput = document.getElementById('fromAmount');
+    const toInput = document.getElementById('toAmount');
+    const tempVal = fromInput.value;
+    fromInput.value = toInput.value;
+    toInput.value = tempVal;
+}
+
+function updateRate() {
+    const newRate = parseFloat(document.getElementById('rateInput').value);
+    if (isNaN(newRate) || newRate <= 0) return;
+    exchangeRate = newRate;
+    localStorage.setItem('taiwan_exchange_rate', newRate.toString());
+    const rateValue = document.getElementById('rateValue');
+    if (rateValue) rateValue.textContent = newRate;
+    // Reconvert from left side
+    if (document.getElementById('fromAmount').value) {
+        convertCurrency('from');
+    }
+}
+
+/* ===== OVERVIEW TABLE ===== */
+const OV_STORAGE_KEY = 'taiwan_overview_2025';
+const OV_PLANNED = {
+    f1: 12000, f2: 4000, f3: 3000, f4: 3300, f5: 600, f6: 800,
+    v7: 2400, v8: 8000, v9: 3000, v10: 1000, v11: 4000, v12: 3000
+};
+const FIXED_PLANNED = 23700;
+const VAR_PLANNED = 21400;
+const GRAND_PLANNED = 45100;
+
+// Category mapping: ov key → category
+const OV_CAT = {
+    f1: 'transport', f2: 'hotel', f3: 'hotel', f4: 'transport', f5: 'other', f6: 'other',
+    v7: 'transport', v8: 'food', v9: 'transport', v10: 'ticket', v11: 'shopping', v12: 'other'
+};
+const CAT_PLANNED = { transport: 20700, hotel: 7000, food: 8000, ticket: 1000, shopping: 4000, other: 4400 };
+
+function loadOverview() {
+    const saved = JSON.parse(localStorage.getItem(OV_STORAGE_KEY) || '{}');
+    document.querySelectorAll('.actual-input').forEach(input => {
+        const key = input.dataset.ov;
+        if (saved[key] !== undefined && saved[key] !== null) {
+            input.value = saved[key];
+        }
+    });
+    calcOverview();
+}
+
+function saveOverview() {
+    const data = {};
+    document.querySelectorAll('.actual-input').forEach(input => {
+        const val = input.value ? parseFloat(input.value) : null;
+        data[input.dataset.ov] = val;
+    });
+    localStorage.setItem(OV_STORAGE_KEY, JSON.stringify(data));
+}
+
+function calcOverview() {
+    let fixedActual = 0, varActual = 0;
+    let hasFixed = false, hasVar = false;
+
+    document.querySelectorAll('.actual-input').forEach(input => {
+        const key = input.dataset.ov;
+        const val = parseFloat(input.value) || 0;
+        if (input.value !== '') {
+            if (key.startsWith('f')) { fixedActual += val; hasFixed = true; }
+            else { varActual += val; hasVar = true; }
+        }
+    });
+
+    // รวมยอดจาก expense list (Variable)
+    const expActual = expenses.reduce((s, e) => s + (e.actual || 0), 0);
+
+    const grandActual = fixedActual + varActual + expActual;
+    const hasAny = hasFixed || hasVar || expActual > 0;
+
+    // Fixed subtotal
+    document.getElementById('fixedActualTotal').textContent = hasFixed ? fixedActual.toLocaleString() : '—';
+
+    // Variable subtotal (overview + expense list)
+    const totalVarActual = varActual + expActual;
+    document.getElementById('varActualTotal').textContent = (hasVar || expActual > 0) ? totalVarActual.toLocaleString() : '—';
+
+    // Grand total card
+    document.getElementById('gtActual').textContent = hasAny ? '฿' + grandActual.toLocaleString() : '—';
+
+    const diffCol = document.getElementById('gtDiffCol');
+    const gtDiff = document.getElementById('gtDiff');
+    if (hasAny) {
+        const diff = GRAND_PLANNED - grandActual;
+        const sign = diff >= 0 ? '-' : '+';
+        gtDiff.textContent = sign + '฿' + Math.abs(diff).toLocaleString();
+        diffCol.className = 'gt-col ' + (diff >= 0 ? 'diff-positive' : 'diff-negative');
+    } else {
+        gtDiff.textContent = '—';
+        diffCol.className = 'gt-col';
+    }
+
+    // Update summary strip in header
+    updateSummary(grandActual, hasAny);
+
+    // Update category chips
+    calcCategorySummary();
+
+    // Update expense sums in Variable table rows
+    updateExpSums();
+}
+
+function calcCategorySummary() {
+    const catActual = { transport: 0, hotel: 0, food: 0, ticket: 0, shopping: 0, other: 0 };
+    const catHas = { transport: false, hotel: false, food: false, ticket: false, shopping: false, other: false };
+
+    // จาก overview table
+    document.querySelectorAll('.actual-input').forEach(input => {
+        const key = input.dataset.ov;
+        const cat = OV_CAT[key];
+        if (input.value !== '') {
+            catActual[cat] += parseFloat(input.value) || 0;
+            catHas[cat] = true;
+        }
+    });
+
+    // รวมจาก expense list ตามหมวด
+    expenses.forEach(e => {
+        if (e.actual > 0) {
+            const cat = e.category || 'other';
+            catActual[cat] = (catActual[cat] || 0) + e.actual;
+            catHas[cat] = true;
+        }
+    });
+
+    const catIds = { transport: 'Transport', hotel: 'Hotel', food: 'Food', ticket: 'Ticket', shopping: 'Shopping', other: 'Other' };
+    for (const [cat, label] of Object.entries(catIds)) {
+        const el = document.getElementById('csActual' + label);
+        if (!el) continue;
+        if (catHas[cat]) {
+            const diff = (CAT_PLANNED[cat] || 0) - catActual[cat];
+            el.textContent = '฿' + catActual[cat].toLocaleString();
+            el.className = diff < 0 ? 'over' : (diff > 0 ? 'under' : '');
+        } else {
+            el.textContent = '—';
+            el.className = '';
+        }
+    }
+}
+
+function updateExpSums() {
+    // รวม expense list ตาม category + เก็บชื่อรายการ
+    const catSums = {};
+    const catItems = {};
+    expenses.forEach(e => {
+        if (e.actual > 0) {
+            const cat = e.category || 'other';
+            catSums[cat] = (catSums[cat] || 0) + e.actual;
+            if (!catItems[cat]) catItems[cat] = [];
+            catItems[cat].push(e.name + ' ฿' + e.actual.toLocaleString());
+        }
+    });
+
+    // Map: ov key → category (สำหรับ Variable rows)
+    const ovToCat = { v8: 'food', v10: 'ticket', v11: 'shopping', v12: 'other' };
+    // transport ลงแถว v9 (ค่าเดินทางในเมือง)
+    const transportRow = 'v9';
+
+    // ใส่ค่ารวมลง input + แสดงรายการล่าสุดเป็นสีส้ม
+    const filledCats = {};
+
+    document.querySelectorAll('.actual-input[data-ov^="v"]').forEach(input => {
+        const key = input.dataset.ov;
+        let cat = ovToCat[key] || null;
+        if (key === transportRow) cat = 'transport';
+        if (key === 'v7') cat = null; // v7 = EasyCard กรอกเอง
+
+        const spanId = input.nextElementSibling ? input.nextElementSibling.id : null;
+        const span = spanId ? document.getElementById(spanId) : null;
+
+        if (cat && catSums[cat] && !filledCats[cat]) {
+            input.value = catSums[cat];
+            if (span) {
+                const last = catItems[cat][catItems[cat].length - 1];
+            const names = last;
+                span.textContent = names;
+            }
+            filledCats[cat] = true;
+            // Save to overview localStorage too
+            saveOverview();
+        } else if (cat && !catSums[cat]) {
+            // ไม่มี expense list → ไม่แตะ input (user อาจกรอกเอง)
+            if (span) span.textContent = '';
+        } else {
+            if (span) span.textContent = '';
+        }
+    });
+}
+
+function updateSummary(totalActual, hasAny) {
+    document.getElementById('totalPlanned').textContent = '฿' + GRAND_PLANNED.toLocaleString();
+
+    if (hasAny) {
+        document.getElementById('totalActual').textContent = '฿' + totalActual.toLocaleString();
+        const diff = GRAND_PLANNED - totalActual;
+        const diffEl = document.getElementById('totalDiff');
+        const sign = diff >= 0 ? '-' : '+';
+        diffEl.textContent = sign + '฿' + Math.abs(diff).toLocaleString();
+        diffEl.className = 's-amount' + (diff < 0 ? ' over' : ' under');
+    } else {
+        document.getElementById('totalActual').textContent = '—';
+        const diffEl = document.getElementById('totalDiff');
+        diffEl.textContent = '—';
+        diffEl.className = 's-amount';
+    }
+}
+
+// Attach listeners
+document.querySelectorAll('.actual-input').forEach(input => {
+    input.addEventListener('input', () => {
+        saveOverview();
+        calcOverview();
+    });
+});
+
+/* ===== EXPENSE LIST (CRUD) ===== */
 const STORAGE_KEY = 'taiwan_budget_2025';
 let expenses = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 let editingId = null;
 let currentFilter = 'all';
+
+// Load overview after expenses is ready
+loadOverview();
 
 const categoryIcons = {
     transport: 'fa-plane',
@@ -546,9 +1485,9 @@ function save() {
 function saveItem() {
     const name = document.getElementById('itemName').value.trim();
     const category = document.getElementById('itemCategory').value;
-    const type = document.getElementById('itemType').value;
+    const type = 'variable';
     const day = document.getElementById('itemDay').value;
-    const planned = parseInt(document.getElementById('itemPlanned').value) || 0;
+    const planned = 0;
     const actual = parseInt(document.getElementById('itemActual').value) || 0;
 
     if (!name) {
@@ -581,9 +1520,7 @@ function editItem(id) {
     editingId = id;
     document.getElementById('itemName').value = item.name;
     document.getElementById('itemCategory').value = item.category;
-    document.getElementById('itemType').value = item.type;
     document.getElementById('itemDay').value = item.day;
-    document.getElementById('itemPlanned').value = item.planned || '';
     document.getElementById('itemActual').value = item.actual || '';
     document.getElementById('formTitle').textContent = 'แก้ไขรายการ';
     document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-pen"></i> อัปเดต';
@@ -610,7 +1547,6 @@ function cancelEdit() {
 
 function clearForm() {
     document.getElementById('itemName').value = '';
-    document.getElementById('itemPlanned').value = '';
     document.getElementById('itemActual').value = '';
 }
 
@@ -625,19 +1561,9 @@ function getFiltered() {
 function render() {
     const filtered = getFiltered();
     const list = document.getElementById('expenseList');
-    const empty = document.getElementById('emptyState');
 
-    // Summary
-    const totalP = expenses.reduce((s, e) => s + (e.planned || 0), 0);
-    const totalA = expenses.reduce((s, e) => s + (e.actual || 0), 0);
-    const diff = totalP - totalA;
-
-    document.getElementById('totalPlanned').textContent = totalP.toLocaleString();
-    document.getElementById('totalActual').textContent = totalA.toLocaleString();
-
-    const diffEl = document.getElementById('totalDiff');
-    diffEl.textContent = (diff >= 0 ? '-' : '+') + Math.abs(diff).toLocaleString();
-    diffEl.className = 'amount' + (diff < 0 ? ' over' : '');
+    // Re-calc overview to update summary cards
+    calcOverview();
 
     // List
     document.getElementById('itemCount').textContent = filtered.length + ' รายการ';
@@ -651,11 +1577,9 @@ function render() {
         const icon = categoryIcons[e.category] || 'fa-ellipsis';
         const catName = categoryNames[e.category] || e.category;
         const dayLabel = dayLabels[e.day] || '';
-        const diff = (e.planned || 0) - (e.actual || 0);
-        const diffClass = e.actual > 0 ? (diff < 0 ? 'over' : 'under') : '';
 
         return `<li class="expense-item">
-            <div class="expense-icon ${e.type}"><i class="fa-solid ${icon}"></i></div>
+            <div class="expense-icon cat-${e.category}"><i class="fa-solid ${icon}"></i></div>
             <div class="expense-info">
                 <div class="expense-name">${e.name}</div>
                 <div class="expense-meta">
@@ -665,8 +1589,7 @@ function render() {
                 </div>
             </div>
             <div class="expense-amounts">
-                <div class="expense-planned">${e.planned ? e.planned.toLocaleString() : '-'}</div>
-                <div class="expense-actual ${diffClass}">${e.actual ? e.actual.toLocaleString() : '-'}</div>
+                <div class="expense-actual">${e.actual ? '฿' + e.actual.toLocaleString() : '-'}</div>
             </div>
             <div class="expense-actions">
                 <button class="btn-edit" onclick="editItem('${e.id}')" aria-label="แก้ไข"><i class="fa-solid fa-pen"></i></button>
