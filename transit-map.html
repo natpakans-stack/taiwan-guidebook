@@ -53,7 +53,7 @@
         /* Daily routes */
         .section { background: var(--bg-white); margin: 12px; border-radius: 12px; box-shadow: var(--shadow-sm); overflow: hidden; }
         .section-header { padding: 16px; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
-        .day-route { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+        .day-route { padding: 12px 16px; border-bottom: 1px solid var(--border); position: relative; }
         .day-route:last-child { border-bottom: none; }
         .day-label { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
         .day-label.d1 { background: #FFE0E6; color: #C62828; }
@@ -79,6 +79,17 @@
         .route-method.lrt { background: var(--kh-lrt); }
         .st-code { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; margin: 0 2px; color: white; }
         .st-code.red { background: var(--red); }
+
+        /* Active NOW highlight */
+        .section.active-day { border: 2px solid var(--red); box-shadow: 0 0 0 3px rgba(227,0,44,0.15); }
+        .section.active-day > .section-header { background: #FFF0F2; }
+        .day-route.active-now { background: #FFF8E1; position: relative; }
+        .day-route.active-now::before { content: '📍 ตอนนี้'; position: absolute; top: 8px; right: 12px; font-size: 11px; font-weight: 700; color: var(--red); background: #FFE0E6; padding: 2px 8px; border-radius: 20px; animation: pulse-now 2s infinite; }
+        @keyframes pulse-now { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .day-route.done { opacity: 0.45; }
+        .day-route.done::after { content: '✓'; position: absolute; top: 8px; right: 12px; font-size: 12px; font-weight: 700; color: #2E7D32; background: #E8F5E9; padding: 2px 8px; border-radius: 20px; }
+        .section.done-day { opacity: 0.5; }
+        .section.done-day > .section-header::after { content: ' ✓ เสร็จแล้ว'; font-size: 12px; color: #2E7D32; margin-left: auto; }
 
         @media (min-width: 768px) {
             .map-wrap, .section, .tip { max-width: 720px; margin-left: auto; margin-right: auto; }
@@ -141,9 +152,9 @@
     <div class="tip"><i class="fa-solid fa-lightbulb"></i><div><strong>Easy Card ใบเดียวใช้ได้ทั้ง Taipei MRT, Kaohsiung MRT, LRT, Bus</strong> · เติมเงินที่ตู้ในสถานี · แนะนำเติม 500 TWD</div></div>
 
     <!-- PRE-GO -->
-    <div class="section">
+    <div class="section" data-day="pre">
         <div class="section-header"><span class="day-label" style="background:#E0E0E0;color:#333;">PRE-GO · พฤหัส 30 เม.ย.</span> คอนโด → DMK</div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-04-30T22:30" data-end="2026-05-01T02:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">23:30 ออกจากคอนโด (MRT ปิดแล้ว)</div>
             <div class="route-flow">
                 <span class="route-stop"><i class="fa-solid fa-house"></i> Parkland แคราย</span>
@@ -151,7 +162,7 @@
                 <span class="route-stop"><i class="fa-solid fa-plane-departure"></i> DMK T1</span>
             </div>
         </div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-01T02:00" data-end="2026-05-01T07:55">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">03:00 เครื่องออก</div>
             <div class="route-flow">
                 <span class="route-stop"><i class="fa-solid fa-plane-departure"></i> DMK</span>
@@ -162,9 +173,9 @@
     </div>
 
     <!-- DAY 1 -->
-    <div class="section">
+    <div class="section" data-day="1">
         <div class="section-header"><span class="day-label d1">Day 1 · ศุกร์ 1 พ.ค.</span> สวัสดีไทเป</div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-01T07:55" data-end="2026-05-01T11:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">09:00 สนามบิน → ฝากกระเป๋าที่โรงแรม</div>
             <div class="route-flow">
                 <span class="route-stop"><i class="fa-solid fa-plane-arrival"></i> TPE Airport</span>
@@ -175,7 +186,7 @@
                 <span class="route-method walk"><i class="fa-solid fa-suitcase"></i> ฝากกระเป๋า</span>
             </div>
         </div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-01T11:00" data-end="2026-05-01T16:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">11:00 วัดหลงซาน → 13:00 กลับเช็คอิน</div>
             <div class="route-flow">
                 <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13</span>
@@ -189,7 +200,7 @@
                 <span class="route-stop hotel"><i class="fa-solid fa-key"></i> R13 เช็คอิน + พัก</span>
             </div>
         </div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-01T16:00" data-end="2026-05-01T22:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">16:00 ซีเหมินติง → 19:00 Ningxia → เดินกลับ</div>
             <div class="route-flow">
                 <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13</span>
@@ -210,9 +221,9 @@
     </div>
 
     <!-- DAY 2 -->
-    <div class="section">
+    <div class="section" data-day="2">
         <div class="section-header"><span class="day-label d2">Day 2 · เสาร์ 2 พ.ค.</span> จีหลง + จิ่วเฟิ่น</div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-02T08:00" data-end="2026-05-02T17:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">โรงแรม → จีหลง → จิ่วเฟิ่น</div>
             <div class="route-flow">
                 <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13</span>
@@ -224,7 +235,7 @@
                 <span class="route-stop"><i class="fa-solid fa-torii-gate"></i> Jiufen</span>
             </div>
         </div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-02T17:00" data-end="2026-05-02T22:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">จิ่วเฟิ่น → โรงแรม</div>
             <div class="route-flow">
                 <span class="route-stop">Jiufen</span>
@@ -239,9 +250,9 @@
     </div>
 
     <!-- DAY 3 -->
-    <div class="section">
+    <div class="section" data-day="3">
         <div class="section-header"><span class="day-label d3">Day 3 · อาทิตย์ 3 พ.ค.</span> Sandiaoling + อู่ไหล</div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-03T18:00" data-end="2026-05-03T22:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">ค่ำ: Raohe → โรงแรม</div>
             <div class="route-flow">
                 <span class="route-stop"><i class="fa-solid fa-utensils"></i> Raohe</span>
@@ -256,9 +267,9 @@
     </div>
 
     <!-- DAY 4 -->
-    <div class="section">
+    <div class="section" data-day="4">
         <div class="section-header"><span class="day-label d4">Day 4 · จันทร์ 4 พ.ค.</span> HSR → เกาสง</div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-04T08:00" data-end="2026-05-04T13:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">ไทเป → เกาสง (HSR)</div>
             <div class="route-flow">
                 <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13</span>
@@ -268,7 +279,7 @@
                 <span class="route-stop">R16 Zuoying (左營)</span>
             </div>
         </div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-04T13:00" data-end="2026-05-04T22:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">ฝอกวงซัน → เช็คอิน → ฉีจิน → Liuhe</div>
             <div class="route-flow">
                 <span class="route-stop">R16</span>
@@ -291,9 +302,9 @@
     </div>
 
     <!-- DAY 5 -->
-    <div class="section">
+    <div class="section" data-day="5">
         <div class="section-header"><span class="day-label d5">Day 5 · อังคาร 5 พ.ค.</span> Pier-2 + ศิลปะ</div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-05T09:00" data-end="2026-05-05T22:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">โรงแรม → Pier-2 → Ruifeng → กลับ</div>
             <div class="route-flow">
                 <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R10</span>
@@ -312,9 +323,9 @@
     </div>
 
     <!-- DAY 6 -->
-    <div class="section">
+    <div class="section" data-day="6">
         <div class="section-header"><span class="day-label d6">Day 6 · พุธ 6 พ.ค.</span> Dream Mall → บินกลับ</div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-06T08:30" data-end="2026-05-06T11:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">08:30 เช็คเอาท์ + ฝากกระเป๋า → Lotus Pond</div>
             <div class="route-flow">
                 <span class="route-stop hotel"><i class="fa-solid fa-suitcase-rolling"></i> SKYONE เช็คเอาท์</span>
@@ -324,7 +335,7 @@
                 <span class="route-stop"><i class="fa-solid fa-place-of-worship"></i> R16 Lotus Pond</span>
             </div>
         </div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-06T11:00" data-end="2026-05-06T19:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">11:00 Dream Mall → 14:00 รับกระเป๋า</div>
             <div class="route-flow">
                 <span class="route-stop">R16 Zuoying</span>
@@ -339,7 +350,7 @@
                 <span class="route-method walk">รับกระเป๋า SKYONE</span>
             </div>
         </div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-06T19:00" data-end="2026-05-06T21:55">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">19:00 สนามบิน → 21:55 บินกลับ</div>
             <div class="route-flow">
                 <span class="route-stop">R10 Formosa Blvd</span>
@@ -360,9 +371,9 @@
     </div>
 
     <!-- POST-ARRIVAL -->
-    <div class="section">
+    <div class="section" data-day="post">
         <div class="section-header"><span class="day-label" style="background:#E0E0E0;color:#333;">POST · พุธ 7 พ.ค.</span> DMK → บ้าน (พรุ่งนี้ทำงาน!)</div>
-        <div class="day-route">
+        <div class="day-route" data-start="2026-05-06T21:55" data-end="2026-05-07T02:00">
             <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">00:20 ถึง DMK → ~01:30 ถึงบ้าน</div>
             <div class="route-flow">
                 <span class="route-stop"><i class="fa-solid fa-plane-arrival"></i> DMK T1 00:20</span>
@@ -391,6 +402,56 @@ function zoom(map, dir) {
     img.style.width = zoomState[map] + '%';
     label.textContent = zoomState[map] + '%';
 }
+
+// ===== ACTIVE NOW HIGHLIGHT =====
+function highlightNow() {
+    // Use Taiwan time (UTC+8) for everything — close enough to Thailand (UTC+7)
+    const now = new Date();
+    const twOffset = 8 * 60; // UTC+8 in minutes
+    const localOffset = now.getTimezoneOffset(); // negative for east of UTC
+    const twTime = new Date(now.getTime() + (twOffset + localOffset) * 60000);
+
+    // Clear all states
+    document.querySelectorAll('.active-now, .active-day, .done, .done-day').forEach(el => {
+        el.classList.remove('active-now', 'active-day', 'done', 'done-day');
+    });
+
+    let foundActive = false;
+    const routes = document.querySelectorAll('.day-route[data-start]');
+
+    routes.forEach(route => {
+        const start = new Date(route.dataset.start);
+        const end = new Date(route.dataset.end);
+
+        if (twTime >= start && twTime < end && !foundActive) {
+            // Current route
+            route.classList.add('active-now');
+            route.closest('.section').classList.add('active-day');
+            foundActive = true;
+            // Auto-scroll + switch to routes tab
+            setTimeout(() => {
+                showTab('routes', document.querySelectorAll('.tab')[2]);
+                route.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        } else if (twTime >= end) {
+            // Past route
+            route.classList.add('done');
+        }
+    });
+
+    // Mark entire past sections
+    document.querySelectorAll('.section[data-day]').forEach(sec => {
+        const routes = sec.querySelectorAll('.day-route[data-start]');
+        const allDone = [...routes].every(r => r.classList.contains('done'));
+        if (allDone && routes.length > 0) {
+            sec.classList.add('done-day');
+        }
+    });
+}
+
+// Run on load + every minute
+highlightNow();
+setInterval(highlightNow, 60000);
 </script>
 </body>
 </html>
