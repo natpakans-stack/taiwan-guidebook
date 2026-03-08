@@ -654,32 +654,6 @@
             height: 52px;
         }
 
-        .desktop-nav-links {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .desktop-nav-links a {
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            padding: 6px 12px;
-            border-radius: var(--radius-full);
-            transition: all 0.2s;
-        }
-
-        .desktop-nav-links a:hover {
-            background: var(--bg-light);
-            color: var(--text-primary);
-        }
-
-        .desktop-nav-links a.active {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-
         .desktop-nav-brand {
             font-size: 14px;
             font-weight: 700;
@@ -690,26 +664,62 @@
             gap: 8px;
         }
 
-        .btn-budget-desktop {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            background: var(--bg-white);
-            color: #1B1D22;
-            border: 2px solid var(--secondary);
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 700;
-            border-radius: var(--radius-full);
-            text-decoration: none;
-            transition: all 0.2s;
+        /* Hamburger button */
+        .burger-btn {
+            background: none; border: none; cursor: pointer;
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; font-size: 20px;
+            color: var(--text-primary); transition: background 0.2s;
         }
+        .burger-btn:hover { background: var(--bg-light); }
 
-        .btn-budget-desktop:hover {
-            background: var(--secondary);
-            color: white;
-            border-color: var(--secondary);
+        /* Overlay menu */
+        .nav-overlay {
+            display: none; position: fixed; inset: 0; z-index: 999;
+            background: rgba(16,17,20,0.5);
+        }
+        .nav-overlay.open { display: block; }
+
+        .nav-drawer {
+            position: fixed; top: 0; right: -300px; z-index: 1000;
+            width: 280px; height: 100%; background: var(--bg-white);
+            box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+            transition: right 0.3s ease;
+            padding: 0; overflow-y: auto;
+        }
+        .nav-drawer.open { right: 0; }
+
+        .nav-drawer-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 20px; border-bottom: 1px solid var(--border);
+        }
+        .nav-drawer-header span { font-size: 15px; font-weight: 700; }
+        .nav-close {
+            background: none; border: none; cursor: pointer;
+            font-size: 20px; color: var(--text-secondary);
+            width: 36px; height: 36px; display: flex;
+            align-items: center; justify-content: center;
+            border-radius: 8px;
+        }
+        .nav-close:hover { background: var(--bg-light); }
+
+        .nav-drawer-links {
+            padding: 8px 12px;
+            display: flex; flex-direction: column; gap: 2px;
+        }
+        .nav-drawer-links a {
+            text-decoration: none; font-size: 14px; font-weight: 700;
+            color: var(--text-secondary); padding: 10px 12px;
+            border-radius: 8px; display: flex; align-items: center; gap: 8px;
+            transition: all 0.15s;
+        }
+        .nav-drawer-links a:hover { background: var(--bg-light); color: var(--text-primary); }
+        .nav-drawer-links a i { width: 20px; text-align: center; font-size: 15px; }
+
+        .nav-drawer-divider {
+            height: 1px; background: var(--border);
+            margin: 4px 12px;
         }
 
         /* ===== DESKTOP ===== */
@@ -852,19 +862,29 @@
 <nav class="desktop-nav">
     <div class="desktop-nav-inner">
         <a href="#top" class="desktop-nav-brand">🇹🇼 Taiwan Guidebook</a>
-        <div class="desktop-nav-links">
-            <a href="#day1">Day 1</a>
-            <a href="#day2">Day 2</a>
-            <a href="#day3">Day 3</a>
-            <a href="#day4">Day 4</a>
-            <a href="#day5">Day 5</a>
-            <a href="#day6">Day 6</a>
-            <a href="#tips">Tips</a>
-            <a href="docs.html"><i class="fa-solid fa-folder-open"></i> เอกสาร</a>
-            <a href="budget.html" class="btn-budget-desktop"><i class="fa-solid fa-wallet"></i> Budget Tracker</a>
-        </div>
+        <button class="burger-btn" onclick="toggleNav()" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
     </div>
 </nav>
+<div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+<div class="nav-drawer" id="navDrawer">
+    <div class="nav-drawer-header">
+        <span>🇹🇼 Menu</span>
+        <button class="nav-close" onclick="toggleNav()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="nav-drawer-links">
+        <a href="#day1" onclick="toggleNav()"><i class="fa-solid fa-1"></i> Day 1 — สวัสดีไทเป</a>
+        <a href="#day2" onclick="toggleNav()"><i class="fa-solid fa-2"></i> Day 2 — จีหลง + จิ่วเฟิ่น</a>
+        <a href="#day3" onclick="toggleNav()"><i class="fa-solid fa-3"></i> Day 3 — Sandiaoling + อู่ไหล</a>
+        <a href="#day4" onclick="toggleNav()"><i class="fa-solid fa-4"></i> Day 4 — ฝอกวงซัน + ฉีจิน</a>
+        <a href="#day5" onclick="toggleNav()"><i class="fa-solid fa-5"></i> Day 5 — Pier-2 + ศิลปะ</a>
+        <a href="#day6" onclick="toggleNav()"><i class="fa-solid fa-6"></i> Day 6 — Dream Mall + บินกลับ</a>
+        <a href="#tips" onclick="toggleNav()"><i class="fa-solid fa-compass"></i> Tips & Checklist</a>
+        <div class="nav-drawer-divider"></div>
+        <a href="transit-map.html"><i class="fa-solid fa-train-subway"></i> Transit Map</a>
+        <a href="docs.html"><i class="fa-solid fa-folder-open"></i> เอกสาร</a>
+        <a href="budget.html"><i class="fa-solid fa-wallet"></i> Budget Tracker</a>
+    </div>
+</div>
 
 <!-- ===== HERO ===== -->
 <header class="hero" id="top">
@@ -1115,6 +1135,59 @@
     <div class="divider"></div>
 
     <!-- ============================================ -->
+    <!-- PRE-DEPARTURE -->
+    <!-- ============================================ -->
+    <section class="section" id="pre-departure">
+        <div class="day-header">
+            <div class="day-num" style="background: #1B1D22;">PRE<span style="font-size:16px;">GO</span></div>
+            <div class="day-info">
+                <h3><span class="th">(พฤหัส) คืนก่อนออกเดินทาง</span><span class="en">(Thu) Night Before Departure</span></h3>
+                <p><span class="th">30 เม.ย. &mdash; คอนโด → สนามบินดอนเมือง</span><span class="en">Apr 30 &mdash; Condo → Don Mueang Airport</span></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">23:30</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th"><i class="fa-solid fa-door-open"></i> ออกจากคอนโด</span><span class="en"><i class="fa-solid fa-door-open"></i> Leave condo</span></div>
+                    <div class="tl-desc"><span class="th">เรียก Grab/Taxi จาก <strong>เดอะพาร์คแลนด์ งามวงศ์วาน-แคราย</strong> ไป DMK (~30-40 นาที ดึกไม่มีรถติด)</span><span class="en">Grab/Taxi from <strong>The Parkland Ngamwongwan-Khae Rai</strong> to DMK (~30-40 min, no traffic late night)</span></div>
+                    <div class="tl-desc"><span class="th"><strong>MRT ปิดแล้ว</strong> ต้องใช้ Grab/Taxi เท่านั้น</span><span class="en"><strong>MRT is closed</strong> — Grab/Taxi only</span></div>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">00:15</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th">ถึง DMK Terminal 1</span><span class="en">Arrive DMK Terminal 1</span></div>
+                    <div class="tl-desc"><span class="th">เช็คอิน Thai Lion Air SL398 (เคาน์เตอร์เปิดก่อนบิน ~3 ชม.)</span><span class="en">Check-in Thai Lion Air SL398 (counter opens ~3 hrs before flight)</span></div>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">03:00</span>
+                    <div class="tl-dot"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th">เครื่องออก! DMK → TPE ✈️</span><span class="en">Takeoff! DMK → TPE ✈️</span></div>
+                    <div class="tl-desc"><span class="th"><strong>Thai Lion Air SL398</strong> · Boeing 737-900 · ใช้เวลา 3 ชม. 55 นาที · ถึงไทเป 07:55</span><span class="en"><strong>Thai Lion Air SL398</strong> · Boeing 737-900 · Duration 3h 55m · Arrive Taipei 07:55</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
     <!-- DAY 1 -->
     <!-- ============================================ -->
     <section class="section" id="day1">
@@ -1129,12 +1202,13 @@
         <div class="card">
             <div class="tl-item">
                 <div class="tl-left">
-                    <span class="tl-time">11:00</span>
+                    <span class="tl-time">07:55</span>
                     <div class="tl-dot"></div>
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
                     <div class="tl-title"><span class="th">ถึงสนามบินเถาหยวน (TPE)</span><span class="en">Arrive at Taoyuan Airport (TPE)</span></div>
+                    <div class="tl-desc"><span class="th"><strong>Thai Lion Air SL398</strong> ออก DMK 03:00 → ถึง TPE 07:55</span><span class="en"><strong>Thai Lion Air SL398</strong> depart DMK 03:00 → arrive TPE 07:55</span></div>
                     <div class="tl-desc"><span class="th">ผ่าน ตม. &rarr; ซื้อ EasyCard + เติมเงิน 1,000 TWD &rarr; เปิดใช้ eSIM</span><span class="en">Immigration &rarr; Buy EasyCard + load 1,000 TWD &rarr; Activate eSIM</span></div>
                     <span class="hl-chip hl-must">Must Do</span>
                     <a href="https://www.google.com/maps/search/Taoyuan+International+Airport+TPE" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
@@ -1143,7 +1217,7 @@
 
             <div class="tl-item">
                 <div class="tl-left">
-                    <span class="tl-time">13:00</span>
+                    <span class="tl-time">09:00</span>
                     <div class="tl-dot"></div>
                     <div class="tl-line"></div>
                 </div>
@@ -1156,12 +1230,25 @@
 
             <div class="tl-item">
                 <div class="tl-left">
-                    <span class="tl-time">14:00</span>
+                    <span class="tl-time">10:00</span>
                     <div class="tl-dot"></div>
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title"><span class="th">เช็คอินที่พัก</span><span class="en">Check in to hotel</span></div>
+                    <div class="tl-title"><span class="th"><i class="fa-solid fa-suitcase"></i> ฝากกระเป๋าที่โรงแรม</span><span class="en"><i class="fa-solid fa-suitcase"></i> Drop luggage at hotel</span></div>
+                    <div class="tl-desc"><span class="th">ไปถึง Cai She Hotel ก่อน → ฝากกระเป๋าที่ lobby (ยังเช็คอินไม่ได้ ต้องรอ 15:00) → ตัวเบาพร้อมออกเที่ยว!</span><span class="en">Head to Cai She Hotel first → leave luggage at lobby (check-in not until 15:00) → travel light and explore!</span></div>
+                    <span class="hl-chip hl-must"><span class="th">ฝากกระเป๋าก่อน!</span><span class="en">Drop bags first!</span></span>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">10:30</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th">เช็คอินที่พัก (หลัง 15:00 กลับมารับกุญแจ)</span><span class="en">Check in to hotel (come back after 15:00 for key)</span></div>
                     <div class="tl-desc"><span class="th">ที่พักหลัก: <strong>Cai She Hotel — 采舍精品旅館 (โรงแรมไคชี)</strong> ย่าน Zhongshan ใกล้ MRT Zhongshan Elementary (R13) · 3F, No.34 Nong'an St.</span><span class="en">Main stay: <strong>Cai She Hotel (采舍精品旅館)</strong> Zhongshan area, near MRT Zhongshan Elementary (R13) · 3F, No.34 Nong'an St.</span></div>
                     <div class="tl-desc"><span class="th"><strong>เช็คอิน:</strong> หลัง 15:00 / <strong>เช็คเอาท์:</strong> ก่อน 12:00 · ห้องดีลักซ์เตียงควีนไซส์ 39 ตร.ม. · <strong>฿6,198 (3 คืน รวมภาษี)</strong></span><span class="en"><strong>Check-in:</strong> after 15:00 / <strong>Check-out:</strong> before 12:00 · Deluxe Queen 39 sqm · <strong>฿6,198 (3 nights incl. tax)</strong></span></div>
                     <div class="tl-desc"><span class="th"><i class="fa-solid fa-walking"></i> เดินถึง Ningxia Night Market ~5 นาที · MRT Zhongshan Elementary (R13) ~3 นาที · ตลาดซวงเฉิง (雙城街) ~3 นาที</span><span class="en"><i class="fa-solid fa-walking"></i> Walk to Ningxia Night Market ~5 min · MRT Zhongshan Elementary (R13) ~3 min · Shuangcheng Night Market ~3 min</span></div>
@@ -1180,7 +1267,7 @@
 
             <div class="tl-item">
                 <div class="tl-left">
-                    <span class="tl-time">16:00</span>
+                    <span class="tl-time">11:00</span>
                     <div class="tl-dot"></div>
                     <div class="tl-line"></div>
                 </div>
@@ -1199,14 +1286,28 @@
 
             <div class="tl-item">
                 <div class="tl-left">
-                    <span class="tl-time">18:00</span>
+                    <span class="tl-time">13:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th"><i class="fa-solid fa-key"></i> กลับ Cai She Hotel เช็คอิน + พักผ่อน</span><span class="en"><i class="fa-solid fa-key"></i> Return to Cai She Hotel check-in + rest</span></div>
+                    <div class="tl-desc"><span class="th">กลับมารับกุญแจห้อง เก็บของ พักผ่อนสักครู่ (บินดึกมาทั้งคืน!) แล้วออกเที่ยวต่อตอนบ่าย</span><span class="en">Pick up room key, store belongings, rest a bit (overnight flight!) then head out in the afternoon</span></div>
+                    <div class="tl-desc"><span class="th"><strong>เช็คอิน:</strong> หลัง 15:00 — ถ้าถึงก่อน ลองขอ early check-in ได้ ถ้าห้องยังไม่พร้อมก็ฝากของไว้ก่อน</span><span class="en"><strong>Check-in:</strong> after 15:00 — try requesting early check-in, if room not ready just leave bags</span></div>
+                    <span class="hl-chip hl-must"><span class="th">พักก่อน!</span><span class="en">Rest first!</span></span>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">16:00</span>
                     <div class="tl-dot"></div>
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
                     <div class="tl-title"><span class="th">ซีเหมินติง (Ximending)</span><span class="en">Ximending</span></div>
                     <div class="tl-desc"><span class="th">MRT สายสีน้ำเงิน/เขียว ลง <strong>Ximen (西門) Exit 6</strong> ขึ้นมาจะเจอ Ximending Walking Street เลย</span><span class="en">Blue/Green Line MRT to <strong>Ximen (西門) Exit 6</strong>, walk straight into Ximending Walking Street</span></div>
-                    <div class="tl-desc"><span class="th">สยามสแควร์แห่งไต้หวัน! ช้อปปิ้ง + สตรีทฟู้ด</span><span class="en">Taiwan's Shibuya! Shopping + street food</span></div>
+                    <div class="tl-desc"><span class="th">สยามสแควร์แห่งไต้หวัน! ช้อปปิ้ง + สตรีทฟู้ด (ร้านเปิดบ่ายๆ คึกคักสุดช่วงเย็น)</span><span class="en">Taiwan's Shibuya! Shopping + street food (shops open afternoon, busiest in evening)</span></div>
                     <div class="tl-desc"><span class="th"><strong>ห้ามพลาด:</strong> บะหมี่หอยนางรมอาจง (Ay-Chung), ไก่ทอดไซส์ยักษ์ Hot Star</span><span class="en"><strong>Must try:</strong> Ay-Chung Oyster Noodles, Hot Star Large Fried Chicken</span></div>
                     <span class="hl-chip hl-food">Street Food</span>
                     <a href="https://www.google.com/maps/search/Ximending+Taipei" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">เปิดแผนที่</span><span class="en">Open Map</span></a>
@@ -1215,7 +1316,7 @@
 
             <div class="tl-item">
                 <div class="tl-left">
-                    <span class="tl-time">20:00</span>
+                    <span class="tl-time">19:00</span>
                     <div class="tl-dot"></div>
                 </div>
                 <div class="tl-body">
@@ -1885,6 +1986,19 @@
         <div class="card">
             <div class="tl-item">
                 <div class="tl-left">
+                    <span class="tl-time">08:30</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th"><i class="fa-solid fa-suitcase-rolling"></i> เช็คเอาท์ SKYONE Hotel + ฝากกระเป๋า</span><span class="en"><i class="fa-solid fa-suitcase-rolling"></i> Check-out SKYONE Hotel + store luggage</span></div>
+                    <div class="tl-desc"><span class="th">เช็คเอาท์ก่อน 11:00 → ฝากกระเป๋าที่ lobby โรงแรม แล้วตัวเบาออกเที่ยววันสุดท้าย!</span><span class="en">Check-out before 11:00 → leave luggage at hotel lobby, then explore your last day light!</span></div>
+                    <span class="hl-chip hl-must"><span class="th">ฝากกระเป๋าที่ lobby!</span><span class="en">Store bags at lobby!</span></span>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
                     <span class="tl-time">09:00</span>
                     <div class="tl-dot"></div>
                     <div class="tl-line"></div>
@@ -1918,15 +2032,13 @@
 
             <div class="tl-item">
                 <div class="tl-left">
-                    <span class="tl-time">13:00</span>
+                    <span class="tl-time">14:00</span>
                     <div class="tl-dot"></div>
                     <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title"><span class="th">MRT สายสีแดงไปสนามบิน KHH</span><span class="en">Red Line MRT to KHH Airport</span></div>
-                    <div class="tl-desc"><span class="th"><strong>วิธีไป:</strong> จาก Dream Mall นั่ง LRT กลับ <strong>Kaisyuan (R6/C4)</strong> แล้วต่อ MRT สายแดงลง <strong>Kaohsiung International Airport (R4)</strong> ใช้เวลา ~25-35 นาที ค่าโดยสาร ~35 TWD</span><span class="en"><strong>How to go:</strong> From Dream Mall take LRT back to <strong>Kaisyuan (R6/C4)</strong>, transfer Red Line MRT to <strong>Kaohsiung International Airport (R4)</strong>. ~25-35 min, ~35 TWD</span></div>
-                    <div class="tl-desc"><span class="th"><strong>Tips:</strong> สนามบิน KHH เล็กกว่า TPE เยอะ เช็คอินก่อนบิน 2 ชม. ถ้าบินเย็น ~17:00 ออกจาก Dream Mall ตอน 13:00 พอ</span><span class="en"><strong>Tips:</strong> KHH airport is much smaller than TPE. Check in 2 hrs before flight. If flying ~17:00, leave Dream Mall at 13:00</span></div>
-                    <a href="https://www.google.com/maps/search/Kaohsiung+International+Airport+KHH" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">สนามบิน KHH</span><span class="en">KHH Airport</span></a>
+                    <div class="tl-title"><span class="th"><i class="fa-solid fa-suitcase"></i> กลับ SKYONE Hotel รับกระเป๋า</span><span class="en"><i class="fa-solid fa-suitcase"></i> Return to SKYONE Hotel for luggage</span></div>
+                    <div class="tl-desc"><span class="th">กลับไปรับกระเป๋าที่ฝากไว้ตอน check-out เช้า (หรือเอากระเป๋าไป Dream Mall ฝากล็อกเกอร์ก็ได้)</span><span class="en">Pick up luggage left at hotel after morning check-out (or use Dream Mall lockers)</span></div>
                 </div>
             </div>
 
@@ -1934,10 +2046,105 @@
                 <div class="tl-left">
                     <span class="tl-time">15:00</span>
                     <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
                 </div>
                 <div class="tl-body">
-                    <div class="tl-title"><span class="th">เช็คอิน + บินกลับไทย</span><span class="en">Check in + Fly home to Thailand</span></div>
-                    <div class="tl-desc"><span class="th">เช็คอินโหลดกระเป๋า บินกลับประเทศไทยโดยสวัสดิภาพ &#9992;&#65039;</span><span class="en">Check in luggage and fly safely back to Thailand &#9992;&#65039;</span></div>
+                    <div class="tl-title"><span class="th">เที่ยวต่อ / พักผ่อนก่อนบิน</span><span class="en">Explore more / Rest before flight</span></div>
+                    <div class="tl-desc"><span class="th">มีเวลาเหลืออีกเยอะ! เลือกได้: กินข้าวเย็นแถว Liuhe Night Market / เดินเล่น Pier-2 Art Center / นั่งคาเฟ่ชิลล์</span><span class="en">Plenty of time left! Options: dinner at Liuhe Night Market / stroll Pier-2 Art Center / chill at a caf&eacute;</span></div>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">19:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th">MRT ไปสนามบิน KHH</span><span class="en">MRT to KHH Airport</span></div>
+                    <div class="tl-desc"><span class="th"><strong>วิธีไป:</strong> MRT สายแดง ลง <strong>Kaohsiung International Airport (R4)</strong> จาก Formosa Blvd (R10) ~15 นาที ค่าโดยสาร ~25 TWD</span><span class="en"><strong>How to go:</strong> Red Line MRT to <strong>Kaohsiung International Airport (R4)</strong>, ~15 min from Formosa Blvd (R10), ~25 TWD</span></div>
+                    <div class="tl-desc"><span class="th"><strong>Tips:</strong> สนามบิน KHH เล็ก เช็คอินเร็ว ไปก่อนบิน 2-3 ชม. พอ</span><span class="en"><strong>Tips:</strong> KHH airport is small, fast check-in. Arrive 2-3 hrs before flight</span></div>
+                    <div class="tl-desc"><span class="th"><strong>💳 EasyCard เงินเหลือ:</strong></span><span class="en"><strong>💳 EasyCard leftover balance:</strong></span></div>
+                    <div class="tl-desc"><span class="th">&bull; <strong>คืนเงินได้</strong> ที่เคาน์เตอร์ MRT สถานี KHH Airport (R4) ก่อนเข้าสนามบิน — ได้คืนเงินในบัตร + ค่ามัดจำ 100 TWD หักค่าธรรมเนียม 20 TWD (บัตรใช้ไม่ถึง 3 เดือน)</span><span class="en">&bull; <strong>Refund available</strong> at MRT counter KHH Airport (R4) before entering airport — get back balance + 100 TWD deposit minus 20 TWD fee (card used less than 3 months)</span></div>
+                    <div class="tl-desc"><span class="th">&bull; <strong>ใช้ให้หมด</strong> ซื้อของที่ 7-11/FamilyMart ในสนามบิน</span><span class="en">&bull; <strong>Spend it</strong> at 7-11/FamilyMart in the airport</span></div>
+                    <div class="tl-desc"><span class="th">&bull; <strong>เก็บไว้ทริปหน้า</strong> บัตรไม่มีวันหมดอายุ! (แนะนำ ถ้าจะกลับมาอีก)</span><span class="en">&bull; <strong>Keep for next trip</strong> — card never expires! (recommended if returning)</span></div>
+                    <a href="https://www.google.com/maps/search/Kaohsiung+International+Airport+KHH" target="_blank" rel="noopener" class="map-link"><i class="fa-solid fa-map-location-dot"></i> <span class="th">สนามบิน KHH</span><span class="en">KHH Airport</span></a>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">21:55</span>
+                    <div class="tl-dot"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th">บินกลับไทย &#9992;&#65039;</span><span class="en">Fly home to Thailand &#9992;&#65039;</span></div>
+                    <div class="tl-desc"><span class="th"><strong>Thai Lion Air SL393</strong> ออก KHH 21:55 → ถึง DMK 00:20 (+1 วัน, 7 พ.ค.)</span><span class="en"><strong>Thai Lion Air SL393</strong> depart KHH 21:55 → arrive DMK 00:20 (+1 day, May 7)</span></div>
+                    <div class="tl-desc"><span class="th">บินกลับประเทศไทยโดยสวัสดิภาพ!</span><span class="en">Fly safely back to Thailand!</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================ -->
+    <!-- POST-ARRIVAL (กลับถึงไทย) -->
+    <!-- ============================================ -->
+    <section class="section" id="post-arrival">
+        <div class="day-header">
+            <div class="day-num" style="background: #1B1D22;">POST<span style="font-size:14px;">🏠</span></div>
+            <div class="day-info">
+                <h3><span class="th">(พุธ) กลับถึงไทย → กลับบ้าน</span><span class="en">(Wed) Arrive Thailand → Home</span></h3>
+                <p><span class="th">7 พ.ค. เช้ามืด &mdash; DMK → คอนโด (พรุ่งนี้ทำงาน!)</span><span class="en">May 7 early morning &mdash; DMK → Condo (work tomorrow!)</span></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">00:20</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th">ถึง DMK Terminal 1</span><span class="en">Arrive DMK Terminal 1</span></div>
+                    <div class="tl-desc"><span class="th"><strong>Thai Lion Air SL393</strong> จาก KHH ถึงดอนเมือง</span><span class="en"><strong>Thai Lion Air SL393</strong> from KHH arrives at Don Mueang</span></div>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">00:45</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th">ผ่าน ตม. + ออกสนามบิน</span><span class="en">Immigration + Exit airport</span></div>
+                    <div class="tl-desc"><span class="th">ไม่มีกระเป๋าโหลด (carry-on เท่านั้น) → ออกเร็ว!</span><span class="en">No checked baggage (carry-on only) → fast exit!</span></div>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">01:00</span>
+                    <div class="tl-dot"></div>
+                    <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th"><i class="fa-solid fa-taxi"></i> Grab/Taxi กลับคอนโด</span><span class="en"><i class="fa-solid fa-taxi"></i> Grab/Taxi to condo</span></div>
+                    <div class="tl-desc"><span class="th">DMK → <strong>เดอะพาร์คแลนด์ งามวงศ์วาน-แคราย</strong> (~30 นาที ดึกไม่มีรถติด)</span><span class="en">DMK → <strong>The Parkland Ngamwongwan-Khae Rai</strong> (~30 min, no traffic)</span></div>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-left">
+                    <span class="tl-time">~01:30</span>
+                    <div class="tl-dot"></div>
+                </div>
+                <div class="tl-body">
+                    <div class="tl-title"><span class="th"><i class="fa-solid fa-house"></i> ถึงบ้าน! นอนเลย!</span><span class="en"><i class="fa-solid fa-house"></i> Home! Sleep now!</span></div>
+                    <div class="tl-desc"><span class="th">พรุ่งนี้ทำงาน — นอนให้เร็วที่สุด! 💤</span><span class="en">Work tomorrow — sleep ASAP! 💤</span></div>
                 </div>
             </div>
         </div>
@@ -2239,6 +2446,7 @@
         <a href="#day5" class="bnav-item"><i class="fa-solid fa-5"></i>DAY 5</a>
         <a href="#day6" class="bnav-item"><i class="fa-solid fa-6"></i>DAY 6</a>
         <a href="#tips" class="bnav-item"><i class="fa-solid fa-compass"></i>Tips</a>
+        <a href="transit-map.html" class="bnav-item"><i class="fa-solid fa-train-subway"></i><span class="th">รฟฟ.</span><span class="en">MRT</span></a>
         <a href="docs.html" class="bnav-item"><i class="fa-solid fa-folder-open"></i><span class="th">เอกสาร</span><span class="en">Docs</span></a>
         <a href="budget.html" class="bnav-item"><i class="fa-solid fa-wallet"></i><span class="th">เงิน</span><span class="en">Budget</span></a>
     </div>
@@ -2248,6 +2456,12 @@
 <button class="btt" id="btt" aria-label="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
 
 <script>
+    // Hamburger nav
+    function toggleNav() {
+        document.getElementById('navOverlay').classList.toggle('open');
+        document.getElementById('navDrawer').classList.toggle('open');
+    }
+
     // Back to top
     const btt = document.getElementById('btt');
     window.addEventListener('scroll', () => {

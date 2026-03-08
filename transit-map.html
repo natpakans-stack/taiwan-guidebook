@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Transit Map | แผนที่เส้นทาง รฟฟ.</title>
+    <link rel="icon" type="image/png" sizes="64x64" href="./favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --red: #E3002C; --blue: #0070BD; --green: #008659;
+            --orange: #F8A01E; --purple: #7B61FF;
+            --kh-red: #E3002C; --kh-orange: #F5A623; --kh-lrt: #3BA676;
+            --text-primary: #1B1D22; --text-secondary: #5A5E6E; --text-tertiary: #9A9DAD;
+            --bg-page: #F6F7FA; --bg-white: #FFFFFF; --bg-light: #F0F1F5;
+            --border: #E4E6ED; --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'IBM Plex Sans Thai', sans-serif; background: var(--bg-page); color: var(--text-primary); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+        .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 48px 16px 24px; text-align: center; position: relative; }
+        .header h1 { font-size: 22px; font-weight: 700; }
+        .header p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+        .header-back { position: absolute; top: 48px; left: 16px; color: white; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+
+        .tabs { display: flex; background: var(--bg-white); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+        .tab { flex: 1; padding: 12px 8px; text-align: center; font-size: 13px; font-weight: 700; cursor: pointer; border: none; border-bottom: 3px solid transparent; color: var(--text-tertiary); transition: all 0.2s; background: none; font-family: inherit; }
+        .tab.active { color: var(--text-primary); border-bottom-color: var(--red); }
+        .panel { display: none; padding-bottom: 40px; }
+        .panel.active { display: block; }
+
+        .tip { margin: 12px; padding: 12px 16px; background: #EBF2FF; border-radius: 12px; font-size: 13px; color: #1565C0; display: flex; gap: 8px; align-items: flex-start; }
+        .tip i { margin-top: 3px; }
+
+        /* Map viewer */
+        .map-wrap { background: var(--bg-white); margin: 12px; border-radius: 12px; box-shadow: var(--shadow-sm); overflow: hidden; }
+        .map-header { padding: 12px 16px; font-size: 14px; font-weight: 700; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+        .map-viewer { overflow: auto; -webkit-overflow-scrolling: touch; max-height: 75vh; background: #f0f0f0; }
+        .map-viewer img { display: block; width: 100%; min-width: 600px; cursor: grab; user-select: none; }
+        .map-viewer img:active { cursor: grabbing; }
+        .zoom-bar { display: flex; justify-content: center; gap: 8px; padding: 8px 16px; border-top: 1px solid var(--border); }
+        .zoom-btn { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-white); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-primary); font-weight: 700; }
+        .zoom-btn:active { background: var(--bg-light); }
+        .zoom-label { display: flex; align-items: center; font-size: 12px; font-weight: 700; color: var(--text-secondary); min-width: 40px; justify-content: center; }
+        .map-source { padding: 8px 16px; font-size: 11px; color: var(--text-tertiary); text-align: center; border-top: 1px solid var(--border); }
+        .map-source a { color: var(--text-secondary); }
+
+        /* Daily routes */
+        .section { background: var(--bg-white); margin: 12px; border-radius: 12px; box-shadow: var(--shadow-sm); overflow: hidden; }
+        .section-header { padding: 16px; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+        .day-route { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+        .day-route:last-child { border-bottom: none; }
+        .day-label { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
+        .day-label.d1 { background: #FFE0E6; color: #C62828; }
+        .day-label.d2 { background: #E3F2FD; color: #1565C0; }
+        .day-label.d3 { background: #E8F5E9; color: #2E7D32; }
+        .day-label.d4 { background: #FFF3E0; color: #E65100; }
+        .day-label.d5 { background: #F3E5F5; color: #6A1B9A; }
+        .day-label.d6 { background: #E0F7FA; color: #00695C; }
+        .route-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; font-size: 13px; line-height: 2; }
+        .route-stop { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; background: var(--bg-light); }
+        .route-stop.hotel { background: #FFF8E1; border: 1px solid #FFD54F; }
+        .route-stop i { font-size: 10px; }
+        .route-method { font-size: 11px; color: white; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+        .route-method.mrt-red { background: var(--red); }
+        .route-method.mrt-blue { background: var(--blue); }
+        .route-method.mrt-green { background: var(--green); }
+        .route-method.mrt-orange { background: var(--orange); color: #333; }
+        .route-method.mrt-purple { background: var(--purple); }
+        .route-method.bus { background: #7B1FA2; }
+        .route-method.hsr { background: #E65100; }
+        .route-method.walk { background: #78909C; }
+        .route-method.ferry { background: #0288D1; }
+        .route-method.lrt { background: var(--kh-lrt); }
+        .st-code { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; margin: 0 2px; color: white; }
+        .st-code.red { background: var(--red); }
+
+        @media (min-width: 768px) {
+            .map-wrap, .section, .tip { max-width: 720px; margin-left: auto; margin-right: auto; }
+            .map-viewer img { min-width: unset; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <a href="./index.html" class="header-back"><i class="fa-solid fa-chevron-left"></i> Guidebook</a>
+    <h1><i class="fa-solid fa-train-subway"></i> Transit Map</h1>
+    <p>แผนที่เส้นทาง รฟฟ. ไต้หวัน — ทริป 1-6 พ.ค. 2026</p>
+</div>
+
+<div class="tabs">
+    <button class="tab active" onclick="showTab('taipei',this)"><i class="fa-solid fa-city"></i> Taipei MRT</button>
+    <button class="tab" onclick="showTab('kaohsiung',this)"><i class="fa-solid fa-sun"></i> Kaohsiung MRT</button>
+    <button class="tab" onclick="showTab('routes',this)"><i class="fa-solid fa-route"></i> เส้นทางรายวัน</button>
+</div>
+
+<!-- ===== TAIPEI MRT MAP ===== -->
+<div id="panel-taipei" class="panel active">
+    <div class="tip"><i class="fa-solid fa-hand-pointer"></i><div><strong>ลากดู + ซูมได้!</strong> กดปุ่ม +/- หรือ pinch-to-zoom บนมือถือ</div></div>
+    <div class="map-wrap">
+        <div class="map-header"><i class="fa-solid fa-map" style="color:var(--red);"></i> Taipei Metro Route Map</div>
+        <div class="map-viewer" id="tpeViewer">
+            <img id="tpeMap" src="./img/taipei-mrt-map.webp" alt="Taipei MRT Route Map" draggable="false">
+        </div>
+        <div class="zoom-bar">
+            <button class="zoom-btn" onclick="zoom('tpe',-1)"><i class="fa-solid fa-minus"></i></button>
+            <div class="zoom-label" id="tpeZoomLabel">100%</div>
+            <button class="zoom-btn" onclick="zoom('tpe',1)"><i class="fa-solid fa-plus"></i></button>
+            <button class="zoom-btn" onclick="zoom('tpe',0)" style="margin-left:8px;font-size:12px;">Reset</button>
+        </div>
+        <div class="map-source">Source: <a href="https://english.metro.taipei" target="_blank" rel="noopener">Taipei Rapid Transit Corporation</a></div>
+    </div>
+</div>
+
+<!-- ===== KAOHSIUNG MRT MAP ===== -->
+<div id="panel-kaohsiung" class="panel">
+    <div class="tip"><i class="fa-solid fa-hand-pointer"></i><div><strong>ลากดู + ซูมได้!</strong> เกาสงมี 2 สาย (แดง+ส้ม) + LRT รถราง · SKYONE HOTEL อยู่ติด Formosa Blvd (R10/O5)</div></div>
+    <div class="map-wrap">
+        <div class="map-header"><i class="fa-solid fa-map" style="color:var(--kh-orange);"></i> Kaohsiung Metro Route Map</div>
+        <div class="map-viewer" id="khViewer">
+            <img id="khMap" src="./img/kaohsiung-mrt-map.jpg" alt="Kaohsiung MRT Route Map" draggable="false">
+        </div>
+        <div class="zoom-bar">
+            <button class="zoom-btn" onclick="zoom('kh',-1)"><i class="fa-solid fa-minus"></i></button>
+            <div class="zoom-label" id="khZoomLabel">100%</div>
+            <button class="zoom-btn" onclick="zoom('kh',1)"><i class="fa-solid fa-plus"></i></button>
+            <button class="zoom-btn" onclick="zoom('kh',0)" style="margin-left:8px;font-size:12px;">Reset</button>
+        </div>
+        <div class="map-source">Source: <a href="https://www.krtc.com.tw/eng/" target="_blank" rel="noopener">KRTC Kaohsiung Metro</a></div>
+    </div>
+</div>
+
+<!-- ===== DAILY ROUTES ===== -->
+<div id="panel-routes" class="panel">
+    <div class="tip"><i class="fa-solid fa-lightbulb"></i><div><strong>Easy Card ใบเดียวใช้ได้ทั้ง Taipei MRT, Kaohsiung MRT, LRT, Bus</strong> · เติมเงินที่ตู้ในสถานี · แนะนำเติม 500 TWD</div></div>
+
+    <!-- PRE-GO -->
+    <div class="section">
+        <div class="section-header"><span class="day-label" style="background:#E0E0E0;color:#333;">PRE-GO · พฤหัส 30 เม.ย.</span> คอนโด → DMK</div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">23:30 ออกจากคอนโด (MRT ปิดแล้ว)</div>
+            <div class="route-flow">
+                <span class="route-stop"><i class="fa-solid fa-house"></i> Parkland แคราย</span>
+                <span class="route-method" style="background:#333;">Grab/Taxi ~35 นาที</span>
+                <span class="route-stop"><i class="fa-solid fa-plane-departure"></i> DMK T1</span>
+            </div>
+        </div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">03:00 เครื่องออก</div>
+            <div class="route-flow">
+                <span class="route-stop"><i class="fa-solid fa-plane-departure"></i> DMK</span>
+                <span class="route-method" style="background:#E3002C;">SL398 · 3h55m</span>
+                <span class="route-stop"><i class="fa-solid fa-plane-arrival"></i> TPE 07:55</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAY 1 -->
+    <div class="section">
+        <div class="section-header"><span class="day-label d1">Day 1 · ศุกร์ 1 พ.ค.</span> สวัสดีไทเป</div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">09:00 สนามบิน → ฝากกระเป๋าที่โรงแรม</div>
+            <div class="route-flow">
+                <span class="route-stop"><i class="fa-solid fa-plane-arrival"></i> TPE Airport</span>
+                <span class="route-method mrt-purple">Airport MRT 35 นาที</span>
+                <span class="route-stop">Taipei Main <span class="st-code red">R10</span></span>
+                <span class="route-method mrt-red">สายแดง 2 สถานี</span>
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13 Cai She Hotel</span>
+                <span class="route-method walk"><i class="fa-solid fa-suitcase"></i> ฝากกระเป๋า</span>
+            </div>
+        </div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">11:00 วัดหลงซาน → 13:00 กลับเช็คอิน</div>
+            <div class="route-flow">
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop">R10 Taipei Main</span>
+                <span class="route-method mrt-blue">สายน้ำเงิน</span>
+                <span class="route-stop"><i class="fa-solid fa-place-of-worship"></i> Longshan Temple</span>
+                <span class="route-method mrt-blue">สายน้ำเงิน</span>
+                <span class="route-stop">R10</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop hotel"><i class="fa-solid fa-key"></i> R13 เช็คอิน + พัก</span>
+            </div>
+        </div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">16:00 ซีเหมินติง → 19:00 Ningxia → เดินกลับ</div>
+            <div class="route-flow">
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop">R10 Taipei Main</span>
+                <span class="route-method mrt-blue">สายน้ำเงิน</span>
+                <span class="route-stop"><i class="fa-solid fa-bag-shopping"></i> BL11 Ximen</span>
+                <span class="route-method mrt-blue">สายน้ำเงิน</span>
+                <span class="route-stop">R10</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop">R12 Shuanglian</span>
+                <span class="route-method walk">เดิน 6 นาที</span>
+                <span class="route-stop"><i class="fa-solid fa-utensils"></i> Ningxia</span>
+                <span class="route-method walk">เดิน 5 นาที</span>
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> Cai She Hotel</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="section">
+        <div class="section-header"><span class="day-label d2">Day 2 · เสาร์ 2 พ.ค.</span> จีหลง + จิ่วเฟิ่น</div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">โรงแรม → จีหลง → จิ่วเฟิ่น</div>
+            <div class="route-flow">
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop">R10 Taipei Main</span>
+                <span class="route-method bus">Bus 1573 ~60 นาที</span>
+                <span class="route-stop"><i class="fa-solid fa-ship"></i> Keelung</span>
+                <span class="route-method bus">Bus 788 ~30 นาที</span>
+                <span class="route-stop"><i class="fa-solid fa-torii-gate"></i> Jiufen</span>
+            </div>
+        </div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">จิ่วเฟิ่น → โรงแรม</div>
+            <div class="route-flow">
+                <span class="route-stop">Jiufen</span>
+                <span class="route-method bus">Bus 1062 ~90 นาที</span>
+                <span class="route-stop">BL15 Zhongxiao Fuxing</span>
+                <span class="route-method mrt-blue">สายน้ำเงิน</span>
+                <span class="route-stop">R10 Taipei Main</span>
+                <span class="route-method mrt-red">สายแดง 2 สถานี</span>
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13 Cai She Hotel</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div class="section">
+        <div class="section-header"><span class="day-label d3">Day 3 · อาทิตย์ 3 พ.ค.</span> Sandiaoling + อู่ไหล</div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">ค่ำ: Raohe → โรงแรม</div>
+            <div class="route-flow">
+                <span class="route-stop"><i class="fa-solid fa-utensils"></i> Raohe</span>
+                <span class="route-method walk">เดิน 2 นาที</span>
+                <span class="route-stop">G19 Songshan</span>
+                <span class="route-method mrt-green">สายเขียว</span>
+                <span class="route-stop">G14/R11 Zhongshan</span>
+                <span class="route-method mrt-red">สายแดง 2 สถานี</span>
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13 Cai She Hotel</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div class="section">
+        <div class="section-header"><span class="day-label d4">Day 4 · จันทร์ 4 พ.ค.</span> HSR → เกาสง</div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">ไทเป → เกาสง (HSR)</div>
+            <div class="route-flow">
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R13</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop">R10 Taipei Main</span>
+                <span class="route-method hsr">HSR ~90 นาที</span>
+                <span class="route-stop">R16 Zuoying (左營)</span>
+            </div>
+        </div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">ฝอกวงซัน → เช็คอิน → ฉีจิน → Liuhe</div>
+            <div class="route-flow">
+                <span class="route-stop">R16</span>
+                <span class="route-method bus">E02 ฝอกวงซัน</span>
+                <span class="route-stop"><i class="fa-solid fa-place-of-worship"></i> Fo Guang Shan</span>
+                <span class="route-method bus">E02 กลับ</span>
+                <span class="route-stop">R16</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R10 SKYONE</span>
+                <span class="route-method mrt-orange">สายส้ม</span>
+                <span class="route-stop">O1 Sizihwan</span>
+                <span class="route-method ferry">เรือ</span>
+                <span class="route-stop"><i class="fa-solid fa-umbrella-beach"></i> Cijin</span>
+                <span class="route-method ferry">เรือกลับ</span>
+                <span class="route-stop"><i class="fa-solid fa-utensils"></i> Liuhe</span>
+                <span class="route-method walk">1 นาที</span>
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> SKYONE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAY 5 -->
+    <div class="section">
+        <div class="section-header"><span class="day-label d5">Day 5 · อังคาร 5 พ.ค.</span> Pier-2 + ศิลปะ</div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">โรงแรม → Pier-2 → Ruifeng → กลับ</div>
+            <div class="route-flow">
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> R10</span>
+                <span class="route-method mrt-orange">สายส้ม</span>
+                <span class="route-stop"><i class="fa-solid fa-palette"></i> O2 Pier-2</span>
+                <span class="route-method mrt-orange">สายส้ม</span>
+                <span class="route-stop">R10 Formosa Blvd</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop"><i class="fa-solid fa-utensils"></i> R14 Ruifeng</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop">R10</span>
+                <span class="route-method walk">3 นาที</span>
+                <span class="route-stop hotel"><i class="fa-solid fa-hotel"></i> SKYONE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAY 6 -->
+    <div class="section">
+        <div class="section-header"><span class="day-label d6">Day 6 · พุธ 6 พ.ค.</span> Dream Mall → บินกลับ</div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">08:30 เช็คเอาท์ + ฝากกระเป๋า → Lotus Pond</div>
+            <div class="route-flow">
+                <span class="route-stop hotel"><i class="fa-solid fa-suitcase-rolling"></i> SKYONE เช็คเอาท์</span>
+                <span class="route-method walk">ฝากกระเป๋า lobby</span>
+                <span class="route-stop">R10 Formosa Blvd</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop"><i class="fa-solid fa-place-of-worship"></i> R16 Lotus Pond</span>
+            </div>
+        </div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">11:00 Dream Mall → 14:00 รับกระเป๋า</div>
+            <div class="route-flow">
+                <span class="route-stop">R16 Zuoying</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop">R06 Kaisyuan</span>
+                <span class="route-method lrt">LRT</span>
+                <span class="route-stop"><i class="fa-solid fa-bag-shopping"></i> C5 Dream Mall</span>
+                <span class="route-method lrt">LRT กลับ</span>
+                <span class="route-stop">R06</span>
+                <span class="route-method mrt-red">สายแดง</span>
+                <span class="route-stop">R10</span>
+                <span class="route-method walk">รับกระเป๋า SKYONE</span>
+            </div>
+        </div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">19:00 สนามบิน → 21:55 บินกลับ</div>
+            <div class="route-flow">
+                <span class="route-stop">R10 Formosa Blvd</span>
+                <span class="route-method mrt-red">สายแดง ~15 นาที</span>
+                <span class="route-stop"><i class="fa-solid fa-plane-departure"></i> R04 KHH Airport</span>
+                <span class="route-method" style="background:#E3002C;">SL393 · 21:55</span>
+                <span class="route-stop"><i class="fa-solid fa-plane-arrival"></i> DMK 00:20</span>
+            </div>
+        </div>
+        <div class="day-route" style="background:#FFF8E1;">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">💳 EasyCard เงินเหลือ — ทำก่อนเข้าสนามบิน</div>
+            <div style="font-size:12px;line-height:1.8;color:var(--text-secondary);">
+                &bull; <strong>คืนเงิน</strong> ที่เคาน์เตอร์ MRT สถานี R04 (ได้คืนเงิน + มัดจำ 100 TWD หัก 20 TWD)<br>
+                &bull; <strong>ใช้ให้หมด</strong> ซื้อของ 7-11/FamilyMart ในสนามบิน<br>
+                &bull; <strong>เก็บไว้ทริปหน้า</strong> บัตรไม่หมดอายุ! (แนะนำ)
+            </div>
+        </div>
+    </div>
+
+    <!-- POST-ARRIVAL -->
+    <div class="section">
+        <div class="section-header"><span class="day-label" style="background:#E0E0E0;color:#333;">POST · พุธ 7 พ.ค.</span> DMK → บ้าน (พรุ่งนี้ทำงาน!)</div>
+        <div class="day-route">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">00:20 ถึง DMK → ~01:30 ถึงบ้าน</div>
+            <div class="route-flow">
+                <span class="route-stop"><i class="fa-solid fa-plane-arrival"></i> DMK T1 00:20</span>
+                <span class="route-method walk">ตม. + ออก (ไม่มีกระเป๋าโหลด)</span>
+                <span class="route-stop">DMK 00:45</span>
+                <span class="route-method" style="background:#333;">Grab/Taxi ~30 นาที</span>
+                <span class="route-stop"><i class="fa-solid fa-house"></i> Parkland แคราย ~01:30</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showTab(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+}
+const zoomState = { tpe: 100, kh: 100 };
+function zoom(map, dir) {
+    const img = document.getElementById(map === 'tpe' ? 'tpeMap' : 'khMap');
+    const label = document.getElementById(map === 'tpe' ? 'tpeZoomLabel' : 'khZoomLabel');
+    if (dir === 0) zoomState[map] = 100;
+    else zoomState[map] = Math.max(50, Math.min(300, zoomState[map] + dir * 25));
+    img.style.width = zoomState[map] + '%';
+    label.textContent = zoomState[map] + '%';
+}
+</script>
+</body>
+</html>
