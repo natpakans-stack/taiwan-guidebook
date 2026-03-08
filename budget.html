@@ -1320,7 +1320,7 @@ function applyOverviewData(saved) {
     document.querySelectorAll('.actual-input').forEach(input => {
         const key = input.dataset.ov;
         if (saved[key] !== undefined && saved[key] !== null) {
-            input.value = saved[key];
+            input.value = formatComma(saved[key]);
         } else {
             input.value = '';
         }
@@ -1336,7 +1336,7 @@ function loadOverview() {
 function saveOverview() {
     const data = {};
     document.querySelectorAll('.actual-input').forEach(input => {
-        const val = input.value ? parseFloat(input.value) : null;
+        const val = input.value ? parseNum(input.value) : null;
         data[input.dataset.ov] = val;
     });
     localStorage.setItem(OV_STORAGE_KEY, JSON.stringify(data));
@@ -1351,7 +1351,7 @@ function calcOverview() {
 
     document.querySelectorAll('.actual-input').forEach(input => {
         const key = input.dataset.ov;
-        const val = parseFloat(input.value) || 0;
+        const val = parseNum(input.value);
         if (input.value !== '') {
             if (key.startsWith('f')) { fixedActual += val; hasFixed = true; }
             else { varActual += val; hasVar = true; }
@@ -1405,7 +1405,7 @@ function calcCategorySummary() {
         const key = input.dataset.ov;
         const cat = OV_CAT[key];
         if (input.value !== '') {
-            catActual[cat] += parseFloat(input.value) || 0;
+            catActual[cat] += parseNum(input.value);
             catHas[cat] = true;
         }
     });
@@ -1501,9 +1501,28 @@ function updateSummary(totalActual, hasAny) {
     }
 }
 
-// Attach listeners
+// === Number formatting helpers ===
+function parseNum(str) {
+    return parseFloat(String(str).replace(/,/g, '')) || 0;
+}
+function formatComma(n) {
+    return n ? n.toLocaleString() : '';
+}
+function stripNonDigit(str) {
+    return String(str).replace(/[^0-9]/g, '');
+}
+
+// Attach listeners — auto comma + numeric only
 document.querySelectorAll('.actual-input').forEach(input => {
     input.addEventListener('input', () => {
+        const raw = stripNonDigit(input.value);
+        const num = parseInt(raw, 10);
+        const cursor = input.selectionStart;
+        const lenBefore = input.value.length;
+        input.value = num ? formatComma(num) : '';
+        const lenAfter = input.value.length;
+        const newCursor = Math.max(0, cursor + (lenAfter - lenBefore));
+        input.setSelectionRange(newCursor, newCursor);
         saveOverview();
         calcOverview();
     });
