@@ -935,10 +935,16 @@
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>ตั๋วเครื่องบิน Multi-City (BKK→TPE / KHH→BKK)</td>
+                    <td>
+                        ตั๋วเครื่องบิน Multi-City — Thai Lion Air (จองแล้ว ✅)
+                        <div style="font-size:.75rem;color:#6b7280;margin-top:4px;line-height:1.6">
+                            ✈ BKK→TPE: SL398 · 1 May 03:00 DMK → 07:55 TPE · Ref: WPYDEE<br>
+                            ✈ KHH→BKK: SL393 · 6 May 21:55 KHH → 7 May 00:20 DMK · Ref: WDNIEI
+                        </div>
+                    </td>
                     <td><span class="cat-badge transport"><i class="fa-solid fa-plane"></i> เดินทาง</span></td>
                     <td>13,000</td>
-                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f1" placeholder="—"></td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f1" placeholder="—" value="15630"></td>
                 </tr>
                 <tr>
                     <td>2</td>
@@ -956,24 +962,24 @@
                 </tr>
                 <tr>
                     <td>4</td>
-                    <td>ตั๋ว HSR ×2 (Taipei→Zuoying, ~1,490 TWD)</td>
+                    <td>
+                        ตั๋ว HSR ×2 Taipei→Zuoying — Klook GO2TAIWAN ซื้อ 1 แถม 1 (จองแล้ว ✅)
+                        <div style="font-size:.75rem;color:#6b7280;margin-top:4px;line-height:1.6">
+                            🚄 4 May · Redeem: EVVNK6RM / DSSMYAM7 · Booking Ref: GHY407777<br>
+                            📌 จองที่นั่งบนเว็บ THSR ได้ตั้งแต่ 6 เม.ย. (ล่วงหน้า 29 วัน) → รับบัตรจริงที่เคาน์เตอร์สถานี Taipei<br>
+                            ☕ แถม Starbucks Buy 1 Get 1 · Voucher: LZDRE3VV · แลกผ่าน Klook App (หมดอายุ 31 Dec 2026)
+                        </div>
+                    </td>
                     <td><span class="cat-badge transport"><i class="fa-solid fa-train"></i> เดินทาง</span></td>
                     <td>3,280</td>
-                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f4" placeholder="—"></td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f4" placeholder="—" value="1318"></td>
                 </tr>
                 <tr>
                     <td>5</td>
-                    <td>eSIM / SIM Card ×2</td>
-                    <td><span class="cat-badge other"><i class="fa-solid fa-sim-card"></i> อื่นๆ</span></td>
-                    <td>600</td>
-                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f5" placeholder="—"></td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>ประกันการเดินทาง ×2</td>
+                    <td>eSIM ×2 + ประกันการเดินทาง ×2</td>
                     <td><span class="cat-badge other"><i class="fa-solid fa-shield-halved"></i> อื่นๆ</span></td>
-                    <td>800</td>
-                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f6" placeholder="—"></td>
+                    <td>1,400</td>
+                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="f5" placeholder="—" value="1068"></td>
                 </tr>
                 <tr class="row-total">
                     <td></td>
@@ -1321,6 +1327,8 @@ function applyOverviewData(saved) {
         const key = input.dataset.ov;
         if (saved[key] !== undefined && saved[key] !== null) {
             input.value = formatComma(saved[key]);
+        } else if (input.defaultValue) {
+            input.value = formatComma(parseNum(input.defaultValue));
         } else {
             input.value = '';
         }
