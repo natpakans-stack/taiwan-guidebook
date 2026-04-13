@@ -507,6 +507,31 @@
         .overview-section .section-header.fixed i { color: #5A47C8; }
         .overview-section .section-header.variable i { color: #9D6227; }
 
+        .paid-badge {
+            margin-left: auto;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #D1FAE5;
+            color: #065F46;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .overview-section.paid tbody tr:not(.row-total) {
+            background: #F0FDF4;
+        }
+        .overview-section.paid tbody tr.row-total {
+            background: #DCFCE7;
+        }
+        .overview-section.paid .actual-input {
+            background: #ECFDF5;
+            border-color: #A7F3D0;
+            color: #065F46;
+            font-weight: 600;
+        }
+
         .overview-table {
             width: 100%;
             min-width: 480px;
@@ -918,9 +943,10 @@
     </div>
 
     <!-- ===== OVERVIEW TABLE ===== -->
-    <div class="overview-section">
+    <div class="overview-section paid">
         <div class="section-header fixed">
             <i class="fa-solid fa-lock"></i> ค่าใช้จ่ายจองล่วงหน้า (Fixed / Pre-Trip)
+            <span class="paid-badge"><i class="fa-solid fa-circle-check"></i> จ่ายครบแล้ว</span>
         </div>
         <table class="overview-table">
             <thead>
