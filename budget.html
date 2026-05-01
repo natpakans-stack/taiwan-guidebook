@@ -661,6 +661,114 @@
         .grand-total-grid .gt-col.diff-positive .gt-num { color: #A5F3CF; }
         .grand-total-grid .gt-col.diff-negative .gt-num { color: #FFB3C1; }
 
+        /* ===== PAYMENT SOURCE SUMMARY ===== */
+        .payment-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .ps-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-left-width: 4px;
+        }
+        .ps-card.cash { border-left-color: #10B981; }
+        .ps-card.card { border-left-color: #3B82F6; }
+        .ps-card-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+        .ps-card.cash .ps-card-header i { color: #10B981; }
+        .ps-card.card .ps-card-header i { color: #3B82F6; }
+        .ps-amount-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 6px;
+        }
+        .ps-amount {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        .ps-amount-sub {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            font-weight: 600;
+        }
+        .ps-remaining {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        .ps-remaining.over { color: #EF4444; }
+        .ps-bar {
+            height: 4px;
+            background: #f3f4f6;
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .ps-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .ps-card.cash .ps-fill { background: #10B981; }
+        .ps-card.card .ps-fill { background: #3B82F6; }
+        .ps-fill.over { background: #EF4444; }
+
+        /* Payment Source Toggle (Form) */
+        .payment-toggle {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+        .payment-toggle label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .payment-toggle label:has(input:checked) {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .payment-toggle input { display: none; }
+
+        /* Payment Badge (Expense List) */
+        .payment-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .payment-badge.cash { background: #D1FAE5; color: #065F46; }
+        .payment-badge.card { background: #DBEAFE; color: #1E40AF; }
+
         /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed;
@@ -1035,9 +1143,9 @@
             <tbody>
                 <tr>
                     <td>7</td>
-                    <td>ค่าอาหาร 6 วัน (~400 TWD/วัน/คน)</td>
+                    <td>ค่าอาหาร 6 วัน (~350 TWD/วัน/คน)</td>
                     <td><span class="cat-badge food"><i class="fa-solid fa-utensils"></i> อาหาร</span></td>
-                    <td>5,280</td>
+                    <td>4,200</td>
                     <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v8" placeholder="—"><span class="exp-sum" id="expSum-food"></span></td>
                 </tr>
                 <tr>
@@ -1058,7 +1166,7 @@
                     <td>10</td>
                     <td>ของฝาก (พายสับปะรด, นูกัต, ชาอู่หลง)</td>
                     <td><span class="cat-badge shopping"><i class="fa-solid fa-bag-shopping"></i> ช้อป</span></td>
-                    <td>4,400</td>
+                    <td>2,600</td>
                     <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v11" placeholder="—"><span class="exp-sum" id="expSum-shopping"></span></td>
                 </tr>
                 <tr>
@@ -1072,7 +1180,7 @@
                     <td></td>
                     <td>รวม Variable</td>
                     <td></td>
-                    <td>15,900</td>
+                    <td>13,000</td>
                     <td id="varActualTotal" style="font-weight:700;">—</td>
                 </tr>
             </tbody>
@@ -1084,7 +1192,7 @@
         <div class="gt-label"><i class="fa-solid fa-calculator"></i> สรุปรวมทั้งทริป (ต่อ 2 คน)</div>
         <div class="grand-total-grid">
             <div class="gt-col">
-                <div class="gt-num" id="gtPlanned">฿42,205</div>
+                <div class="gt-num" id="gtPlanned">฿39,305</div>
                 <div class="gt-sub">ประมาณ</div>
             </div>
             <div class="gt-col">
@@ -1095,6 +1203,28 @@
                 <div class="gt-num" id="gtDiff">—</div>
                 <div class="gt-sub">ส่วนต่าง</div>
             </div>
+        </div>
+    </div>
+
+    <!-- ===== PAYMENT SOURCE SUMMARY (เงินสด / Travel Card) ===== -->
+    <div class="payment-summary">
+        <div class="ps-card cash">
+            <div class="ps-card-header"><i class="fa-solid fa-money-bill-wave"></i> เงินสด</div>
+            <div class="ps-amount-row">
+                <span class="ps-amount" id="psCashSpent">฿0</span>
+                <span class="ps-amount-sub">/ ฿6,000</span>
+            </div>
+            <div class="ps-remaining" id="psCashRemaining">เหลือ ฿6,000</div>
+            <div class="ps-bar"><div class="ps-fill" id="psCashFill"></div></div>
+        </div>
+        <div class="ps-card card">
+            <div class="ps-card-header"><i class="fa-solid fa-credit-card"></i> Travel Card</div>
+            <div class="ps-amount-row">
+                <span class="ps-amount" id="psCardSpent">฿0</span>
+                <span class="ps-amount-sub">/ ฿7,000</span>
+            </div>
+            <div class="ps-remaining" id="psCardRemaining">เหลือ ฿7,000</div>
+            <div class="ps-bar"><div class="ps-fill" id="psCardFill"></div></div>
         </div>
     </div>
 
@@ -1137,6 +1267,22 @@
             <div class="form-group">
                 <label>จ่ายจริง (THB)</label>
                 <input type="number" id="itemActual" placeholder="0" min="0">
+            </div>
+        </div>
+
+        <div class="form-row full">
+            <div class="form-group">
+                <label>จ่ายจาก</label>
+                <div class="payment-toggle">
+                    <label>
+                        <input type="radio" name="paymentSource" value="cash" checked>
+                        <i class="fa-solid fa-money-bill-wave"></i> เงินสด
+                    </label>
+                    <label>
+                        <input type="radio" name="paymentSource" value="card">
+                        <i class="fa-solid fa-credit-card"></i> Travel Card
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -1328,18 +1474,20 @@ function updateRate() {
 const OV_STORAGE_KEY = 'taiwan_overview_2025';
 const OV_PLANNED = {
     f1: 12000, f2: 4000, f3: 3000, f4: 3300, f5: 600, f6: 800,
-    v8: 8000, v9: 5400, v10: 1000, v11: 4000, v12: 3000
+    v8: 4200, v9: 3500, v10: 700, v11: 2600, v12: 2000
 };
-const FIXED_PLANNED = 27080;
-const VAR_PLANNED = 15900;
-const GRAND_PLANNED = 42980;
+const FIXED_PLANNED = 26305;
+const VAR_PLANNED = 13000;
+const GRAND_PLANNED = 39305;
+const CASH_BUDGET = 6000;
+const CARD_BUDGET = 7000;
 
 // Category mapping: ov key → category
 const OV_CAT = {
     f1: 'transport', f2: 'hotel', f3: 'hotel', f4: 'transport', f5: 'other', f6: 'other',
     v8: 'food', v9: 'transport', v10: 'ticket', v11: 'shopping', v12: 'other'
 };
-const CAT_PLANNED = { transport: 20700, hotel: 7000, food: 8000, ticket: 1000, shopping: 4000, other: 4400 };
+const CAT_PLANNED = { transport: 19780, hotel: 9000, food: 4200, ticket: 700, shopping: 2600, other: 3400 };
 
 function applyOverviewData(saved) {
     document.querySelectorAll('.actual-input').forEach(input => {
@@ -1417,6 +1565,9 @@ function calcOverview() {
     // Update category chips
     calcCategorySummary();
 
+    // Update payment source summary (cash / card)
+    calcPaymentSummary();
+
     // Update expense sums in Variable table rows
     updateExpSums();
 }
@@ -1457,6 +1608,50 @@ function calcCategorySummary() {
             el.className = '';
         }
     }
+}
+
+function calcPaymentSummary() {
+    let cashSpent = 0, cardSpent = 0;
+    expenses.forEach(e => {
+        if (!e.actual) return;
+        if (e.paymentSource === 'card') cardSpent += e.actual;
+        else cashSpent += e.actual;
+    });
+
+    const cashRemaining = CASH_BUDGET - cashSpent;
+    const cardRemaining = CARD_BUDGET - cardSpent;
+    const cashPct = Math.min(100, (cashSpent / CASH_BUDGET) * 100);
+    const cardPct = Math.min(100, (cardSpent / CARD_BUDGET) * 100);
+
+    document.getElementById('psCashSpent').textContent = '฿' + cashSpent.toLocaleString();
+    document.getElementById('psCardSpent').textContent = '฿' + cardSpent.toLocaleString();
+
+    const cashRemEl = document.getElementById('psCashRemaining');
+    const cardRemEl = document.getElementById('psCardRemaining');
+    const cashFill = document.getElementById('psCashFill');
+    const cardFill = document.getElementById('psCardFill');
+
+    if (cashRemaining >= 0) {
+        cashRemEl.textContent = 'เหลือ ฿' + cashRemaining.toLocaleString();
+        cashRemEl.classList.remove('over');
+        cashFill.classList.remove('over');
+    } else {
+        cashRemEl.textContent = 'เกิน ฿' + Math.abs(cashRemaining).toLocaleString();
+        cashRemEl.classList.add('over');
+        cashFill.classList.add('over');
+    }
+    cashFill.style.width = cashPct + '%';
+
+    if (cardRemaining >= 0) {
+        cardRemEl.textContent = 'เหลือ ฿' + cardRemaining.toLocaleString();
+        cardRemEl.classList.remove('over');
+        cardFill.classList.remove('over');
+    } else {
+        cardRemEl.textContent = 'เกิน ฿' + Math.abs(cardRemaining).toLocaleString();
+        cardRemEl.classList.add('over');
+        cardFill.classList.add('over');
+    }
+    cardFill.style.width = cardPct + '%';
 }
 
 function updateExpSums() {
@@ -1600,6 +1795,16 @@ function save() {
     }
 }
 
+function getSelectedPaymentSource() {
+    const checked = document.querySelector('input[name="paymentSource"]:checked');
+    return checked ? checked.value : 'cash';
+}
+
+function setPaymentSource(value) {
+    const radio = document.querySelector(`input[name="paymentSource"][value="${value || 'cash'}"]`);
+    if (radio) radio.checked = true;
+}
+
 function saveItem() {
     const name = document.getElementById('itemName').value.trim();
     const category = document.getElementById('itemCategory').value;
@@ -1607,6 +1812,7 @@ function saveItem() {
     const day = document.getElementById('itemDay').value;
     const planned = 0;
     const actual = parseInt(document.getElementById('itemActual').value) || 0;
+    const paymentSource = getSelectedPaymentSource();
 
     if (!name) {
         document.getElementById('itemName').focus();
@@ -1616,14 +1822,14 @@ function saveItem() {
     if (editingId) {
         const idx = expenses.findIndex(e => e.id === editingId);
         if (idx !== -1) {
-            expenses[idx] = { ...expenses[idx], name, category, type, day, planned, actual };
+            expenses[idx] = { ...expenses[idx], name, category, type, day, planned, actual, paymentSource };
         }
         editingId = null;
         document.getElementById('formTitle').textContent = 'เพิ่มรายการ';
         document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-check"></i> บันทึก';
         document.getElementById('btnCancel').classList.add('hidden');
     } else {
-        expenses.push({ id: generateId(), name, category, type, day, planned, actual });
+        expenses.push({ id: generateId(), name, category, type, day, planned, actual, paymentSource });
     }
 
     save();
@@ -1640,6 +1846,7 @@ function editItem(id) {
     document.getElementById('itemCategory').value = item.category;
     document.getElementById('itemDay').value = item.day;
     document.getElementById('itemActual').value = item.actual || '';
+    setPaymentSource(item.paymentSource || 'cash');
     document.getElementById('formTitle').textContent = 'แก้ไขรายการ';
     document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-pen"></i> อัปเดต';
     document.getElementById('btnCancel').classList.remove('hidden');
@@ -1666,6 +1873,7 @@ function cancelEdit() {
 function clearForm() {
     document.getElementById('itemName').value = '';
     document.getElementById('itemActual').value = '';
+    setPaymentSource('cash');
 }
 
 function getFiltered() {
@@ -1695,6 +1903,9 @@ function render() {
         const icon = categoryIcons[e.category] || 'fa-ellipsis';
         const catName = categoryNames[e.category] || e.category;
         const dayLabel = dayLabels[e.day] || '';
+        const ps = e.paymentSource || 'cash';
+        const psIcon = ps === 'card' ? 'fa-credit-card' : 'fa-money-bill-wave';
+        const psLabel = ps === 'card' ? 'Card' : 'เงินสด';
 
         return `<li class="expense-item">
             <div class="expense-icon cat-${e.category}"><i class="fa-solid ${icon}"></i></div>
@@ -1704,6 +1915,7 @@ function render() {
                     <span class="type-badge ${e.type}">${e.type === 'fixed' ? 'Fixed' : 'Variable'}</span>
                     <span>${catName}</span>
                     <span>${dayLabel}</span>
+                    <span class="payment-badge ${ps}"><i class="fa-solid ${psIcon}"></i> ${psLabel}</span>
                 </div>
             </div>
             <div class="expense-amounts">
