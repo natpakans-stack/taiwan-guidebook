@@ -955,7 +955,10 @@
         <i class="fa-solid fa-database"></i> <span>Local</span>
     </div>
     <button id="forceReloadBtn" onclick="forceReload()" title="โหลดใหม่ (ล้าง cache)" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#5A5E6E; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.10</span>
+        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.11</span>
+    </button>
+    <button id="forceSyncBtn" onclick="forceSyncToCloud()" title="ดัน localStorage ขึ้น Firebase (ใช้กรณีข้อมูลไม่ sync)" style="position:absolute; top:50px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#0EA5E9; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+        <i class="fa-solid fa-cloud-arrow-up"></i> Sync
     </button>
 
     <div class="summary-strip">
@@ -1362,7 +1365,7 @@ let firebaseReady = false;
 let _fbIncoming = false; // guard to prevent write-back loops
 
 // App version — bumped each deploy. Devices on older versions auto-reload via Firebase.
-const APP_VERSION = '2.10';
+const APP_VERSION = '2.11';
 const _verLabel = document.getElementById('appVersionLabel');
 if (_verLabel) _verLabel.textContent = APP_VERSION;
 
@@ -1395,6 +1398,27 @@ function forceReload() {
     const url = new URL(window.location.href);
     url.searchParams.set('t', Date.now());
     window.location.replace(url.toString());
+}
+
+function forceSyncToCloud() {
+    if (!firebaseReady) {
+        alert('Firebase ยังไม่ ready — รอเชื่อมต่อก่อน แล้วลองใหม่');
+        return;
+    }
+    const ovData = {};
+    document.querySelectorAll('.actual-input').forEach(input => {
+        const val = input.value ? parseNum(input.value) : null;
+        ovData[input.dataset.ov] = val;
+    });
+    Promise.all([
+        db.ref('/expenses').set(expenses),
+        db.ref('/overview').set(ovData)
+    ]).then(() => {
+        alert('✅ Sync เรียบร้อย!\n\n• Expenses: ' + expenses.length + ' รายการ\n• Overview: ' + Object.keys(ovData).length + ' fields\n\nลองเปิดบนเครื่องอื่นดู');
+    }).catch(err => {
+        alert('❌ Sync ล้มเหลว: ' + err.message);
+        console.error('Force sync error:', err);
+    });
 }
 
 function compareVersion(a, b) {
