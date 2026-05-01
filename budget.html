@@ -1385,18 +1385,16 @@ function calcOverview() {
         }
     });
 
-    // รวมยอดจาก expense list (Variable)
-    const expActual = expenses.reduce((s, e) => s + (e.actual || 0), 0);
-
-    const grandActual = fixedActual + varActual + expActual;
-    const hasAny = hasFixed || hasVar || expActual > 0;
+    // หมายเหตุ: expense list ถูก auto-fill ลง Variable rows แล้ว (ใน updateExpSums)
+    // จึงนับจาก varActual อย่างเดียว ไม่ต้องบวก expense ซ้ำ
+    const grandActual = fixedActual + varActual;
+    const hasAny = hasFixed || hasVar;
 
     // Fixed subtotal
     document.getElementById('fixedActualTotal').textContent = hasFixed ? fixedActual.toLocaleString() : '—';
 
-    // Variable subtotal (overview + expense list)
-    const totalVarActual = varActual + expActual;
-    document.getElementById('varActualTotal').textContent = (hasVar || expActual > 0) ? totalVarActual.toLocaleString() : '—';
+    // Variable subtotal
+    document.getElementById('varActualTotal').textContent = hasVar ? varActual.toLocaleString() : '—';
 
     // Grand total card
     document.getElementById('gtActual').textContent = hasAny ? '฿' + grandActual.toLocaleString() : '—';
