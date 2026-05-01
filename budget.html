@@ -275,7 +275,7 @@
 
         .expense-item {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             padding: 12px 16px;
             border-bottom: 1px solid var(--border);
             gap: 10px;
@@ -306,8 +306,10 @@
         .expense-icon.cat-other { background: #F3F4F6; color: var(--text-secondary); }
 
         .expense-info { flex: 1; min-width: 0; }
-        .expense-name { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .expense-meta { font-size: 11px; color: var(--text-tertiary); display: flex; gap: 8px; }
+        .expense-name { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+        .expense-meta { font-size: 11px; color: var(--text-tertiary); display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; }
+        .expense-meta-text { display: inline-flex; align-items: center; white-space: nowrap; }
+        .expense-meta-text + .expense-meta-text::before { content: "·"; margin-right: 6px; color: var(--text-tertiary); opacity: 0.6; }
 
         .expense-amounts { text-align: right; flex-shrink: 0; }
         .expense-planned { font-size: 11px; color: var(--text-tertiary); }
@@ -768,6 +770,7 @@
             font-weight: 700;
             padding: 2px 6px;
             border-radius: 4px;
+            white-space: nowrap;
         }
         .payment-badge.cash { background: #D1FAE5; color: #065F46; }
         .payment-badge.card { background: #DBEAFE; color: #1E40AF; }
@@ -955,7 +958,7 @@
         <i class="fa-solid fa-database"></i> <span>Local</span>
     </div>
     <button id="forceReloadBtn" onclick="forceReload()" title="โหลดใหม่ (ล้าง cache)" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#5A5E6E; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.11</span>
+        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.12</span>
     </button>
     <button id="forceSyncBtn" onclick="forceSyncToCloud()" title="ดัน localStorage ขึ้น Firebase (ใช้กรณีข้อมูลไม่ sync)" style="position:absolute; top:50px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#0EA5E9; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
         <i class="fa-solid fa-cloud-arrow-up"></i> Sync
@@ -1365,7 +1368,7 @@ let firebaseReady = false;
 let _fbIncoming = false; // guard to prevent write-back loops
 
 // App version — bumped each deploy. Devices on older versions auto-reload via Firebase.
-const APP_VERSION = '2.11';
+const APP_VERSION = '2.12';
 const _verLabel = document.getElementById('appVersionLabel');
 if (_verLabel) _verLabel.textContent = APP_VERSION;
 
@@ -1985,9 +1988,8 @@ function render() {
             <div class="expense-info">
                 <div class="expense-name">${e.name}</div>
                 <div class="expense-meta">
-                    <span class="type-badge ${e.type}">${e.type === 'fixed' ? 'Fixed' : 'Variable'}</span>
-                    <span>${catName}</span>
-                    <span>${dayLabel}</span>
+                    <span class="expense-meta-text">${catName}</span>
+                    <span class="expense-meta-text">${dayLabel}</span>
                     <span class="payment-badge ${ps}"><i class="fa-solid ${psIcon}"></i> ${psLabel}</span>
                 </div>
             </div>
