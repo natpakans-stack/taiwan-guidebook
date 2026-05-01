@@ -1611,11 +1611,22 @@ function calcCategorySummary() {
 }
 
 function calcPaymentSummary() {
+    const cashSpentEl = document.getElementById('psCashSpent');
+    const cardSpentEl = document.getElementById('psCardSpent');
+    const cashRemEl = document.getElementById('psCashRemaining');
+    const cardRemEl = document.getElementById('psCardRemaining');
+    const cashFill = document.getElementById('psCashFill');
+    const cardFill = document.getElementById('psCardFill');
+
+    // Bail if HTML elements not yet rendered (defensive against legacy/cached HTML)
+    if (!cashSpentEl || !cardSpentEl || !cashRemEl || !cardRemEl || !cashFill || !cardFill) return;
+
     let cashSpent = 0, cardSpent = 0;
     expenses.forEach(e => {
-        if (!e.actual) return;
-        if (e.paymentSource === 'card') cardSpent += e.actual;
-        else cashSpent += e.actual;
+        const actual = Number(e.actual) || 0;
+        if (!actual) return;
+        if (e.paymentSource === 'card') cardSpent += actual;
+        else cashSpent += actual;
     });
 
     const cashRemaining = CASH_BUDGET - cashSpent;
@@ -1623,13 +1634,8 @@ function calcPaymentSummary() {
     const cashPct = Math.min(100, (cashSpent / CASH_BUDGET) * 100);
     const cardPct = Math.min(100, (cardSpent / CARD_BUDGET) * 100);
 
-    document.getElementById('psCashSpent').textContent = '฿' + cashSpent.toLocaleString();
-    document.getElementById('psCardSpent').textContent = '฿' + cardSpent.toLocaleString();
-
-    const cashRemEl = document.getElementById('psCashRemaining');
-    const cardRemEl = document.getElementById('psCardRemaining');
-    const cashFill = document.getElementById('psCashFill');
-    const cardFill = document.getElementById('psCardFill');
+    cashSpentEl.textContent = '฿' + cashSpent.toLocaleString();
+    cardSpentEl.textContent = '฿' + cardSpent.toLocaleString();
 
     if (cashRemaining >= 0) {
         cashRemEl.textContent = 'เหลือ ฿' + cashRemaining.toLocaleString();
@@ -1963,39 +1969,54 @@ if (firebaseReady) {
     db.ref('/overview').on('value', snapshot => {
         if (_fbIncoming) return;
         _fbIncoming = true;
-        const data = snapshot.val() || {};
-        localStorage.setItem(OV_STORAGE_KEY, JSON.stringify(data));
-        applyOverviewData(data);
-        _fbIncoming = false;
+        try {
+            const data = snapshot.val() || {};
+            localStorage.setItem(OV_STORAGE_KEY, JSON.stringify(data));
+            applyOverviewData(data);
+        } catch (err) {
+            console.error('Firebase /overview listener error:', err);
+        } finally {
+            _fbIncoming = false;
+        }
     });
 
     // Expenses listener
     db.ref('/expenses').on('value', snapshot => {
         if (_fbIncoming) return;
         _fbIncoming = true;
-        const data = snapshot.val();
-        if (data !== null) {
-            expenses = (Array.isArray(data) ? data : Object.values(data)).filter(e => e !== null);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
-            render();
+        try {
+            const data = snapshot.val();
+            if (data !== null) {
+                expenses = (Array.isArray(data) ? data : Object.values(data)).filter(e => e !== null);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
+                render();
+            }
+        } catch (err) {
+            console.error('Firebase /expenses listener error:', err);
+        } finally {
+            _fbIncoming = false;
         }
-        _fbIncoming = false;
     });
 
     // Exchange rate listener
     db.ref('/settings/exchangeRate').on('value', snapshot => {
         if (_fbIncoming) return;
         _fbIncoming = true;
-        const rate = snapshot.val();
-        if (rate !== null) {
-            exchangeRate = rate;
-            localStorage.setItem('taiwan_exchange_rate', rate.toString());
-            document.getElementById('rateInput').value = rate;
-            const rv = document.getElementById('rateValue');
-            if (rv) rv.textContent = rate;
-            if (document.getElementById('fromAmount').value) convertCurrency('from');
+        try {
+            const rate = snapshot.val();
+            if (rate !== null) {
+                exchangeRate = rate;
+                localStorage.setItem('taiwan_exchange_rate', rate.toString());
+                document.getElementById('rateInput').value = rate;
+                const rv = document.getElementById('rateValue');
+                if (rv) rv.textContent = rate;
+                if (document.getElementById('fromAmount').value) convertCurrency('from');
+            }
+        } catch (err) {
+            console.error('Firebase /settings/exchangeRate listener error:', err);
+        } finally {
+            _fbIncoming = false;
         }
-        _fbIncoming = false;
     });
 
     // One-time migration: push localStorage → Firebase if Firebase is empty
