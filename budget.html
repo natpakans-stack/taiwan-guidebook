@@ -1035,41 +1035,34 @@
             <tbody>
                 <tr>
                     <td>7</td>
-                    <td>EasyCard ×2 (ค่าบัตร+เติมเงิน)</td>
-                    <td><span class="cat-badge transport"><i class="fa-solid fa-credit-card"></i> เดินทาง</span></td>
-                    <td>2,400</td>
-                    <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v7" placeholder="—"><span class="exp-sum" id="expSum-transport-v7"></span></td>
-                </tr>
-                <tr>
-                    <td>8</td>
                     <td>ค่าอาหาร 6 วัน (~400 TWD/วัน/คน)</td>
                     <td><span class="cat-badge food"><i class="fa-solid fa-utensils"></i> อาหาร</span></td>
                     <td>5,280</td>
                     <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v8" placeholder="—"><span class="exp-sum" id="expSum-food"></span></td>
                 </tr>
                 <tr>
-                    <td>9</td>
-                    <td>ค่าเดินทางในเมือง (MRT/Bus/Ferry เติม EasyCard เพิ่ม)</td>
+                    <td>8</td>
+                    <td>ค่าเดินทางในเมือง (EasyCard + เติม MRT/Bus/Ferry)</td>
                     <td><span class="cat-badge transport"><i class="fa-solid fa-bus"></i> เดินทาง</span></td>
-                    <td>1,100</td>
+                    <td>3,500</td>
                     <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v9" placeholder="—"><span class="exp-sum" id="expSum-transport-v9"></span></td>
                 </tr>
                 <tr>
-                    <td>10</td>
+                    <td>9</td>
                     <td>ค่าเข้าชม (Heping 120 + Log Cart 50 + Ferris 150 TWD)</td>
                     <td><span class="cat-badge ticket"><i class="fa-solid fa-ticket"></i> ตั๋ว</span></td>
                     <td>700</td>
                     <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v10" placeholder="—"><span class="exp-sum" id="expSum-ticket"></span></td>
                 </tr>
                 <tr>
-                    <td>11</td>
+                    <td>10</td>
                     <td>ของฝาก (พายสับปะรด, นูกัต, ชาอู่หลง)</td>
                     <td><span class="cat-badge shopping"><i class="fa-solid fa-bag-shopping"></i> ช้อป</span></td>
                     <td>4,400</td>
                     <td><input type="text" inputmode="numeric" class="actual-input" data-ov="v11" placeholder="—"><span class="exp-sum" id="expSum-shopping"></span></td>
                 </tr>
                 <tr>
-                    <td>12</td>
+                    <td>11</td>
                     <td>สำรองฉุกเฉิน</td>
                     <td><span class="cat-badge other"><i class="fa-solid fa-piggy-bank"></i> สำรอง</span></td>
                     <td>2,000</td>
@@ -1335,7 +1328,7 @@ function updateRate() {
 const OV_STORAGE_KEY = 'taiwan_overview_2025';
 const OV_PLANNED = {
     f1: 12000, f2: 4000, f3: 3000, f4: 3300, f5: 600, f6: 800,
-    v7: 2400, v8: 8000, v9: 3000, v10: 1000, v11: 4000, v12: 3000
+    v8: 8000, v9: 5400, v10: 1000, v11: 4000, v12: 3000
 };
 const FIXED_PLANNED = 27080;
 const VAR_PLANNED = 15900;
@@ -1344,7 +1337,7 @@ const GRAND_PLANNED = 42980;
 // Category mapping: ov key → category
 const OV_CAT = {
     f1: 'transport', f2: 'hotel', f3: 'hotel', f4: 'transport', f5: 'other', f6: 'other',
-    v7: 'transport', v8: 'food', v9: 'transport', v10: 'ticket', v11: 'shopping', v12: 'other'
+    v8: 'food', v9: 'transport', v10: 'ticket', v11: 'shopping', v12: 'other'
 };
 const CAT_PLANNED = { transport: 20700, hotel: 7000, food: 8000, ticket: 1000, shopping: 4000, other: 4400 };
 
@@ -1493,7 +1486,6 @@ function updateExpSums() {
         const key = input.dataset.ov;
         let cat = ovToCat[key] || null;
         if (key === transportRow) cat = 'transport';
-        if (key === 'v7') cat = null; // v7 = EasyCard กรอกเอง
 
         const spanId = input.nextElementSibling ? input.nextElementSibling.id : null;
         const span = spanId ? document.getElementById(spanId) : null;
