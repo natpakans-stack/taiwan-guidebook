@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="description" content="Budget Tracker สำหรับทริปไต้หวัน 2025 — ติดตามค่าใช้จ่ายแบบ real-time">
     <meta property="og:title" content="Budget Tracker | Taiwan Trip 2025">
     <meta property="og:description" content="Track expenses for Taiwan trip — 6 Days, Taipei → Kaohsiung">
@@ -951,6 +954,9 @@
     <div id="syncBadge" class="sync-badge offline" title="ใช้ localStorage (offline)">
         <i class="fa-solid fa-database"></i> <span>Local</span>
     </div>
+    <button id="forceReloadBtn" onclick="forceReload()" title="โหลดใหม่ (ล้าง cache)" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#5A5E6E; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.10</span>
+    </button>
 
     <div class="summary-strip">
         <div class="s-col">
@@ -1355,6 +1361,11 @@ let db = null;
 let firebaseReady = false;
 let _fbIncoming = false; // guard to prevent write-back loops
 
+// App version — bumped each deploy. Devices on older versions auto-reload via Firebase.
+const APP_VERSION = '2.10';
+const _verLabel = document.getElementById('appVersionLabel');
+if (_verLabel) _verLabel.textContent = APP_VERSION;
+
 try {
     if (firebaseConfig.apiKey && typeof firebase !== 'undefined') {
         firebase.initializeApp(firebaseConfig);
@@ -1363,6 +1374,38 @@ try {
     }
 } catch(e) {
     console.warn('Firebase init failed, using localStorage fallback:', e);
+}
+
+// Auto-reload mechanism: write current version to Firebase, listen for newer versions
+if (firebaseReady) {
+    db.ref('/_appVersion').set(APP_VERSION).catch(()=>{});
+    db.ref('/_appVersion').on('value', snap => {
+        const remote = snap.val();
+        if (remote && remote !== APP_VERSION && compareVersion(remote, APP_VERSION) > 0) {
+            // Newer version exists — force reload with cache bust
+            const url = new URL(window.location.href);
+            url.searchParams.set('v', remote);
+            url.searchParams.set('t', Date.now());
+            window.location.replace(url.toString());
+        }
+    });
+}
+
+function forceReload() {
+    const url = new URL(window.location.href);
+    url.searchParams.set('t', Date.now());
+    window.location.replace(url.toString());
+}
+
+function compareVersion(a, b) {
+    const pa = String(a).split('.').map(n => parseInt(n) || 0);
+    const pb = String(b).split('.').map(n => parseInt(n) || 0);
+    for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+        const da = pa[i] || 0, dbn = pb[i] || 0;
+        if (da > dbn) return 1;
+        if (da < dbn) return -1;
+    }
+    return 0;
 }
 
 /* ===== CURRENCY CONVERTER ===== */
