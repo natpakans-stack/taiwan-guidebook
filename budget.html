@@ -1085,7 +1085,7 @@
         <i class="fa-solid fa-database"></i> <span>Local</span>
     </div>
     <button id="forceReloadBtn" onclick="forceReload()" title="โหลดใหม่ (ล้าง cache)" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#5A5E6E; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.15</span>
+        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.16</span>
     </button>
     <button id="forceSyncBtn" onclick="forceSyncToCloud()" title="ดัน localStorage ขึ้น Firebase (ใช้กรณีข้อมูลไม่ sync)" style="position:absolute; top:50px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#0EA5E9; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
         <i class="fa-solid fa-cloud-arrow-up"></i> Sync
@@ -1387,16 +1387,16 @@
     <!-- ===== PAYMENT SOURCE SUMMARY (เงินสด / Travel Card) ===== -->
     <div class="payment-summary">
         <div class="ps-card cash">
-            <div class="ps-card-header"><i class="fa-solid fa-money-bill-wave"></i> เงินสด</div>
+            <div class="ps-card-header"><i class="fa-solid fa-money-bill-wave"></i> เงินสด <span style="font-weight:400; opacity:0.7; font-size:10px;">(TWD)</span></div>
             <div class="ps-amount-row">
-                <span class="ps-amount" id="psCashSpent">฿0</span>
-                <span class="ps-amount-sub">/ ฿6,000</span>
+                <span class="ps-amount" id="psCashSpent">NT$0</span>
+                <span class="ps-amount-sub">/ NT$5,900</span>
             </div>
-            <div class="ps-remaining" id="psCashRemaining">เหลือ ฿6,000</div>
+            <div class="ps-remaining" id="psCashRemaining">เหลือ NT$5,900</div>
             <div class="ps-bar"><div class="ps-fill" id="psCashFill"></div></div>
         </div>
         <div class="ps-card card">
-            <div class="ps-card-header"><i class="fa-solid fa-credit-card"></i> Travel Card</div>
+            <div class="ps-card-header"><i class="fa-solid fa-credit-card"></i> Travel Card <span style="font-weight:400; opacity:0.7; font-size:10px;">(THB)</span></div>
             <div class="ps-amount-row">
                 <span class="ps-amount" id="psCardSpent">฿0</span>
                 <span class="ps-amount-sub">/ ฿7,000</span>
@@ -1541,7 +1541,7 @@ let firebaseReady = false;
 let _fbIncoming = false; // guard to prevent write-back loops
 
 // App version — bumped each deploy. Devices on older versions auto-reload via Firebase.
-const APP_VERSION = '2.15';
+const APP_VERSION = '2.16';
 const _verLabel = document.getElementById('appVersionLabel');
 if (_verLabel) _verLabel.textContent = APP_VERSION;
 
@@ -1723,8 +1723,8 @@ const OV_PLANNED = {
 const FIXED_PLANNED = 26305;
 const VAR_PLANNED = 13000;
 const GRAND_PLANNED = 39305;
-const CASH_BUDGET = 6000;
-const CARD_BUDGET = 7000;
+const CASH_BUDGET = 5900;   // TWD (ตอนแลก 6,000 THB ได้ 5,900 NT$)
+const CARD_BUDGET = 7000;   // THB (Travel Card top-up — ใช้ผ่าน YouTrip)
 
 // Category mapping: ov key → category
 const OV_CAT = {
@@ -1865,28 +1865,31 @@ function calcPaymentSummary() {
     // Bail if HTML elements not yet rendered (defensive against legacy/cached HTML)
     if (!cashSpentEl || !cardSpentEl || !cashRemEl || !cardRemEl || !cashFill || !cardFill) return;
 
-    let cashSpent = 0, cardSpent = 0;
+    // Cash bucket: ใช้ TWD ตรงๆ (ไม่แปลงค่า) — actualTWD
+    // Card bucket: ใช้ THB (YouTrip จะหักเป็น THB) — actual
+    let cashSpentTWD = 0, cardSpentTHB = 0;
     expenses.forEach(e => {
-        const actual = Number(e.actual) || 0;
-        if (!actual) return;
-        if (e.paymentSource === 'card') cardSpent += actual;
-        else cashSpent += actual;
+        if (e.paymentSource === 'card') {
+            cardSpentTHB += Number(e.actual) || 0;
+        } else {
+            cashSpentTWD += Number(e.actualTWD) || 0;
+        }
     });
 
-    const cashRemaining = CASH_BUDGET - cashSpent;
-    const cardRemaining = CARD_BUDGET - cardSpent;
-    const cashPct = Math.min(100, (cashSpent / CASH_BUDGET) * 100);
-    const cardPct = Math.min(100, (cardSpent / CARD_BUDGET) * 100);
+    const cashRemaining = CASH_BUDGET - cashSpentTWD;
+    const cardRemaining = CARD_BUDGET - cardSpentTHB;
+    const cashPct = Math.min(100, (cashSpentTWD / CASH_BUDGET) * 100);
+    const cardPct = Math.min(100, (cardSpentTHB / CARD_BUDGET) * 100);
 
-    cashSpentEl.textContent = '฿' + cashSpent.toLocaleString();
-    cardSpentEl.textContent = '฿' + cardSpent.toLocaleString();
+    cashSpentEl.textContent = 'NT$' + cashSpentTWD.toLocaleString();
+    cardSpentEl.textContent = '฿' + cardSpentTHB.toLocaleString();
 
     if (cashRemaining >= 0) {
-        cashRemEl.textContent = 'เหลือ ฿' + cashRemaining.toLocaleString();
+        cashRemEl.textContent = 'เหลือ NT$' + cashRemaining.toLocaleString();
         cashRemEl.classList.remove('over');
         cashFill.classList.remove('over');
     } else {
-        cashRemEl.textContent = 'เกิน ฿' + Math.abs(cashRemaining).toLocaleString();
+        cashRemEl.textContent = 'เกิน NT$' + Math.abs(cashRemaining).toLocaleString();
         cashRemEl.classList.add('over');
         cashFill.classList.add('over');
     }
