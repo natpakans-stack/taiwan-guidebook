@@ -1085,7 +1085,7 @@
         <i class="fa-solid fa-database"></i> <span>Local</span>
     </div>
     <button id="forceReloadBtn" onclick="forceReload()" title="โหลดใหม่ (ล้าง cache)" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#5A5E6E; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.16</span>
+        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.17</span>
     </button>
     <button id="forceSyncBtn" onclick="forceSyncToCloud()" title="ดัน localStorage ขึ้น Firebase (ใช้กรณีข้อมูลไม่ sync)" style="position:absolute; top:50px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#0EA5E9; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
         <i class="fa-solid fa-cloud-arrow-up"></i> Sync
@@ -1541,7 +1541,7 @@ let firebaseReady = false;
 let _fbIncoming = false; // guard to prevent write-back loops
 
 // App version — bumped each deploy. Devices on older versions auto-reload via Firebase.
-const APP_VERSION = '2.16';
+const APP_VERSION = '2.17';
 const _verLabel = document.getElementById('appVersionLabel');
 if (_verLabel) _verLabel.textContent = APP_VERSION;
 
@@ -2303,8 +2303,10 @@ function render() {
                 </div>
             </div>
             <div class="expense-amounts">
-                <div class="expense-actual">${e.actual ? '฿' + e.actual.toLocaleString() : '-'}</div>
-                ${e.actualTWD ? `<div style="font-size:10px; color:var(--text-tertiary); font-weight:600;">NT$${e.actualTWD.toLocaleString()}</div>` : ''}
+                ${e.actualTWD
+                    ? `<div class="expense-actual">NT$${e.actualTWD.toLocaleString()}</div>
+                       ${e.actual ? `<div style="font-size:10px; color:var(--text-tertiary); font-weight:600;">฿${e.actual.toLocaleString()}</div>` : ''}`
+                    : `<div class="expense-actual">${e.actual ? '฿' + e.actual.toLocaleString() : '-'}</div>`}
             </div>
             <div class="expense-actions">
                 <button class="btn-edit" onclick="editItem('${e.id}')" aria-label="แก้ไข"><i class="fa-solid fa-pen"></i></button>
@@ -2330,8 +2332,9 @@ function render() {
             ${cardTotal > 0 ? `<span class="etr-mini card"><i class="fa-solid fa-credit-card"></i> ฿${cardTotal.toLocaleString()}</span>` : ''}
         </div>
         <div class="etr-total">
-            ฿${total.toLocaleString()}
-            ${totalTWD > 0 ? `<div style="font-size:11px; color:var(--text-tertiary); font-weight:600;">NT$${totalTWD.toLocaleString()}</div>` : ''}
+            ${totalTWD > 0
+                ? `NT$${totalTWD.toLocaleString()}<div style="font-size:11px; color:var(--text-tertiary); font-weight:600;">฿${total.toLocaleString()}</div>`
+                : `฿${total.toLocaleString()}`}
         </div>
     </li>`;
 
