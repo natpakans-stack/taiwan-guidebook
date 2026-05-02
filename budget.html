@@ -787,6 +787,107 @@
         }
         .payment-toggle input { display: none; }
 
+        /* ===== EXCHANGE LOG ===== */
+        .exchange-section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 16px;
+        }
+        .exchange-section summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            list-style: none;
+            user-select: none;
+        }
+        .exchange-section summary::-webkit-details-marker { display: none; }
+        .exchange-section summary > i.fa-chevron-down { transition: transform 0.2s; font-size: 11px; color: var(--text-tertiary); }
+        .exchange-section[open] summary > i.fa-chevron-down { transform: rotate(180deg); }
+        .ex-rates {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .ex-rate-card {
+            background: var(--bg-page);
+            border-radius: 8px;
+            padding: 10px;
+            border-left: 3px solid var(--border);
+        }
+        .ex-rate-card.cash { border-left-color: #10B981; }
+        .ex-rate-card.card { border-left-color: #3B82F6; }
+        .ex-rate-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .ex-rate-card.cash .ex-rate-label i { color: #10B981; }
+        .ex-rate-card.card .ex-rate-label i { color: #3B82F6; }
+        .ex-rate-value { font-size: 16px; font-weight: 800; margin-top: 4px; }
+        .ex-rate-detail { font-size: 10px; color: var(--text-tertiary); margin-top: 2px; }
+        .ex-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 12px;
+        }
+        .ex-form-row > * {
+            font-size: 13px;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: white;
+            font-family: inherit;
+        }
+        .ex-form-actions { display: flex; gap: 6px; margin-top: 8px; }
+        .ex-form-actions button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .ex-btn-add { background: var(--primary); color: white; }
+        .ex-list { margin-top: 12px; padding: 0; list-style: none; }
+        .ex-list-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+        }
+        .ex-list-item:last-child { border-bottom: none; }
+        .ex-list-item .ex-li-source {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .ex-list-item .ex-li-source.cash { background: #D1FAE5; color: #065F46; }
+        .ex-list-item .ex-li-source.card { background: #DBEAFE; color: #1E40AF; }
+        .ex-list-item .ex-li-amount { flex: 1; color: var(--text-secondary); }
+        .ex-list-item .ex-li-rate { font-weight: 700; color: var(--text-primary); }
+        .ex-list-item .ex-li-del {
+            border: none;
+            background: transparent;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            padding: 4px;
+        }
+
         /* Payment Badge (Expense List) */
         .payment-badge {
             display: inline-flex;
@@ -984,7 +1085,7 @@
         <i class="fa-solid fa-database"></i> <span>Local</span>
     </div>
     <button id="forceReloadBtn" onclick="forceReload()" title="โหลดใหม่ (ล้าง cache)" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#5A5E6E; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.14</span>
+        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.15</span>
     </button>
     <button id="forceSyncBtn" onclick="forceSyncToCloud()" title="ดัน localStorage ขึ้น Firebase (ใช้กรณีข้อมูลไม่ sync)" style="position:absolute; top:50px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#0EA5E9; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
         <i class="fa-solid fa-cloud-arrow-up"></i> Sync
@@ -1087,6 +1188,45 @@
         </div>
         <div id="rateStatus" style="font-size:10px; color:var(--text-tertiary); margin-top:4px;"></div>
     </div>
+
+    <!-- ===== EXCHANGE LOG (Effective Rate Tracking) ===== -->
+    <details class="exchange-section" id="exchangeSection">
+        <summary>
+            <span><i class="fa-solid fa-coins" style="color:#D4AF37; margin-right:6px;"></i> อัตราแลกจริง (effective rate)</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </summary>
+
+        <div class="ex-rates">
+            <div class="ex-rate-card cash">
+                <div class="ex-rate-label"><i class="fa-solid fa-money-bill-wave"></i> เงินสด</div>
+                <div class="ex-rate-value" id="exCashRate">— THB/TWD</div>
+                <div class="ex-rate-detail" id="exCashDetail">ยังไม่มีข้อมูล</div>
+            </div>
+            <div class="ex-rate-card card">
+                <div class="ex-rate-label"><i class="fa-solid fa-credit-card"></i> Travel Card</div>
+                <div class="ex-rate-value" id="exCardRate">— THB/TWD</div>
+                <div class="ex-rate-detail" id="exCardDetail">ยังไม่มีข้อมูล</div>
+            </div>
+        </div>
+
+        <div style="margin-top:12px; font-size:12px; font-weight:700; color:var(--text-secondary);">+ บันทึกการแลก / เติมเงิน</div>
+        <div class="ex-form-row">
+            <select id="exSource">
+                <option value="cash">💵 เงินสด</option>
+                <option value="card">💳 Travel Card</option>
+            </select>
+            <input type="date" id="exDate">
+        </div>
+        <div class="ex-form-row">
+            <input type="number" id="exTHB" placeholder="THB จ่าย" min="0" step="1">
+            <input type="number" id="exTWD" placeholder="TWD ได้รับ" min="0" step="1">
+        </div>
+        <div class="ex-form-actions">
+            <button class="ex-btn-add" onclick="addExchange()"><i class="fa-solid fa-plus"></i> บันทึก</button>
+        </div>
+
+        <ul class="ex-list" id="exList"></ul>
+    </details>
 
     <!-- ===== OVERVIEW TABLE ===== -->
     <div class="overview-section paid">
@@ -1301,11 +1441,18 @@
             </div>
         </div>
 
-        <div class="form-row full">
+        <div class="form-row">
             <div class="form-group">
-                <label>จ่ายจริง (THB)</label>
-                <input type="number" id="itemActual" placeholder="0" min="0">
+                <label>จ่ายจริง <span style="color:var(--secondary);">(TWD)</span></label>
+                <input type="number" id="itemActualTWD" placeholder="0" min="0" step="1" oninput="onTwdInput()">
             </div>
+            <div class="form-group">
+                <label>= ใน <span style="color:var(--text-tertiary);">(THB)</span></label>
+                <input type="number" id="itemActual" placeholder="0" min="0" oninput="onThbInput()">
+            </div>
+        </div>
+        <div style="font-size:11px; color:var(--text-tertiary); margin-top:-8px; margin-bottom:8px;" id="effRateHint">
+            ใส่ TWD → THB จะคำนวณตาม effective rate (จาก Exchange Log) อัตโนมัติ
         </div>
 
         <div class="form-row full">
@@ -1313,11 +1460,11 @@
                 <label>จ่ายจาก</label>
                 <div class="payment-toggle">
                     <label>
-                        <input type="radio" name="paymentSource" value="cash" checked>
+                        <input type="radio" name="paymentSource" value="cash" checked onchange="onTwdInput()">
                         <i class="fa-solid fa-money-bill-wave"></i> เงินสด
                     </label>
                     <label>
-                        <input type="radio" name="paymentSource" value="card">
+                        <input type="radio" name="paymentSource" value="card" onchange="onTwdInput()">
                         <i class="fa-solid fa-credit-card"></i> Travel Card
                     </label>
                 </div>
@@ -1394,7 +1541,7 @@ let firebaseReady = false;
 let _fbIncoming = false; // guard to prevent write-back loops
 
 // App version — bumped each deploy. Devices on older versions auto-reload via Firebase.
-const APP_VERSION = '2.14';
+const APP_VERSION = '2.15';
 const _verLabel = document.getElementById('appVersionLabel');
 if (_verLabel) _verLabel.textContent = APP_VERSION;
 
@@ -1441,9 +1588,10 @@ function forceSyncToCloud() {
     });
     Promise.all([
         db.ref('/expenses').set(expenses),
-        db.ref('/overview').set(ovData)
+        db.ref('/overview').set(ovData),
+        db.ref('/exchanges').set(exchanges)
     ]).then(() => {
-        alert('✅ Sync เรียบร้อย!\n\n• Expenses: ' + expenses.length + ' รายการ\n• Overview: ' + Object.keys(ovData).length + ' fields\n\nลองเปิดบนเครื่องอื่นดู');
+        alert('✅ Sync เรียบร้อย!\n\n• Expenses: ' + expenses.length + ' รายการ\n• Overview: ' + Object.keys(ovData).length + ' fields\n• Exchanges: ' + exchanges.length + ' ครั้ง\n\nลองเปิดบนเครื่องอื่นดู');
     }).catch(err => {
         alert('❌ Sync ล้มเหลว: ' + err.message);
         console.error('Force sync error:', err);
@@ -1756,6 +1904,121 @@ function calcPaymentSummary() {
     cardFill.style.width = cardPct + '%';
 }
 
+/* ===== EXCHANGE LOG (effective rate tracking) ===== */
+const EX_STORAGE_KEY = 'taiwan_exchanges_2025';
+let exchanges = JSON.parse(localStorage.getItem(EX_STORAGE_KEY) || '[]');
+
+function saveExchanges() {
+    localStorage.setItem(EX_STORAGE_KEY, JSON.stringify(exchanges));
+    if (firebaseReady && !_fbIncoming) {
+        db.ref('/exchanges').set(exchanges).catch(err => console.warn('Firebase write error:', err));
+    }
+}
+
+function getEffectiveRate(source) {
+    // rate = TWD / THB (matches existing convention "1 THB = X TWD")
+    const filtered = exchanges.filter(ex => ex.source === source && ex.thb > 0 && ex.twd > 0);
+    if (filtered.length === 0) return null;
+    const totalTHB = filtered.reduce((s, e) => s + e.thb, 0);
+    const totalTWD = filtered.reduce((s, e) => s + e.twd, 0);
+    return { rate: totalTWD / totalTHB, totalTHB, totalTWD, count: filtered.length };
+}
+
+function addExchange() {
+    const source = document.getElementById('exSource').value;
+    const date = document.getElementById('exDate').value || new Date().toISOString().slice(0, 10);
+    const thb = parseFloat(document.getElementById('exTHB').value) || 0;
+    const twd = parseFloat(document.getElementById('exTWD').value) || 0;
+    if (thb <= 0 || twd <= 0) {
+        alert('ใส่ทั้ง THB และ TWD ให้ครบก่อน');
+        return;
+    }
+    exchanges.push({ id: generateId(), source, date, thb, twd });
+    saveExchanges();
+    document.getElementById('exTHB').value = '';
+    document.getElementById('exTWD').value = '';
+    renderExchangeLog();
+}
+
+function deleteExchange(id) {
+    if (!confirm('ลบรายการแลกนี้?')) return;
+    exchanges = exchanges.filter(ex => ex.id !== id);
+    saveExchanges();
+    renderExchangeLog();
+}
+
+function renderExchangeLog() {
+    const cashRate = getEffectiveRate('cash');
+    const cardRate = getEffectiveRate('card');
+
+    const cashRateEl = document.getElementById('exCashRate');
+    const cashDetailEl = document.getElementById('exCashDetail');
+    const cardRateEl = document.getElementById('exCardRate');
+    const cardDetailEl = document.getElementById('exCardDetail');
+    const listEl = document.getElementById('exList');
+    if (!cashRateEl) return; // section not rendered
+
+    if (cashRate) {
+        cashRateEl.textContent = '1 THB = ' + cashRate.rate.toFixed(4) + ' TWD';
+        cashDetailEl.textContent = `${cashRate.totalTHB.toLocaleString()} THB → ${cashRate.totalTWD.toLocaleString()} TWD · ${cashRate.count} ครั้ง`;
+    } else {
+        cashRateEl.textContent = '— THB/TWD';
+        cashDetailEl.textContent = 'ยังไม่มีข้อมูล (default 0.92)';
+    }
+    if (cardRate) {
+        cardRateEl.textContent = '1 THB = ' + cardRate.rate.toFixed(4) + ' TWD';
+        cardDetailEl.textContent = `${cardRate.totalTHB.toLocaleString()} THB → ${cardRate.totalTWD.toLocaleString()} TWD · ${cardRate.count} ครั้ง`;
+    } else {
+        cardRateEl.textContent = '— THB/TWD';
+        cardDetailEl.textContent = 'ยังไม่มีข้อมูล (default 0.92)';
+    }
+
+    listEl.innerHTML = exchanges.slice().reverse().map(ex => {
+        const inferred = (ex.twd / ex.thb).toFixed(4);
+        return `<li class="ex-list-item">
+            <span class="ex-li-source ${ex.source}">${ex.source === 'card' ? '💳 Card' : '💵 Cash'}</span>
+            <span class="ex-li-amount">${ex.date} · ${ex.thb.toLocaleString()} THB → ${ex.twd.toLocaleString()} TWD</span>
+            <span class="ex-li-rate">${inferred}</span>
+            <button class="ex-li-del" onclick="deleteExchange('${ex.id}')" aria-label="ลบ"><i class="fa-solid fa-xmark"></i></button>
+        </li>`;
+    }).join('');
+}
+
+// Default date for exchange form
+(function initExDate() {
+    const el = document.getElementById('exDate');
+    if (el && !el.value) el.value = new Date().toISOString().slice(0, 10);
+})();
+renderExchangeLog();
+
+/* ===== TWD ↔ THB AUTO-CONVERT IN EXPENSE FORM ===== */
+function getActiveRate(source) {
+    const eff = getEffectiveRate(source);
+    return eff ? eff.rate : exchangeRate; // fallback to global market rate
+}
+
+function onTwdInput() {
+    const twdEl = document.getElementById('itemActualTWD');
+    const thbEl = document.getElementById('itemActual');
+    const hint = document.getElementById('effRateHint');
+    if (!twdEl || !thbEl) return;
+    const twd = parseFloat(twdEl.value);
+    if (!twd || twd <= 0) return;
+    const source = getSelectedPaymentSource();
+    const rate = getActiveRate(source);
+    if (rate > 0) {
+        const thb = twd / rate;
+        thbEl.value = Math.round(thb);
+        if (hint) hint.textContent = `effective ${source}: 1 THB = ${rate.toFixed(4)} TWD → NT$${twd} ≈ ฿${Math.round(thb)}`;
+    }
+}
+
+function onThbInput() {
+    // User typed THB manually — clear TWD to indicate it's not auto-derived
+    const hint = document.getElementById('effRateHint');
+    if (hint) hint.textContent = 'พิมพ์ THB เอง — ไม่ได้ใช้ effective rate (แก้ TWD เพื่อ auto-calc ใหม่)';
+}
+
 function updateExpSums() {
     // รวม expense list ตาม category + เก็บชื่อรายการ
     const catSums = {};
@@ -1914,6 +2177,7 @@ function saveItem() {
     const day = document.getElementById('itemDay').value;
     const planned = 0;
     const actual = parseInt(document.getElementById('itemActual').value) || 0;
+    const actualTWD = parseInt(document.getElementById('itemActualTWD').value) || 0;
     const paymentSource = getSelectedPaymentSource();
 
     if (!name) {
@@ -1924,14 +2188,14 @@ function saveItem() {
     if (editingId) {
         const idx = expenses.findIndex(e => e.id === editingId);
         if (idx !== -1) {
-            expenses[idx] = { ...expenses[idx], name, category, type, day, planned, actual, paymentSource };
+            expenses[idx] = { ...expenses[idx], name, category, type, day, planned, actual, actualTWD, paymentSource};
         }
         editingId = null;
         document.getElementById('formTitle').textContent = 'เพิ่มรายการ';
         document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-check"></i> บันทึก';
         document.getElementById('btnCancel').classList.add('hidden');
     } else {
-        expenses.push({ id: generateId(), name, category, type, day, planned, actual, paymentSource });
+        expenses.push({ id: generateId(), name, category, type, day, planned, actual, actualTWD, paymentSource});
     }
 
     save();
@@ -1948,6 +2212,7 @@ function editItem(id) {
     document.getElementById('itemCategory').value = item.category;
     document.getElementById('itemDay').value = item.day;
     document.getElementById('itemActual').value = item.actual || '';
+    document.getElementById('itemActualTWD').value = item.actualTWD || '';
     setPaymentSource(item.paymentSource || 'cash');
     document.getElementById('formTitle').textContent = 'แก้ไขรายการ';
     document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-pen"></i> อัปเดต';
@@ -1978,7 +2243,10 @@ function cancelEdit() {
 function clearForm() {
     document.getElementById('itemName').value = '';
     document.getElementById('itemActual').value = '';
+    document.getElementById('itemActualTWD').value = '';
     setPaymentSource('cash');
+    const hint = document.getElementById('effRateHint');
+    if (hint) hint.textContent = 'ใส่ TWD → THB จะคำนวณตาม effective rate (จาก Exchange Log) อัตโนมัติ';
 }
 
 // Category sort order — for day-filtered views, show categories in this order
@@ -2033,6 +2301,7 @@ function render() {
             </div>
             <div class="expense-amounts">
                 <div class="expense-actual">${e.actual ? '฿' + e.actual.toLocaleString() : '-'}</div>
+                ${e.actualTWD ? `<div style="font-size:10px; color:var(--text-tertiary); font-weight:600;">NT$${e.actualTWD.toLocaleString()}</div>` : ''}
             </div>
             <div class="expense-actions">
                 <button class="btn-edit" onclick="editItem('${e.id}')" aria-label="แก้ไข"><i class="fa-solid fa-pen"></i></button>
@@ -2043,6 +2312,7 @@ function render() {
 
     // Total row at the bottom of the filtered list
     const total = filtered.reduce((s, e) => s + (Number(e.actual) || 0), 0);
+    const totalTWD = filtered.reduce((s, e) => s + (Number(e.actualTWD) || 0), 0);
     const cashTotal = filtered.reduce((s, e) => s + ((e.paymentSource !== 'card') ? (Number(e.actual) || 0) : 0), 0);
     const cardTotal = total - cashTotal;
     let totalLabel = 'รวมทั้งหมด';
@@ -2056,7 +2326,10 @@ function render() {
             ${cashTotal > 0 ? `<span class="etr-mini cash"><i class="fa-solid fa-money-bill-wave"></i> ฿${cashTotal.toLocaleString()}</span>` : ''}
             ${cardTotal > 0 ? `<span class="etr-mini card"><i class="fa-solid fa-credit-card"></i> ฿${cardTotal.toLocaleString()}</span>` : ''}
         </div>
-        <div class="etr-total">฿${total.toLocaleString()}</div>
+        <div class="etr-total">
+            ฿${total.toLocaleString()}
+            ${totalTWD > 0 ? `<div style="font-size:11px; color:var(--text-tertiary); font-weight:600;">NT$${totalTWD.toLocaleString()}</div>` : ''}
+        </div>
     </li>`;
 
     list.innerHTML = itemsHtml + totalHtml;
@@ -2162,6 +2435,31 @@ if (firebaseReady) {
         if (snap.val() === null) {
             const r = localStorage.getItem('taiwan_exchange_rate');
             if (r) db.ref('/settings/exchangeRate').set(parseFloat(r));
+        }
+    });
+
+    // Exchanges listener (effective-rate tracking)
+    db.ref('/exchanges').on('value', snapshot => {
+        if (_fbIncoming) return;
+        _fbIncoming = true;
+        try {
+            const data = snapshot.val();
+            if (data !== null) {
+                exchanges = (Array.isArray(data) ? data : Object.values(data)).filter(e => e !== null);
+                localStorage.setItem(EX_STORAGE_KEY, JSON.stringify(exchanges));
+                renderExchangeLog();
+            }
+        } catch (err) {
+            console.error('Firebase /exchanges listener error:', err);
+        } finally {
+            _fbIncoming = false;
+        }
+    });
+
+    // Migrate localStorage exchanges → Firebase if empty
+    db.ref('/exchanges').once('value', snap => {
+        if (snap.val() === null && exchanges.length > 0) {
+            db.ref('/exchanges').set(exchanges);
         }
     });
 }
