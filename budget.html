@@ -958,7 +958,7 @@
         <i class="fa-solid fa-database"></i> <span>Local</span>
     </div>
     <button id="forceReloadBtn" onclick="forceReload()" title="โหลดใหม่ (ล้าง cache)" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#5A5E6E; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.12</span>
+        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.13</span>
     </button>
     <button id="forceSyncBtn" onclick="forceSyncToCloud()" title="ดัน localStorage ขึ้น Firebase (ใช้กรณีข้อมูลไม่ sync)" style="position:absolute; top:50px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#0EA5E9; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
         <i class="fa-solid fa-cloud-arrow-up"></i> Sync
@@ -1241,7 +1241,7 @@
     </div>
 
     <!-- ===== ADD/EDIT FORM ===== -->
-    <div class="form-section">
+    <div class="form-section" id="formSection">
         <div class="form-title"><i class="fa-solid fa-plus-circle"></i> <span id="formTitle">เพิ่มรายการ</span></div>
 
         <div class="form-row full">
@@ -1368,7 +1368,7 @@ let firebaseReady = false;
 let _fbIncoming = false; // guard to prevent write-back loops
 
 // App version — bumped each deploy. Devices on older versions auto-reload via Firebase.
-const APP_VERSION = '2.12';
+const APP_VERSION = '2.13';
 const _verLabel = document.getElementById('appVersionLabel');
 if (_verLabel) _verLabel.textContent = APP_VERSION;
 
@@ -1927,7 +1927,10 @@ function editItem(id) {
     document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-pen"></i> อัปเดต';
     document.getElementById('btnCancel').classList.remove('hidden');
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll the form into view (not all the way to top of page)
+    document.getElementById('formSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Focus the name field so the keyboard pops up immediately on mobile
+    setTimeout(() => document.getElementById('itemName').focus(), 300);
 }
 
 function deleteItem(id) {
