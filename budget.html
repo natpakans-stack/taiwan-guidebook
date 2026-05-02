@@ -285,6 +285,32 @@
         .expense-item:last-child { border-bottom: none; }
         .expense-item:active { background: var(--bg-page); }
 
+        /* Total row at end of expense list */
+        .expense-total-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--bg-page);
+            border-top: 2px solid var(--border);
+            font-weight: 700;
+        }
+        .etr-label { font-size: 13px; color: var(--text-secondary); flex-shrink: 0; }
+        .etr-breakdown { display: flex; flex-wrap: wrap; gap: 4px 8px; flex: 1; justify-content: flex-end; }
+        .etr-mini {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .etr-mini.cash { background: #D1FAE5; color: #065F46; }
+        .etr-mini.card { background: #DBEAFE; color: #1E40AF; }
+        .etr-total { font-size: 16px; color: var(--text-primary); flex-shrink: 0; }
+
         .expense-icon {
             width: 36px;
             height: 36px;
@@ -958,7 +984,7 @@
         <i class="fa-solid fa-database"></i> <span>Local</span>
     </div>
     <button id="forceReloadBtn" onclick="forceReload()" title="โหลดใหม่ (ล้าง cache)" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#5A5E6E; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.13</span>
+        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.14</span>
     </button>
     <button id="forceSyncBtn" onclick="forceSyncToCloud()" title="ดัน localStorage ขึ้น Firebase (ใช้กรณีข้อมูลไม่ sync)" style="position:absolute; top:50px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#0EA5E9; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
         <i class="fa-solid fa-cloud-arrow-up"></i> Sync
@@ -1368,7 +1394,7 @@ let firebaseReady = false;
 let _fbIncoming = false; // guard to prevent write-back loops
 
 // App version — bumped each deploy. Devices on older versions auto-reload via Firebase.
-const APP_VERSION = '2.13';
+const APP_VERSION = '2.14';
 const _verLabel = document.getElementById('appVersionLabel');
 if (_verLabel) _verLabel.textContent = APP_VERSION;
 
@@ -1955,12 +1981,21 @@ function clearForm() {
     setPaymentSource('cash');
 }
 
+// Category sort order — for day-filtered views, show categories in this order
+const CAT_ORDER = { food: 1, transport: 2, ticket: 3, shopping: 4, hotel: 5, other: 6 };
+
 function getFiltered() {
-    if (currentFilter === 'all') return expenses;
-    if (currentFilter === 'fixed' || currentFilter === 'variable') {
-        return expenses.filter(e => e.type === currentFilter);
+    let list;
+    if (currentFilter === 'all') {
+        list = expenses.slice();
+    } else if (currentFilter === 'fixed' || currentFilter === 'variable') {
+        list = expenses.filter(e => e.type === currentFilter);
+    } else {
+        // Day filter — sort by category order
+        list = expenses.filter(e => e.day === currentFilter)
+            .sort((a, b) => (CAT_ORDER[a.category] || 99) - (CAT_ORDER[b.category] || 99));
     }
-    return expenses.filter(e => e.day === currentFilter);
+    return list;
 }
 
 function render() {
@@ -1978,7 +2013,7 @@ function render() {
         return;
     }
 
-    list.innerHTML = filtered.map(e => {
+    const itemsHtml = filtered.map(e => {
         const icon = categoryIcons[e.category] || 'fa-ellipsis';
         const catName = categoryNames[e.category] || e.category;
         const dayLabel = dayLabels[e.day] || '';
@@ -2005,6 +2040,26 @@ function render() {
             </div>
         </li>`;
     }).join('');
+
+    // Total row at the bottom of the filtered list
+    const total = filtered.reduce((s, e) => s + (Number(e.actual) || 0), 0);
+    const cashTotal = filtered.reduce((s, e) => s + ((e.paymentSource !== 'card') ? (Number(e.actual) || 0) : 0), 0);
+    const cardTotal = total - cashTotal;
+    let totalLabel = 'รวมทั้งหมด';
+    if (currentFilter === 'fixed') totalLabel = 'รวม Fixed';
+    else if (currentFilter === 'variable') totalLabel = 'รวม Variable';
+    else if (currentFilter !== 'all') totalLabel = `รวม Day ${currentFilter}`;
+
+    const totalHtml = `<li class="expense-total-row">
+        <div class="etr-label">${totalLabel}</div>
+        <div class="etr-breakdown">
+            ${cashTotal > 0 ? `<span class="etr-mini cash"><i class="fa-solid fa-money-bill-wave"></i> ฿${cashTotal.toLocaleString()}</span>` : ''}
+            ${cardTotal > 0 ? `<span class="etr-mini card"><i class="fa-solid fa-credit-card"></i> ฿${cardTotal.toLocaleString()}</span>` : ''}
+        </div>
+        <div class="etr-total">฿${total.toLocaleString()}</div>
+    </li>`;
+
+    list.innerHTML = itemsHtml + totalHtml;
 }
 
 // Tab handling
