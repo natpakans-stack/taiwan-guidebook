@@ -1085,7 +1085,7 @@
         <i class="fa-solid fa-database"></i> <span>Local</span>
     </div>
     <button id="forceReloadBtn" onclick="forceReload()" title="โหลดใหม่ (ล้าง cache)" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#5A5E6E; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.17</span>
+        <i class="fa-solid fa-arrows-rotate"></i> v<span id="appVersionLabel">2.18</span>
     </button>
     <button id="forceSyncBtn" onclick="forceSyncToCloud()" title="ดัน localStorage ขึ้น Firebase (ใช้กรณีข้อมูลไม่ sync)" style="position:absolute; top:50px; right:14px; background:rgba(255,255,255,0.95); border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; color:#0EA5E9; cursor:pointer; display:flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
         <i class="fa-solid fa-cloud-arrow-up"></i> Sync
@@ -1541,7 +1541,7 @@ let firebaseReady = false;
 let _fbIncoming = false; // guard to prevent write-back loops
 
 // App version — bumped each deploy. Devices on older versions auto-reload via Firebase.
-const APP_VERSION = '2.17';
+const APP_VERSION = '2.18';
 const _verLabel = document.getElementById('appVersionLabel');
 if (_verLabel) _verLabel.textContent = APP_VERSION;
 
@@ -1723,8 +1723,8 @@ const OV_PLANNED = {
 const FIXED_PLANNED = 26305;
 const VAR_PLANNED = 13000;
 const GRAND_PLANNED = 39305;
-const CASH_BUDGET = 5900;   // TWD (ตอนแลก 6,000 THB ได้ 5,900 NT$)
-const CARD_BUDGET = 7000;   // THB (Travel Card top-up — ใช้ผ่าน YouTrip)
+const CASH_BUDGET = 8900;   // TWD (5,900 จากแลก 6,000 THB + 3,000 TWD ถอน ATM ผ่านบัตร)
+const CARD_BUDGET = 4000;   // THB (เริ่มต้น 7,000 THB - 3,000 THB ที่ใช้ถอน ATM = 4,000 THB)
 
 // Category mapping: ov key → category
 const OV_CAT = {
